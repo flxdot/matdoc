@@ -257,36 +257,114 @@ classdef Class < m2plantUML.Meta.Super.Meta
             % plantUML property of the m2plantUML.Meta.Super.Meta.
             
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            umlStr = sprintf('class %s {', this.Name);
+            classPrefix = '';
+            if ~isempty(this.EnumerationMemberList)
+                classPrefix = 'enum';
+            elseif this.Abstract
+                classPrefix = 'abstract';
+            end % if this.Abstract
+            umlStr = sprintf('class %s %s {', classPrefix, this.Name);
             
             % add UML String of each field %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            for iObj = 1:length(this.PropertyList)
-                curMetaObj = this.PropertyList(iObj);
-                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
-            end % for iObj = 1:length(this.PropertyList)
+            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlProperties(this));
             
             % add UML String for each method %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            for iObj = 1:length(this.MethodList)
-                curMetaObj = this.MethodList(iObj);
-                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
-            end % for iObj = 1:length(this.MethodList)
+            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlMethods(this));
             
             % add UML String for each event %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            for iObj = 1:length(this.EventList)
-                curMetaObj = this.EventList(iObj);
-                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
-            end % for iObj = 1:length(this.EventList)
+            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlEvents(this));
             
             % add UML String for each enuemration value %%%%%%%%%%%%%%%%%%%
-            for iObj = 1:length(this.EnumerationMemberList)
-                curMetaObj = this.EnumerationMemberList(iObj);
-                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
-            end % for iObj = 1:length(this.EnumerationMemberList)
+            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlEnumerationValues(this));
             
             % add the UML end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n}', umlStr);
             
         end % function umlStr = getPlantUML(this)
+        
+        %% - umlStr = getPlantUmlProperties
+        function umlStr = getPlantUmlProperties(this)
+            % function umlStr = getPlantUmlProperties(this)
+            %
+            % Returns the uml string for the properties of this class
+            
+            % if there are no members of the list, return an empty string
+            if isempty(this.PropertyList)
+                umlStr = '';
+                return;
+            end % if isempty(this.PropertyList)
+            
+            umlStr = '   -- Properties --';
+        
+            for iObj = 1:length(this.PropertyList)
+                curMetaObj = this.PropertyList(iObj);
+                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
+            end % for iObj = 1:length(this.PropertyList)
+            
+        end % function umlStr = getPlantUmlProperties(this)
+        
+        %% - umlStr = getPlantUmlMethods
+        function umlStr = getPlantUmlMethods(this)
+            % function umlStr = getPlantUmlMethods(this)
+            %
+            % Returns the uml string for the methods of this class
+            
+            % if there are no members of the list, return an empty string
+            if isempty(this.MethodList)
+                umlStr = '';
+                return;
+            end % if isempty(this.MethodList)
+            
+            umlStr = '   -- Methods --';
+        
+            for iObj = 1:length(this.MethodList)
+                curMetaObj = this.MethodList(iObj);
+                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
+            end % for iObj = 1:length(this.MethodList)
+            
+        end % function umlStr = getPlantUmlMethods(this)
+        
+        %% - umlStr = getPlantUmlEvents
+        function umlStr = getPlantUmlEvents(this)
+            % function umlStr = getPlantUmlEvents(this)
+            %
+            % Returns the uml string for the events of this class
+            
+            % if there are no members of the list, return an empty string
+            if isempty(this.EventList)
+                umlStr = '';
+                return;
+            end % if isempty(this.EventList)
+            
+            umlStr = '   -- Events --';
+        
+            for iObj = 1:length(this.EventList)
+                curMetaObj = this.EventList(iObj);
+                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
+            end % for iObj = 1:length(this.EventList)
+            
+        end % function umlStr = getPlantUmlEvents(this)
+        
+        %% - umlStr = getPlantUmlEnumerationValues
+        function umlStr = getPlantUmlEnumerationValues(this)
+            % function umlStr = getPlantUmlEnumerationValues(this)
+            %
+            % Returns the uml string for the enumeration values of this class
+            
+            % if there are no members of the list, return an empty string
+            if isempty(this.EnumerationMemberList)
+                umlStr = '';
+                return;
+            end % if isempty(this.EnumerationMemberList)
+            
+            umlStr = '   -- Enumeration Values --';
+            
+            for iObj = 1:length(this.EnumerationMemberList)
+                curMetaObj = this.EnumerationMemberList(iObj);
+                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
+            end % for iObj = 1:length(this.EnumerationMemberList)
+            
+        end % function umlStr = getPlantUmlEnumerationValues(this)
         
     end %  methods (Access = protected)
     

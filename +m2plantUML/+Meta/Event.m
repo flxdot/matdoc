@@ -153,7 +153,7 @@ classdef Event < m2plantUML.Meta.Super.Meta
             % Note: This method will be called by the getter of the
             % plantUML property of the m2plantUML.Meta.Super.Meta.
             
-            umlStr = '';
+            umlStr = sprintf('   %s', this.Name);
             
         end % function umlStr = getPlantUML(this)
         

@@ -114,7 +114,7 @@ classdef Property < m2plantUML.Meta.Super.Meta
             if ~isempty(this.metaObj.Description)
                 val = this.metaObj.Description;
             else
-                val = help(sprintf('%s/%s', this.DefiningClass.name, this.Name));
+                val = help(sprintf('%s/%s', this.DefiningClass.Name, this.Name));
             end
             
         end % function val = get.Description(this)
@@ -306,7 +306,7 @@ classdef Property < m2plantUML.Meta.Super.Meta
             % plantUML property of the m2plantUML.Meta.Super.Meta.
             
             % prefix
-            prefix = '   {method} ';
+            prefix = '   {field} ';
             if this.Constant
                prefix = sprintf('%s{static} ', prefix(1:end-1)); 
             end
@@ -326,6 +326,10 @@ classdef Property < m2plantUML.Meta.Super.Meta
             
             % name
             umlStr = sprintf('%s%s%s', prefix, AccessLevel, this.Name);
+            
+            % print description?
+            % spacer = char(31 * ones(1, length(prefix) + length(AccessLevel)));
+            % umlStr = sprintf('%s\n%s%s\n%s', umlStr, spacer, this.Description, spacer);
             
         end % function umlStr = getPlantUML(this)
         
