@@ -104,6 +104,11 @@ classdef Package < m2plantUML.Meta.Super.Meta
             
             umlStr = '';
             
+            % get all classes contained by this package %%%%%%%%%%%%%%%%%%%
+            for iObj = 1:length(this.ClassList)
+                umlStr = sprintf('%s\n\n%s', umlStr, this.ClassList(iObj).plantUML);
+            end % for iObj = 1:length(this.ClassList)
+            
         end % function umlStr = getPlantUML(this)
         
     end %  methods (Access = protected)

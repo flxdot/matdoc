@@ -35,6 +35,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
         % The list of super classes
         SuperclassList;
         
+        % The inheritation relation ships
+        InheritationRelations = cell(0, 1);
+        
     end % properties (SetAccess = protected)
     
     %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
@@ -293,9 +296,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
             % EnumerationMemberList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.EnumerationMemberList)
-                this.EnumerationMemberList = m2plantUML.Meta.EnumerationValue(this.metaObj.EnumerationMemberList(1), this);
+                this.EnumerationMemberList = m2plantUML.Meta.EnumeratedValue(this.metaObj.EnumerationMemberList(1), this);
                 for iPack = 2:length(this.metaObj.EnumerationMemberList)
-                    this.EnumerationMemberList(iPack) = m2plantUML.Meta.EnumerationValue(this.metaObj.EnumerationMemberList(iPack), this);
+                    this.EnumerationMemberList(iPack) = m2plantUML.Meta.EnumeratedValue(this.metaObj.EnumerationMemberList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EnumerationMemberList)
             end % if ~isempty(this.metaObj.EnumerationMemberList)
             
@@ -306,7 +309,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
                     this.SuperclassList(iPack) = m2plantUML.Meta.Class(this.metaObj.SuperclassList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EventList)
             end % if ~isempty(this.metaObj.EventList)
-                        
+            
+            discoverInheritanceRelation(this);
+            
         end % function walkMeta(this)
         
         %% - getSortedPropertyList()
@@ -423,6 +428,22 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
         end % function val = getSuperclassListFlattend(this)
         
+        %% - discoverInheritanceRelation()
+        function discoverInheritanceRelation(this)
+            % function discoverInheritanceRelation(this)
+            %
+            % This call will fill the InheritationRelations property with
+            % the actual uml pseudo code for the class relations to its
+            % super classes
+            
+            this.InheritationRelations = cell(0, 1);
+            for iSup = 1:length(this.SuperclassList)
+                this.InheritationRelations{end + 1, 1} = sprintf('%s --|> %s',...
+                    this.Name, this.SuperclassList(iSup).Name);
+            end % for iSup = 1:length(this.SuperclassList)
+            
+        end % function discoverInheritanceRelation(this)
+        
         %% - umlStr = getPlantUML()
         function umlStr = getPlantUML(this)
             % function umlStr = getPlantUML(this)
@@ -432,13 +453,14 @@ classdef Class < m2plantUML.Meta.Super.Meta
             % plantUML property of the m2plantUML.Meta.Super.Meta.
             
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            classPrefix = '';
             if ~isempty(this.EnumerationMemberList)
                 classPrefix = 'enum';
             elseif this.Abstract
-                classPrefix = 'abstract';
+                classPrefix = 'abstract class';
+            else
+                classPrefix = 'class';
             end % if this.Abstract
-            umlStr = sprintf('%s class %s {', classPrefix, this.Name);
+            umlStr = sprintf('%s %s {', classPrefix, this.Name);
             
             % add UML String of each field %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n%s', umlStr, getPlantUmlProperties(this));
@@ -449,15 +471,18 @@ classdef Class < m2plantUML.Meta.Super.Meta
             % add UML String for each event %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n%s', umlStr, getPlantUmlEvents(this));
             
-            % add UML String for each enuemration value %%%%%%%%%%%%%%%%%%%
+            % add UML String for each enumeration value %%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n%s', umlStr, getPlantUmlEnumerationValues(this));
             
-            % add the UML end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % close the class section the UML end %%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n}', umlStr);
+            
+            % add UML String for each superclass inheritance %%%%%%%%%%%%%%
+            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlInheritanceRelation(this));
             
         end % function umlStr = getPlantUML(this)
         
-        %% - umlStr = getPlantUmlProperties
+        %% - umlStr = getPlantUmlProperties()
         function umlStr = getPlantUmlProperties(this)
             % function umlStr = getPlantUmlProperties(this)
             %
@@ -485,7 +510,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
         end % function umlStr = getPlantUmlProperties(this)
         
-        %% - umlStr = getPlantUmlMethods
+        %% - umlStr = getPlantUmlMethods()
         function umlStr = getPlantUmlMethods(this)
             % function umlStr = getPlantUmlMethods(this)
             %
@@ -513,7 +538,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
         end % function umlStr = getPlantUmlMethods(this)
         
-        %% - umlStr = getPlantUmlEvents
+        %% - umlStr = getPlantUmlEvents()
         function umlStr = getPlantUmlEvents(this)
             % function umlStr = getPlantUmlEvents(this)
             %
@@ -534,7 +559,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
         end % function umlStr = getPlantUmlEvents(this)
         
-        %% - umlStr = getPlantUmlEnumerationValues
+        %% - umlStr = getPlantUmlEnumerationValues()
         function umlStr = getPlantUmlEnumerationValues(this)
             % function umlStr = getPlantUmlEnumerationValues(this)
             %
@@ -554,6 +579,23 @@ classdef Class < m2plantUML.Meta.Super.Meta
             end % for iObj = 1:length(this.EnumerationMemberList)
             
         end % function umlStr = getPlantUmlEnumerationValues(this)
+        
+        %% - umlStr = getPlantUmlInheritanceRelation()
+        function umlStr = getPlantUmlInheritanceRelation(this)
+            % function umlStr = getPlantUmlInheritanceRelation(this)
+            %
+            % Returns the uml string defining the class inheritances
+            
+            umlStr = '';
+            
+            for idx = 1:length(this.InheritationRelations)
+                umlStr = sprintf('%s\n%s',...
+                    umlStr,...
+                    this.InheritationRelations{idx}...
+                    );
+            end % for idx = 1:length(this.InheritationRelations)
+            
+        end % function umlStr = getPlantUmlInheritanceRelation(this)
         
     end %  methods (Access = protected)
     

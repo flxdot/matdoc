@@ -209,10 +209,10 @@ classdef UML < m2plantUML.Super.DisplayUML
                         this.PackageList = umlMetaObj;
                         
                         % PackageListFlattend
-                        this.PackageListFlattend = vertcat(...
-                            umlMetaObj,...
-                            umlMetaObj.SuperclassListFlattend...
-                            );
+%                         this.PackageListFlattend = vertcat(...
+%                             umlMetaObj,...
+%                             umlMetaObj.PackageListFlattend...
+%                             );
                         
                     else % if isempty(this.PackageList)
                         % PackageList
@@ -222,16 +222,16 @@ classdef UML < m2plantUML.Super.DisplayUML
                             );
                         
                         % PackageListFlattend
-                        this.PackageListFlattend = vertcat(...
-                            this.PackageListFlattend,...
-                            umlMetaObj,...
-                            umlMetaObj.SuperclassListFlattend...
-                            );
+%                         this.PackageListFlattend = vertcat(...
+%                             this.PackageListFlattend,...
+%                             umlMetaObj,...
+%                             umlMetaObj.PackageListFlattend...
+%                             );
                     end % if isempty(this.PackageList)
                     
                     % keep only distinct classes
                     this.PackageList = unique(this.PackageList);
-                    this.PackageListFlattend = unique(this.PackageListFlattend);
+%                     this.PackageListFlattend = unique(this.PackageListFlattend);
                     
             end % switch class(metaObj)
             
@@ -249,6 +249,12 @@ classdef UML < m2plantUML.Super.DisplayUML
             
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = '@startuml';
+            
+            % add UML String for each package %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            for iObj = 1:length(this.PackageList)
+                umlStr = sprintf('%s\n\n%s', ...
+                    umlStr, this.PackageList(iObj).plantUML);
+            end % for iObj = 1:length(this.PackageList)
             
             % add UML String of each class %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             for iObj = 1:length(this.ClassListFlattend)
