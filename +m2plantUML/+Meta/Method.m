@@ -6,6 +6,14 @@ classdef Method < m2plantUML.Meta.Super.Meta & ...
         
     end % properties
     
+    %% PROPERTIES: SETACCESS = PROTECTED
+    properties (SetAccess = protected)
+        
+        % The access level of the method
+        Access;
+        
+    end % properties (SetAccess = protected)
+    
     %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
     properties (Dependent, SetAccess = protected)
         
@@ -17,9 +25,6 @@ classdef Method < m2plantUML.Meta.Super.Meta & ...
         
         % The detailes description of the method
         DetailedDescription;
-        
-        % The access level of the method
-        Access;
         
         % Is the method static?
         Static;
@@ -100,17 +105,6 @@ classdef Method < m2plantUML.Meta.Super.Meta & ...
             val = this.metaObj.DetailedDescription;
             
         end % function val = get.DetailedDescription(this)
-        
-        %% - val = get.Access()
-        function val = get.Access(this)
-            % function val = get.Access(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = this.metaObj.Access;
-            
-        end % function val = get.Access(this)
         
         %% - val = get.Static()
         function val = get.Static(this)
@@ -201,6 +195,13 @@ classdef Method < m2plantUML.Meta.Super.Meta & ...
             % This method will make sure the sub meta classes of the
             % metaObj are also wrapped by the meta classes of this package.
             
+            % The access level of the method
+            if isa(this.metaObj, 'function_handle')
+                this.Access = m2plantUML.Enums.AccessLevel.Public;
+            else % if isa(this.metaObj, 'function_handle')
+                this.Access = m2plantUML.Enums.AccessLevel.from(this.metaObj.Access);
+            end % if isa(this.metaObj, 'function_handle')
+            
         end % function walkMeta(this)
         
         %% - umlStr = getPlantUML()
@@ -255,14 +256,81 @@ classdef Method < m2plantUML.Meta.Super.Meta & ...
             
         end % function umlStr = getPlantUML(this)
         
+        
         %% - umlCat = getCategoryUML(this)
         function umlCat = getCategoryUML(this)
             % function umlCat = getCategoryUML(this)
             %
             % Returns the string of the category within a class or package
             % based on its access level and other (abstract, hidden, etc.)
+                        
+            % Access Level %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
-            umlCat = '';
+            % Access
+            umlCat = char(this.Access);
+            isPublic = this.Access == m2plantUML.Enums.AccessLevel.Public;
+            
+            % Other Attributes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % Hidden
+            if this.Hidden
+                umlCat = sprintf('Hidden %s', umlCat);
+                % remove public key word if both set and get access is
+                % public
+                if isPublic
+                    umlCat = strrep(umlCat, ...
+                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        ''...
+                        );
+                end % if sameAccessLevel
+            end % if this.Hidden
+            
+            % Static
+            if this.Static
+                umlCat = sprintf('Static %s', umlCat);
+                % remove public key word if both set and get access is
+                % public
+                if isPublic
+                    umlCat = strrep(umlCat, ...
+                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        ''...
+                        );
+                end % if sameAccessLevel
+            end % if this.Static
+            
+            % Sealed
+            if this.Sealed
+                umlCat = sprintf('Sealed %s', umlCat);
+                % remove public key word if both set and get access is
+                % public
+                if isPublic
+                    umlCat = strrep(umlCat, ...
+                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        ''...
+                        );
+                end % if sameAccessLevel
+            end % if this.Sealed
+            
+            % Abstract
+            if this.Abstract
+                umlCat = sprintf('Abstract %s', umlCat);
+                % remove public key word if both set and get access is
+                % public
+                if isPublic
+                    umlCat = strrep(umlCat, ...
+                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        ''...
+                        );
+                end % if sameAccessLevel
+            end % if this.Abstract
+            
+            % Final adjustements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % remove trailing and leading whitespaces
+            umlCat = strtrim(umlCat);
+            if ~isempty(umlCat) && strcmp(umlCat(end), ',')
+                umlCat = strtrim(umlCat(1:end-1));
+            end
             
         end % function umlCat = getCategoryUML(this)
         

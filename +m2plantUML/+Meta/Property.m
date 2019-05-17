@@ -16,6 +16,12 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
         % The set method of the propery
         SetMethod;
         
+        % The get access level
+        GetAccess;
+        
+        % The set access level
+        SetAccess;
+        
     end % properties (SetAccess = protected)
     
     %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
@@ -29,12 +35,6 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
         
         % Details description of the property
         DetailedDescription;
-        
-        % The get access level
-        GetAccess;
-        
-        % The set access level
-        SetAccess;
         
         % Is the property dependent?
         Dependent;
@@ -130,28 +130,6 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             val = this.metaObj.DetailedDescription;
             
         end % function val = get.DetailedDescription(this)
-        
-        %% - val = get.GetAccess()
-        function val = get.GetAccess(this)
-            % function val = get.GetAccess(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = this.metaObj.GetAccess;
-            
-        end % function val = get.GetAccess(this)
-        
-        %% - val = get.SetAccess()
-        function val = get.SetAccess(this)
-            % function val = get.SetAccess(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = this.metaObj.SetAccess;
-            
-        end % function val = get.SetAccess(this)
         
         %% - val = get.Dependent()
         function val = get.Dependent(this)
@@ -296,6 +274,12 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
                 this.SetMethod = m2plantUML.Meta.Method(this.metaObj.SetMethod, this);
             end % if ~isempty(this.metaObj.PackageList)
             
+            % The get access level
+            this.GetAccess  = m2plantUML.Enums.AccessLevel.from(this.metaObj.GetAccess);
+            
+            % The set access level
+            this.SetAccess  = m2plantUML.Enums.AccessLevel.from(this.metaObj.SetAccess);
+            
         end % function walkMeta(this)
         
         %% - umlStr = getPlantUML()
@@ -309,10 +293,10 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             % prefix
             prefix = '   {field} ';
             if this.Constant
-               prefix = sprintf('%s{static} ', prefix(1:end-1)); 
+                prefix = sprintf('%s{static} ', prefix(1:end-1));
             end
             if this.Abstract
-               prefix = sprintf('%s{abtract} ', prefix(1:end-1)); 
+                prefix = sprintf('%s{abtract} ', prefix(1:end-1));
             end
             
             % acces level
@@ -334,14 +318,120 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             
         end % function umlStr = getPlantUML(this)
         
-        %% - umlCat = getCategoryUML(this
+        %% - umlCat = getCategoryUML(this)
         function umlCat = getCategoryUML(this)
             % function umlCat = getCategoryUML(this)
             %
             % Returns the string of the category within a class or package
             % based on its access level and other (abstract, hidden, etc.)
             
-            umlCat = this.GetAccess;
+            % Access Level %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % Is the access the same for get and set?
+            if this.GetAccess == this.SetAccess
+                
+                umlCat = char(this.GetAccess);
+                
+                sameAccessLevel = true;
+                
+            else % if this.GetAccess == this.SetAccess
+                
+                sameAccessLevel = false;
+                
+                umlCat = '';
+                
+                % GetAccess
+                if this.GetAccess > m2plantUML.Enums.AccessLevel.Public
+                    umlCat = sprintf('%s GetAccess = %s,',...
+                        umlCat, char(this.GetAccess));
+                end % if this.GetAccess > m2plantUML.Enums.AccessLevel.Public
+                
+                % SetAccess
+                if this.SetAccess > m2plantUML.Enums.AccessLevel.Public
+                    umlCat = sprintf('%s SetAccess = %s,',...
+                        umlCat, char(this.SetAccess));
+                end % if this.SetAccess > m2plantUML.Enums.AccessLevel.Public
+                
+            end % if this.GetAccess == this.SetAccess
+            
+            % Observable %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % GetObservable
+            if this.GetObservable
+                umlCat = sprintf('%s GetObservable,', umlCat);
+            end % if this.GetObservable
+            
+            % SetObservable
+            if this.SetObservable
+                umlCat = sprintf('%s SetObservable,', umlCat);
+            end % if this.SetObservable
+            
+            % AbortSet
+            if this.AbortSet
+                umlCat = sprintf('%s AbortSet,', umlCat);
+            end % if this.AbortSet
+            
+            % Other Attributes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % Hidden
+            if this.Hidden
+                umlCat = sprintf('Hidden %s', umlCat);
+                % remove public key word if both set and get access is
+                % public
+                if sameAccessLevel
+                    umlCat = strrep(umlCat, ...
+                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        ''...
+                        );
+                end % if sameAccessLevel
+            end % if this.Hidden
+            
+            % Transient
+            if this.Transient
+                umlCat = sprintf('Transient %s', umlCat);
+                % remove public key word if both set and get access is
+                % public
+                if sameAccessLevel
+                    umlCat = strrep(umlCat, ...
+                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        ''...
+                        );
+                end % if sameAccessLevel
+            end % if this.Transient
+            
+            % Constant
+            if this.Constant
+                umlCat = sprintf('Constant %s', umlCat);
+                % remove public key word if both set and get access is
+                % public
+                if sameAccessLevel
+                    umlCat = strrep(umlCat, ...
+                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        ''...
+                        );
+                end % if sameAccessLevel
+            end % if this.Constant
+            
+            % Abstract
+            if this.Abstract
+                umlCat = sprintf('Abstract %s', umlCat);
+                % remove public key word if both set and get access is
+                % public
+                if sameAccessLevel
+                    umlCat = strrep(umlCat, ...
+                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        ''...
+                        );
+                end % if sameAccessLevel
+            end % if this.Abstract
+            
+            % Final adjustements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % remove trailing and leading whitespaces
+            umlCat = strtrim(umlCat);
+            if strcmp(umlCat(end), ',')
+                umlCat = strtrim(umlCat(1:end-1));
+            end
             
         end % function umlCat = getCategoryUML(this)
         

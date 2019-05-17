@@ -20,6 +20,12 @@ classdef Class < m2plantUML.Meta.Super.Meta
         % The list of methods
         MethodList;
         
+        % It cotains a Nx2 cell array. The first column holds the
+        % category (categoryUML property) and the second column the
+        % actual cell array of handles to the meta classes.
+        % N = number of unique categories.
+        SortedMethodList = cell(0, 2);
+        
         % The list of events
         EventList;
         
@@ -37,6 +43,10 @@ classdef Class < m2plantUML.Meta.Super.Meta
         % A complete list of properties incl the ones inheritated from
         % other classes
         PropertyListFlattend;
+        
+        % A complete list of methods incl the ones inheritated from
+        % other classes
+        MethodListFlattend;
         
         % The name of Class
         Name;
@@ -104,6 +114,17 @@ classdef Class < m2plantUML.Meta.Super.Meta
             val = this.PropertyList;
             
         end % function val = get.PropertyListFlattend(this)
+        
+        %% - val = get.MethodListFlattend()
+        function val = get.MethodListFlattend(this)
+            % function val = get.MethodListFlattend(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = this.MethodList;
+            
+        end % function val = get.MethodListFlattend(this)
         
         %% - val = get.Name()
         function val = get.Name(this)
@@ -246,6 +267,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
                 end % for iPack = 2:length(this.metaObj.MethodList)
             end % if ~isempty(this.metaObj.MethodList)
             
+            % The list of propertties sorted and categorized
+            getSortedMethodList(this);
+            
             % EventList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.EventList)
                 this.EventList = m2plantUML.Meta.Event(this.metaObj.EventList(1), this);
@@ -310,11 +334,59 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
             % sort the properties
             for iCat = 1:size(this.SortedPropertyList, 1)
-                [~, sortIdx] = sort({this.SortedPropertyList{iCat, 2}(:).Name});
+                % make sure to sort case insensitive
+                [~, sortIdx] = sort(lower({this.SortedPropertyList{iCat, 2}(:).Name}));
+                % apply the sorting
                 this.SortedPropertyList{iCat, 2} = this.SortedPropertyList{iCat, 2}(sortIdx);
             end % for iCat = 1:size(this.SortedPropertyList, 1)
             
         end % function getSortedPropertyList(this)
+        
+        %% - getSortedMethodList()
+        function getSortedMethodList(this)
+            % function getSortedMethodList(this)
+            %
+            % Call to fill the SortedMethodList property.
+            %
+            % It cotains a Nx2 cell array. The first column holds the
+            % category (categoryUML property) and the second column the
+            % actual cell array of handles to the meta classes.
+            
+            % reset the list
+            this.SortedMethodList = cell(0, 2);
+            
+            theMethodList = this.MethodListFlattend;
+            for iMethod = 1:length(theMethodList)
+                % get the currently processes property
+                curMethod = theMethodList(iMethod);
+                curMethodCat = curMethod.categoryUML;
+                
+                % get the index of the catergory in the list
+                catIdx = strcmp(this.SortedMethodList(:, 1), curMethodCat);
+                
+                % new category?
+                if ~any(catIdx)
+                    this.SortedMethodList{end + 1, 1} = curMethodCat;
+                    this.SortedMethodList{end, 2} = curMethod;
+                else % if ~any(catIdx)
+                    this.SortedMethodList{catIdx, 2}(end + 1, 1) = curMethod;
+                end % if ~any(catIdx)
+                
+            end % for iProp = 1:length(this.MethodList)
+            
+            % sort the categories by name
+            [~, sortIdx] = sort(this.SortedMethodList(:, 1));
+            this.SortedMethodList = this.SortedMethodList(sortIdx, :);
+            
+            % sort the properties
+            for iCat = 1:size(this.SortedMethodList, 1)
+                % make sure to sort case insensitive
+                [~, sortIdx] = sort(lower({this.SortedMethodList{iCat, 2}(:).Name}));
+                % apply the sorting
+                this.SortedMethodList{iCat, 2} = this.SortedMethodList{iCat, 2}(sortIdx);
+            end % for iCat = 1:size(this.SortedMethodList, 1)
+            
+        end % function getSortedMethodList(this)
         
         %% - umlStr = getPlantUML()
         function umlStr = getPlantUML(this)
@@ -366,7 +438,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
             for iCat = 1:size(this.SortedPropertyList, 1)
                 % add the headline of the current category
-                umlStr = sprintf('%s\n   .. %s ..', umlStr, upper(this.SortedPropertyList{iCat, 1}));
+                umlStr = sprintf('%s\n   .. %s ..', umlStr, this.SortedPropertyList{iCat, 1});
                 
                 % loop over the properties
                 theProps = this.SortedPropertyList{iCat, 2};
@@ -391,11 +463,18 @@ classdef Class < m2plantUML.Meta.Super.Meta
             end % if isempty(this.MethodList)
             
             umlStr = '   -- Methods --';
-        
-            for iObj = 1:length(this.MethodList)
-                curMetaObj = this.MethodList(iObj);
-                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
-            end % for iObj = 1:length(this.MethodList)
+            
+            for iCat = 1:size(this.SortedMethodList, 1)
+                % add the headline of the current category
+                umlStr = sprintf('%s\n   .. %s ..', umlStr, this.SortedMethodList{iCat, 1});
+                
+                % loop over the properties
+                theProps = this.SortedMethodList{iCat, 2};
+                for iProp = 1:length(theProps)
+                    curMetaObj = theProps(iProp);
+                    umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
+                end % for iObj = 1:length(this.MethodList)
+            end % for iCat = 1:size(this.SortedMethodList, 1)
             
         end % function umlStr = getPlantUmlMethods(this)
         
