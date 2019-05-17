@@ -48,6 +48,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
         % other classes
         MethodListFlattend;
         
+        % A complete list of super classes incl. nested inheritated classes
+        SuperclassListFlattend;
+        
         % The name of Class
         Name;
         
@@ -101,7 +104,6 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
             this = this@m2plantUML.Meta.Super.Meta(metaObj, parent);
             
-            
         end % function this = ColumnDataDisplay()
         
         %% - val = get.PropertyListFlattend()
@@ -125,6 +127,17 @@ classdef Class < m2plantUML.Meta.Super.Meta
             val = this.MethodList;
             
         end % function val = get.MethodListFlattend(this)
+        
+        %% - val = get.SuperclassListFlattend()
+        function val = get.SuperclassListFlattend(this)
+            % function val = get.SuperclassListFlattend(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = getSuperclassListFlattend(this);
+            
+        end % function val = get.SuperclassListFlattend(this)
         
         %% - val = get.Name()
         function val = get.Name(this)
@@ -293,7 +306,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
                     this.SuperclassList(iPack) = m2plantUML.Meta.Class(this.metaObj.SuperclassList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EventList)
             end % if ~isempty(this.metaObj.EventList)
-            
+                        
         end % function walkMeta(this)
         
         %% - getSortedPropertyList()
@@ -388,6 +401,28 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
         end % function getSortedMethodList(this)
         
+        %% - val = getSuperclassListFlattend(this)
+        function val = getSuperclassListFlattend(this)
+            % function val = getSuperclassListFlattend(this)
+            %
+            % return as a list of all superclasses including the ones which
+            % are inheritated
+            
+            val = this.SuperclassList;
+            for iSup = 1:length(val)
+                val = horzcat(...
+                    val,...
+                    this.SuperclassList(iSup).SuperclassListFlattend...
+                    );
+            end % for iSup = 1:length(val)
+            
+            % keep only distinct items
+            if length(val) > 1
+                val = unique(val);
+            end
+            
+        end % function val = getSuperclassListFlattend(this)
+        
         %% - umlStr = getPlantUML()
         function umlStr = getPlantUML(this)
             % function umlStr = getPlantUML(this)
@@ -403,7 +438,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
             elseif this.Abstract
                 classPrefix = 'abstract';
             end % if this.Abstract
-            umlStr = sprintf('class %s %s {', classPrefix, this.Name);
+            umlStr = sprintf('%s class %s {', classPrefix, this.Name);
             
             % add UML String of each field %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n%s', umlStr, getPlantUmlProperties(this));

@@ -11,6 +11,24 @@ classdef UML < m2plantUML.Super.DisplayUML
     %% PROPERTIES: SETACCESS = PROTECTED
     properties (SetAccess = protected)
         
+        % List of all classes in the UmlObjects
+        % This list only contains the classes directly added to UmlObjects
+        ClassList = m2plantUML.Meta.Class.empty(1, 0);
+        
+        
+        % List of all classes in the UmlObjects
+        % This list also includes the super classes for each class
+        ClassListFlattend = m2plantUML.Meta.Class.empty(1, 0);
+        
+        % List of all packages in the UmlObjects
+        % This list only contains the packages directly added to UmlObjects
+        PackageList = m2plantUML.Meta.Package.empty(1, 0);
+        
+        
+        % List of all packages in the UmlObjects
+        % This list also includes the sub packages of package
+        PackeListFlattend = m2plantUML.Meta.Package.empty(1, 0);
+        
     end % properties (SetAccess = protected)
     
     %% PROPERTIES: ACCESS = PROTECTED
@@ -143,9 +161,78 @@ classdef UML < m2plantUML.Super.DisplayUML
             % wrap the meta class with my own classes
             switch class(metaObj)
                 case 'meta.class'
+                    % wrapt the matlab meta class with my own to allow uml
+                    % export
                     umlMetaObj = m2plantUML.Meta.Class(metaObj, []);
+                    
+                    % add the class to the list of all classes
+                    if isempty(this.ClassList)
+                        
+                        % ClassList
+                        this.ClassList = umlMetaObj;
+                        
+                        % ClassListFlattend
+                        this.ClassListFlattend = horzcat(...
+                            umlMetaObj,...
+                            umlMetaObj.SuperclassListFlattend...
+                            );
+                        
+                    else % if isempty(this.ClassList)
+                        % ClassList
+                        this.ClassList = horzcat(...
+                            this.ClassList,...
+                            umlMetaObj...
+                            );
+                        
+                        % ClassListFlattend
+                        this.ClassListFlattend = horzcat(...
+                            this.ClassListFlattend,...
+                            umlMetaObj,...
+                            umlMetaObj.SuperclassListFlattend...
+                            );
+                    end % if isempty(this.ClassList)
+                    
+                    % keep only distinct classes
+                    this.ClassList = unique(this.ClassList);
+                    this.ClassListFlattend = unique(this.ClassListFlattend);
+                    
                 case 'meta.package'
+                    
+                    % wrap the meta.package with my own class to allow uml
+                    % export
                     umlMetaObj = m2plantUML.Meta.Package(metaObj, []);
+                    
+                    % add the class to the list of all classes
+                    if isempty(this.PackageList)
+                        
+                        % PackageList
+                        this.PackageList = umlMetaObj;
+                        
+                        % PackageListFlattend
+                        this.PackageListFlattend = vertcat(...
+                            umlMetaObj,...
+                            umlMetaObj.SuperclassListFlattend...
+                            );
+                        
+                    else % if isempty(this.PackageList)
+                        % PackageList
+                        this.PackageList = vertcat(...
+                            this.PackageList,...
+                            umlMetaObj...
+                            );
+                        
+                        % PackageListFlattend
+                        this.PackageListFlattend = vertcat(...
+                            this.PackageListFlattend,...
+                            umlMetaObj,...
+                            umlMetaObj.SuperclassListFlattend...
+                            );
+                    end % if isempty(this.PackageList)
+                    
+                    % keep only distinct classes
+                    this.PackageList = unique(this.PackageList);
+                    this.PackageListFlattend = unique(this.PackageListFlattend);
+                    
             end % switch class(metaObj)
             
             this.UmlObjects_{end + 1, 1} = umlMetaObj;
@@ -163,10 +250,10 @@ classdef UML < m2plantUML.Super.DisplayUML
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = '@startuml';
             
-            % add UML String of each object %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            for iObj = 1:length(this.UmlObjects_)
-                curMetaObj = this.UmlObjects{iObj};
-                umlStr = sprintf('%s\n\n%s', umlStr, curMetaObj.plantUML);
+            % add UML String of each class %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            for iObj = 1:length(this.ClassListFlattend)
+                curMetaClass = this.ClassListFlattend(iObj);
+                umlStr = sprintf('%s\n\n%s', umlStr, curMetaClass.plantUML);
             end % for iObj = 1:length(this.UmlObjects_)
             
             % add UML String for the relations %%%%%%%%%%%%%%%%%%%%%%%%%%%%
