@@ -11,6 +11,12 @@ classdef Class < m2plantUML.Meta.Super.Meta
         % The list of properties
         PropertyList;
         
+        % It cotains a Nx2 cell array. The first column holds the
+        % category (categoryUML property) and the second column the
+        % actual cell array of handles to the meta classes.
+        % N = number of unique categories.
+        SortedPropertyList = cell(0, 2);
+        
         % The list of methods
         MethodList;
         
@@ -25,8 +31,12 @@ classdef Class < m2plantUML.Meta.Super.Meta
         
     end % properties (SetAccess = protected)
     
-    %% PROPERTIES: SETACCESS = PROTECTED
+    %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
     properties (Dependent, SetAccess = protected)
+        
+        % A complete list of properties incl the ones inheritated from
+        % other classes
+        PropertyListFlattend;
         
         % The name of Class
         Name;
@@ -83,6 +93,17 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
             
         end % function this = ColumnDataDisplay()
+        
+        %% - val = get.PropertyListFlattend()
+        function val = get.PropertyListFlattend(this)
+            % function val = get.PropertyListFlattend(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = this.PropertyList;
+            
+        end % function val = get.PropertyListFlattend(this)
         
         %% - val = get.Name()
         function val = get.Name(this)
@@ -214,6 +235,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
                 end % for iPack = 2:length(this.metaObj.PropertyList)
             end % if ~isempty(this.metaObj.PropertyList)
             
+            % The list of propertties sorted and categorized
+            getSortedPropertyList(this);
+            
             % MethodList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.MethodList)
                 this.MethodList = m2plantUML.Meta.Method(this.metaObj.MethodList(1), this);
@@ -247,6 +271,50 @@ classdef Class < m2plantUML.Meta.Super.Meta
             end % if ~isempty(this.metaObj.EventList)
             
         end % function walkMeta(this)
+        
+        %% - getSortedPropertyList()
+        function getSortedPropertyList(this)
+            % function getSortedPropertyList(this)
+            %
+            % Call to fill the SortedPropertyList property.
+            %
+            % It cotains a Nx2 cell array. The first column holds the
+            % category (categoryUML property) and the second column the
+            % actual cell array of handles to the meta classes.
+            
+            % reset the list
+            this.SortedPropertyList = cell(0, 2);
+            
+            thePropList = this.PropertyListFlattend;
+            for iProp = 1:length(thePropList)
+                % get the currently processes property
+                curProp = thePropList(iProp);
+                curPropCat = curProp.categoryUML;
+                
+                % get the index of the catergory in the list
+                catIdx = strcmp(this.SortedPropertyList(:, 1), curPropCat);
+                
+                % new category?
+                if ~any(catIdx)
+                    this.SortedPropertyList{end + 1, 1} = curPropCat;
+                    this.SortedPropertyList{end, 2} = curProp;
+                else % if ~any(catIdx)
+                    this.SortedPropertyList{catIdx, 2}(end + 1, 1) = curProp;
+                end % if ~any(catIdx)
+                
+            end % for iProp = 1:length(this.PropertyList)
+            
+            % sort the categories by name
+            [~, sortIdx] = sort(this.SortedPropertyList(:, 1));
+            this.SortedPropertyList = this.SortedPropertyList(sortIdx, :);
+            
+            % sort the properties
+            for iCat = 1:size(this.SortedPropertyList, 1)
+                [~, sortIdx] = sort({this.SortedPropertyList{iCat, 2}(:).Name});
+                this.SortedPropertyList{iCat, 2} = this.SortedPropertyList{iCat, 2}(sortIdx);
+            end % for iCat = 1:size(this.SortedPropertyList, 1)
+            
+        end % function getSortedPropertyList(this)
         
         %% - umlStr = getPlantUML()
         function umlStr = getPlantUML(this)
@@ -294,12 +362,19 @@ classdef Class < m2plantUML.Meta.Super.Meta
                 return;
             end % if isempty(this.PropertyList)
             
-            umlStr = '   -- Properties --';
-        
-            for iObj = 1:length(this.PropertyList)
-                curMetaObj = this.PropertyList(iObj);
-                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
-            end % for iObj = 1:length(this.PropertyList)
+            umlStr = '   -- PROPERTIES --';
+            
+            for iCat = 1:size(this.SortedPropertyList, 1)
+                % add the headline of the current category
+                umlStr = sprintf('%s\n   .. %s ..', umlStr, upper(this.SortedPropertyList{iCat, 1}));
+                
+                % loop over the properties
+                theProps = this.SortedPropertyList{iCat, 2};
+                for iProp = 1:length(theProps)
+                    curMetaObj = theProps(iProp);
+                    umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
+                end % for iObj = 1:length(this.PropertyList)
+            end % for iCat = 1:size(this.SortedPropertyList, 1)
             
         end % function umlStr = getPlantUmlProperties(this)
         

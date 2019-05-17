@@ -1,4 +1,5 @@
-classdef EnumeratedValue < m2plantUML.Meta.Super.Meta
+classdef EnumeratedValue < m2plantUML.Meta.Super.Meta & ...
+        m2plantUML.Super.DisplayUMLCategory
     
     %% PROPERTIES: PUBLIC
     properties
@@ -97,9 +98,20 @@ classdef EnumeratedValue < m2plantUML.Meta.Super.Meta
             % Note: This method will be called by the getter of the
             % plantUML property of the m2plantUML.Meta.Super.Meta.
             
-            umlStr = '';
+            umlStr = sprintf('   %s', this.Name);
             
         end % function umlStr = getPlantUML(this)
+        
+        %% - umlCat = getCategoryUML(this)
+        function umlCat = getCategoryUML(this)
+            % function umlCat = getCategoryUML(this)
+            %
+            % Returns the string of the category within a class or package
+            % based on its access level and other (abstract, hidden, etc.)
+            
+            umlCat = '';
+            
+        end % function umlCat = getCategoryUML(this)
         
     end %  methods (Access = protected)
     

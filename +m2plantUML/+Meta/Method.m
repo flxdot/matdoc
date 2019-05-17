@@ -1,4 +1,5 @@
-classdef Method < m2plantUML.Meta.Super.Meta
+classdef Method < m2plantUML.Meta.Super.Meta & ...
+        m2plantUML.Super.DisplayUMLCategory
     
     %% PROPERTIES: PUBLIC
     properties
@@ -253,6 +254,17 @@ classdef Method < m2plantUML.Meta.Super.Meta
             umlStr = sprintf('%s%s%s', prefix, AccessLevel, MethodSignature);
             
         end % function umlStr = getPlantUML(this)
+        
+        %% - umlCat = getCategoryUML(this)
+        function umlCat = getCategoryUML(this)
+            % function umlCat = getCategoryUML(this)
+            %
+            % Returns the string of the category within a class or package
+            % based on its access level and other (abstract, hidden, etc.)
+            
+            umlCat = '';
+            
+        end % function umlCat = getCategoryUML(this)
         
     end %  methods (Access = protected)
     
