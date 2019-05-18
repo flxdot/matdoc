@@ -19,6 +19,7 @@ specialSettings = {'IngoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelations
 % export default diagram
 fileName = 'export-class';
 exportPath = fullfile('doc', 'uml-examples');
+linkPath = fullfile('uml-examples');
 theUML.toFile(fullfile(exportPath, sprintf('%s.txt', fileName)));
 
 % Build the Doc string
@@ -81,8 +82,8 @@ for iProp = 1:length(cfgProps)
     DocStr = sprintf('%s\n\n```matlab', DocStr);
     DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheUML.toFile(''%s'');', DocStr, curPropName, bool2str(~curProp.DefaultValue), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
-    DocStr = sprintf('%s\n![%s](%s)', DocStr, umlFilePng, fullfile(exportPath, umlFilePng));
-    DocStr = sprintf('%s\nThe UML output: **[%s](%s)**', DocStr, umlFileTxt, fullfile(exportPath, umlFileTxt));
+    DocStr = sprintf('%s\n![%s](%s)', DocStr, umlFilePng, fullfile(linkPath, umlFilePng));
+    DocStr = sprintf('%s\nThe UML output: **[%s](%s)**', DocStr, umlFileTxt, fullfile(linkPath, umlFileTxt));
     
 end % for iProp = 1:length(CfgProps)
 
@@ -120,8 +121,8 @@ for iSett = 1:length(specialSettings)
     DocStr = sprintf('%s\n\n```matlab', DocStr);
     DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheUML.toFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
-    DocStr = sprintf('%s\n![%s](%s)', DocStr, umlFilePng, fullfile(exportPath, umlFilePng));
-    DocStr = sprintf('%s\nThe UML output: **[%s](%s)**', DocStr, umlFileTxt, fullfile(exportPath, umlFileTxt));
+    DocStr = sprintf('%s\n![%s](%s)', DocStr, umlFilePng, fullfile(linkPath, umlFilePng));
+    DocStr = sprintf('%s\nThe UML output: **[%s](%s)**', DocStr, umlFileTxt, fullfile(linkPath, umlFileTxt));
     
 end % for iSett = 1:length(specialSettings)
 
