@@ -3,13 +3,13 @@ classdef Configuration < handle
     %% PROPERTIES: PUBLIC
     properties
         
-        % Flag: true or false
+        % Flag: true or false 
         % Default: false
         % If set the uml export will not contain refrences to built-in
         % classes
         IgnoreBuiltInClass = false;
         
-        % Flag: true or false
+        % Flag: true or false 
         % Default: true
         % If set the uml export will not contain methods inheritated from
         % built-in classes
@@ -38,6 +38,27 @@ classdef Configuration < handle
         % If set the UML will contain information about inhertitated
         % methods at the end of the line
         MethodInheritanceHint = true;
+        
+        % Flag: true or false
+        % Default: false
+        % If set the UML won't contain any information about properties
+        HideProperties = false;
+        
+        % Flag: true or false
+        % Default: false
+        % If set the UML won't contain any information about methods
+        HideMethods = false;
+        
+        % Flag: true or false
+        % Default: false
+        % If set the UML won't contain any information about events
+        HideEvents = false;
+        
+        % Flag: true or false
+        % Default: false
+        % If set the UML won't contain any information about enumeration
+        % members
+        HideEnumerationMember = false;
         
     end % properties
     
@@ -111,17 +132,24 @@ classdef Configuration < handle
             end % if any(propIdx)
             
             % check some special cases
-            switch lower(key)
-                case 'ingorebuiltininheritance'
-                    this.IngoreBuiltInMethodInheritance = value;
-                    this.IngoreBuiltInPropertyInheritance = value;
-                case 'inheritancehint'
-                    this.PropertyInheritanceHint = value;
-                    this.MethodInheritanceHint = value;
-                otherwise
-                    error('m2plantUML:Configuration:setSetting:SettingNotFound',...
-                        'Can not set settings ''%s'' because it don'' know that. You better check the documentation again!', key);
-            end % switch lower(key)
+            if value
+                switch lower(key)
+                    case 'ingorebuiltininheritance'
+                        this.IngoreBuiltInMethodInheritance = value;
+                        this.IngoreBuiltInPropertyInheritance = value;
+                    case 'inheritancehint'
+                        this.PropertyInheritanceHint = value;
+                        this.MethodInheritanceHint = value;
+                    case 'onlyrelationship'
+                        this.HideProperties = true;
+                        this.HideMethods = true;
+                        this.HideEvents = true;
+                        this.HideEnumerationMember = true;
+                    otherwise
+                        error('m2plantUML:Configuration:setSetting:SettingNotFound',...
+                            'Can not set settings ''%s'' because it don'' know that. You better check the documentation again!', key);
+                end % switch lower(key)
+            end % if value
             
         end % function setSetting(this, key, value)
         

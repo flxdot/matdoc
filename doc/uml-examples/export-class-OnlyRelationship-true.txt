@@ -1,0 +1,31 @@
+@startuml
+
+abstract class handle {
+}
+
+
+enum m2plantUML.Enums.AccessLevel {
+}
+
+m2plantUML.Enums.AccessLevel --|> uint32
+
+class m2plantUML.Meta.Class {
+}
+
+m2plantUML.Meta.Class --|> m2plantUML.Meta.Super.Meta
+
+abstract class m2plantUML.Meta.Super.Meta {
+}
+
+m2plantUML.Meta.Super.Meta --|> m2plantUML.Super.DisplayUML
+
+abstract class m2plantUML.Super.DisplayUML {
+}
+
+m2plantUML.Super.DisplayUML --|> handle
+
+class uint32 {
+}
+
+
+@enduml

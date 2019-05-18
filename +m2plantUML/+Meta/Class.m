@@ -484,16 +484,24 @@ classdef Class < m2plantUML.Meta.Super.Meta
             umlStr = sprintf('%s %s {', classPrefix, this.Name);
             
             % add UML String for each enumeration value %%%%%%%%%%%%%%%%%%%
+            if ~this.Configuration.HideEnumerationMember
             umlStr = sprintf('%s%s', umlStr, getPlantUmlEnumerationValues(this));
+            end % if ~this.Configuration.HideEnumerationMember
             
             % add UML String of each field %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if ~this.Configuration.HideProperties
             umlStr = sprintf('%s%s', umlStr, getPlantUmlProperties(this));
+            end % if ~this.Configuration.HideProperties
             
             % add UML String for each method %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if ~this.Configuration.HideMethods
             umlStr = sprintf('%s%s', umlStr, getPlantUmlMethods(this));
+            end % if ~this.Configuration.HideMethods
             
             % add UML String for each event %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if ~this.Configuration.HideEvents
             umlStr = sprintf('%s%s', umlStr, getPlantUmlEvents(this));
+            end % if ~this.Configuration.HideEvents
             
             % close the class section the UML end %%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n}', umlStr);

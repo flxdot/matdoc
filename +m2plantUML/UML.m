@@ -107,6 +107,44 @@ classdef UML < m2plantUML.Super.DisplayUML
             
         end % function addObj(this, object)
         
+        %% - toFile(File_)
+        function toFile(this, File_)
+            % function toFile(this, File_)
+            %
+            % Write the uml string with the current settings to the defined
+            % file.
+            
+            if ~ischar(File_)
+                error('m2plantUML:UML:toFile:TypeError',...
+                    'Parameter File_ has to be a path (string). Was of type %s instead.', class(File_));
+            end % if ~ischar(File_)
+            
+            % does the path exist?
+            FilePath = fileparts(File_);
+            if ~isdir(FilePath)
+                mkdir(FilePath);
+            end % if ~isdir(FilePath)
+            
+            % try to write the file
+            [fid, fopen_err] = fopen(File_, 'w');
+            if fid > 0
+                try
+                    % write the UML string to the file
+                    fwrite(fid, this.plantUML);
+                    % close the file
+                    fclose(fid);
+                catch ex
+                    % make sure to close the file
+                    try fclose(fid); end
+                    rethrow(ex);
+                end % try
+            else % if fid > 0
+                error('m2plantUML:UML:toFile:IOError',...
+                    'Could not open ''%s'' for writting. Cause: %s', File_, fopen_err);
+            end % if fid > 0
+            
+        end % function toFile(this, File_)
+        
         %% - clear()
         function clear(this)
             % function addObj(this)

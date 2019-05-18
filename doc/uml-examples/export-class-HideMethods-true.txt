@@ -1,0 +1,86 @@
+@startuml
+
+abstract class handle {
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+
+enum m2plantUML.Enums.AccessLevel {
+   -- Enumeration Values --
+   Public
+   Protected
+   Private
+}
+
+m2plantUML.Enums.AccessLevel --|> uint32
+
+class m2plantUML.Meta.Class {
+   -- Properties --
+   .. Protected ..
+   {field} # Configuration < m2plantUML.Meta.Super.Meta
+   {field} # Parent < m2plantUML.Meta.Super.Meta
+   {field} # UmlRoot < m2plantUML.Meta.Super.Meta
+   .. SetAccess = Protected ..
+   {field} + Abstract
+   {field} + ConstructOnLoad
+   {field} + ContainingPackage
+   {field} + Description
+   {field} + DetailedDescription
+   {field} + EnumerationMemberList
+   {field} + EventList
+   {field} + HandleCompatible
+   {field} + Hidden
+   {field} + InferiorClasses
+   {field} + InheritationRelations
+   {field} + isBuiltIn
+   {field} + metaObj < m2plantUML.Meta.Super.Meta
+   {field} + MethodList
+   {field} + MethodListFlattend
+   {field} + Name
+   {field} + plantUML < m2plantUML.Super.DisplayUML
+   {field} + PropertyList
+   {field} + PropertyListFlattend
+   {field} + Sealed
+   {field} + SortedMethodList
+   {field} + SortedPropertyList
+   {field} + SuperclassList
+   {field} + SuperclassListFlattend
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+m2plantUML.Meta.Class --|> m2plantUML.Meta.Super.Meta
+
+abstract class m2plantUML.Meta.Super.Meta {
+   -- Properties --
+   .. Abstract  SetAccess = Protected ..
+   {field}{abstract} + Name
+   .. Protected ..
+   {field} # Configuration
+   {field} # Parent
+   {field} # UmlRoot
+   .. SetAccess = Protected ..
+   {field} + metaObj
+   {field} + plantUML < m2plantUML.Super.DisplayUML
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+m2plantUML.Meta.Super.Meta --|> m2plantUML.Super.DisplayUML
+
+abstract class m2plantUML.Super.DisplayUML {
+   -- Properties --
+   .. SetAccess = Protected ..
+   {field} + plantUML
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+m2plantUML.Super.DisplayUML --|> handle
+
+class uint32 {
+}
+
+
+@enduml

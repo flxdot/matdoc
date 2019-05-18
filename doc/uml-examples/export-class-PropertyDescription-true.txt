@@ -1,0 +1,227 @@
+@startuml
+
+abstract class handle {
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+
+enum m2plantUML.Enums.AccessLevel {
+   -- Enumeration Values --
+   Public
+   Protected
+   Private
+   -- Methods --
+   .. Hidden ..
+   {method} + varargout = colon(varargin)
+   .. Public ..
+   {method} + e = AccessLevel(varargin)
+   {method} + lhs1 = char(rhs1)
+   {method} + isEqual = eq(this, other)
+   {method} + isEqual = ne(this, other)
+   .. Static ..
+   {method}{static} + enum = from(val)
+   {method}{static} + enum = fromNum(val)
+   {method}{static} + enum = fromStr(val)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+}
+
+m2plantUML.Enums.AccessLevel --|> uint32
+
+class m2plantUML.Meta.Class {
+   -- Properties --
+   .. Protected ..
+   {field} # Configuration < m2plantUML.Meta.Super.Meta
+             The handle to the export configuration
+
+Help for m2plantUML.Meta.Class/Configuration is inherited from superclass M2PLANTUML.META.SUPER.META
+             
+   {field} # Parent < m2plantUML.Meta.Super.Meta
+             the parent object
+
+Help for m2plantUML.Meta.Class/Parent is inherited from superclass M2PLANTUML.META.SUPER.META
+             
+   {field} # UmlRoot < m2plantUML.Meta.Super.Meta
+             Handle to the parent m2plantUML.UML class
+
+Help for m2plantUML.Meta.Class/UmlRoot is inherited from superclass M2PLANTUML.META.SUPER.META
+             
+   .. SetAccess = Protected ..
+   {field} + Abstract
+             Is the class abstract?
+             
+   {field} + ConstructOnLoad
+             Construct OnLoad
+             
+   {field} + ContainingPackage
+             ContainingPackage
+             
+   {field} + Description
+             Class description
+             
+   {field} + DetailedDescription
+             Detailed class description
+             
+   {field} + EnumerationMemberList
+             The list of EnumerationMembers
+             
+   {field} + EventList
+             The list of events
+             
+   {field} + HandleCompatible
+             Is the class a handle class?
+             
+   {field} + Hidden
+             Is the class hidden?
+             
+   {field} + InferiorClasses
+             InferiorClasses
+             
+   {field} + InheritationRelations
+             The inheritation relation ships
+             
+   {field} + isBuiltIn
+             If true the wrapped class is a built in matlab class
+             
+   {field} + metaObj < m2plantUML.Meta.Super.Meta
+             the actual wrapped meta object (meta.package, meta.class,
+  meta.method, meta.property, etc.)
+
+Help for m2plantUML.Meta.Class/metaObj is inherited from superclass M2PLANTUML.META.SUPER.META
+             
+   {field} + MethodList
+             The list of methods
+             
+   {field} + MethodListFlattend
+             A complete list of methods incl the ones inheritated from
+  other classes
+             
+   {field} + Name
+             The name of Class
+             
+   {field} + plantUML < m2plantUML.Super.DisplayUML
+             The plantUML representation of the object
+
+Help for m2plantUML.Meta.Class/plantUML is inherited from superclass M2PLANTUML.SUPER.DISPLAYUML
+             
+   {field} + PropertyList
+             The list of properties
+             
+   {field} + PropertyListFlattend
+             A complete list of properties incl the ones inheritated from
+  other classes
+             
+   {field} + Sealed
+             Is the class sealed?
+             
+   {field} + SortedMethodList
+             It cotains a Nx2 cell array. The first column holds the
+  category (categoryUML property) and the second column the
+  actual cell array of handles to the meta classes.
+  N = number of unique categories.
+             
+   {field} + SortedPropertyList
+             It cotains a Nx2 cell array. The first column holds the
+  category (categoryUML property) and the second column the
+  actual cell array of handles to the meta classes.
+  N = number of unique categories.
+             
+   {field} + SuperclassList
+             The list of super classes
+             
+   {field} + SuperclassListFlattend
+             A complete list of super classes incl. nested inheritated classes
+             
+   -- Methods --
+   .. Protected ..
+   {method} # umlStr = getPlantUML(this)
+   {method} # umlStr = getPlantUmlEnumerationValues(this)
+   {method} # umlStr = getPlantUmlEvents(this)
+   {method} # umlStr = getPlantUmlInheritanceRelation(this)
+   {method} # umlStr = getPlantUmlMethods(this)
+   {method} # umlStr = getPlantUmlProperties(this)
+   {method} # getSortedMethodList(this)
+   {method} # getSortedPropertyList(this)
+   {method} # val = getSuperclassListFlattend(this)
+   {method} # walkMeta(this)
+   .. Public ..
+   {method} + this = Class(metaObj, parent)
+   {method} + is_eq = eq(this, other) < m2plantUML.Meta.Super.Meta
+   {method} + is_ne = ne(this, other) < m2plantUML.Meta.Super.Meta
+   {method} + [B, IX] = sort(this, dim, mode) < m2plantUML.Meta.Super.Meta
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+m2plantUML.Meta.Class --|> m2plantUML.Meta.Super.Meta
+
+abstract class m2plantUML.Meta.Super.Meta {
+   -- Properties --
+   .. Abstract  SetAccess = Protected ..
+   {field}{abstract} + Name
+                       The name of the meta object
+                       
+   .. Protected ..
+   {field} # Configuration
+             The handle to the export configuration
+             
+   {field} # Parent
+             the parent object
+             
+   {field} # UmlRoot
+             Handle to the parent m2plantUML.UML class
+             
+   .. SetAccess = Protected ..
+   {field} + metaObj
+             the actual wrapped meta object (meta.package, meta.class,
+  meta.method, meta.property, etc.)
+             
+   {field} + plantUML < m2plantUML.Super.DisplayUML
+             The plantUML representation of the object
+
+Help for m2plantUML.Meta.Super.Meta/plantUML is inherited from superclass M2PLANTUML.SUPER.DISPLAYUML
+             
+   -- Methods --
+   .. Abstract Protected ..
+   {method}{abstract} # getPlantUML(this) < m2plantUML.Super.DisplayUML
+   {method}{abstract} # walkMeta(this)
+   .. Public ..
+   {method} + is_eq = eq(this, other)
+   {method} + this = Meta(metaObj, parent)
+   {method} + is_ne = ne(this, other)
+   {method} + [B, IX] = sort(this, dim, mode)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+m2plantUML.Meta.Super.Meta --|> m2plantUML.Super.DisplayUML
+
+abstract class m2plantUML.Super.DisplayUML {
+   -- Properties --
+   .. SetAccess = Protected ..
+   {field} + plantUML
+             The plantUML representation of the object
+             
+   -- Methods --
+   .. Abstract Protected ..
+   {method}{abstract} # getPlantUML(this)
+   .. Public ..
+   {method} + this = DisplayUML()
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+m2plantUML.Super.DisplayUML --|> handle
+
+class uint32 {
+}
+
+
+@enduml

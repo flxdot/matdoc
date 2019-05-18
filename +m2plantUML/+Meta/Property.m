@@ -323,7 +323,7 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             
             % print description?
             if this.Configuration.PropertyDescription
-                spacer = char(31 * ones(1, length(prefix) + length(AccessLevel)));
+                spacer = char(32 * ones(1, length(prefix) + length(AccessLevel)));
                 umlStr = sprintf('%s\n%s%s\n%s', umlStr, spacer, this.Description, spacer);
             end % if this.Configuration.PropertyDescription
             

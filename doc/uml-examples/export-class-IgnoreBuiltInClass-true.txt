@@ -1,0 +1,125 @@
+@startuml
+
+enum m2plantUML.Enums.AccessLevel {
+   -- Enumeration Values --
+   Public
+   Protected
+   Private
+   -- Methods --
+   .. Hidden ..
+   {method} + varargout = colon(varargin)
+   .. Public ..
+   {method} + e = AccessLevel(varargin)
+   {method} + lhs1 = char(rhs1)
+   {method} + isEqual = eq(this, other)
+   {method} + isEqual = ne(this, other)
+   .. Static ..
+   {method}{static} + enum = from(val)
+   {method}{static} + enum = fromNum(val)
+   {method}{static} + enum = fromStr(val)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+}
+
+
+class m2plantUML.Meta.Class {
+   -- Properties --
+   .. Protected ..
+   {field} # Configuration < m2plantUML.Meta.Super.Meta
+   {field} # Parent < m2plantUML.Meta.Super.Meta
+   {field} # UmlRoot < m2plantUML.Meta.Super.Meta
+   .. SetAccess = Protected ..
+   {field} + Abstract
+   {field} + ConstructOnLoad
+   {field} + ContainingPackage
+   {field} + Description
+   {field} + DetailedDescription
+   {field} + EnumerationMemberList
+   {field} + EventList
+   {field} + HandleCompatible
+   {field} + Hidden
+   {field} + InferiorClasses
+   {field} + InheritationRelations
+   {field} + isBuiltIn
+   {field} + metaObj < m2plantUML.Meta.Super.Meta
+   {field} + MethodList
+   {field} + MethodListFlattend
+   {field} + Name
+   {field} + plantUML < m2plantUML.Super.DisplayUML
+   {field} + PropertyList
+   {field} + PropertyListFlattend
+   {field} + Sealed
+   {field} + SortedMethodList
+   {field} + SortedPropertyList
+   {field} + SuperclassList
+   {field} + SuperclassListFlattend
+   -- Methods --
+   .. Protected ..
+   {method} # umlStr = getPlantUML(this)
+   {method} # umlStr = getPlantUmlEnumerationValues(this)
+   {method} # umlStr = getPlantUmlEvents(this)
+   {method} # umlStr = getPlantUmlInheritanceRelation(this)
+   {method} # umlStr = getPlantUmlMethods(this)
+   {method} # umlStr = getPlantUmlProperties(this)
+   {method} # getSortedMethodList(this)
+   {method} # getSortedPropertyList(this)
+   {method} # val = getSuperclassListFlattend(this)
+   {method} # walkMeta(this)
+   .. Public ..
+   {method} + this = Class(metaObj, parent)
+   {method} + is_eq = eq(this, other) < m2plantUML.Meta.Super.Meta
+   {method} + is_ne = ne(this, other) < m2plantUML.Meta.Super.Meta
+   {method} + [B, IX] = sort(this, dim, mode) < m2plantUML.Meta.Super.Meta
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+m2plantUML.Meta.Class --|> m2plantUML.Meta.Super.Meta
+
+abstract class m2plantUML.Meta.Super.Meta {
+   -- Properties --
+   .. Abstract  SetAccess = Protected ..
+   {field}{abstract} + Name
+   .. Protected ..
+   {field} # Configuration
+   {field} # Parent
+   {field} # UmlRoot
+   .. SetAccess = Protected ..
+   {field} + metaObj
+   {field} + plantUML < m2plantUML.Super.DisplayUML
+   -- Methods --
+   .. Abstract Protected ..
+   {method}{abstract} # getPlantUML(this) < m2plantUML.Super.DisplayUML
+   {method}{abstract} # walkMeta(this)
+   .. Public ..
+   {method} + is_eq = eq(this, other)
+   {method} + this = Meta(metaObj, parent)
+   {method} + is_ne = ne(this, other)
+   {method} + [B, IX] = sort(this, dim, mode)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+m2plantUML.Meta.Super.Meta --|> m2plantUML.Super.DisplayUML
+
+abstract class m2plantUML.Super.DisplayUML {
+   -- Properties --
+   .. SetAccess = Protected ..
+   {field} + plantUML
+   -- Methods --
+   .. Abstract Protected ..
+   {method}{abstract} # getPlantUML(this)
+   .. Public ..
+   {method} + this = DisplayUML()
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+
+@enduml
