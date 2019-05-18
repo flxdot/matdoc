@@ -302,11 +302,11 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             % acces level
             switch this.GetAccess
                 case 'private'
-                    AccessLevel = '-';
+                    AccessLevel = '- ';
                 case 'protected'
-                    AccessLevel = '#';
+                    AccessLevel = '# ';
                 otherwise
-                    AccessLevel = '+';
+                    AccessLevel = '+ ';
             end % switch this.GetAccess
             
             % name

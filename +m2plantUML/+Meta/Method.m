@@ -224,11 +224,11 @@ classdef Method < m2plantUML.Meta.Super.Meta & ...
             % acces level
             switch this.Access
                 case 'private'
-                    AccessLevel = '-';
+                    AccessLevel = '- ';
                 case 'protected'
-                    AccessLevel = '#';
+                    AccessLevel = '# ';
                 otherwise
-                    AccessLevel = '+';
+                    AccessLevel = '+ ';
             end % switch this.GetAccess
             
             % method signature
