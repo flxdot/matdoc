@@ -22,6 +22,14 @@ classdef Package < m2plantUML.Meta.Super.Meta
         
     end % properties (SetAccess = protected)
     
+    %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
+    properties (Dependent, SetAccess = protected)
+        
+        % A complete list of packages incl the ones int sub packages
+        PackageListFlattend;
+        
+    end % properties (Dependent, SetAccess = protected)
+    
     %% PROPERTIES: ACCESS = PROTECTED
     properties (Access = protected)
          
@@ -55,6 +63,17 @@ classdef Package < m2plantUML.Meta.Super.Meta
             val = this.metaObj.Name;
             
         end % function val = get.Name(this)
+        
+        %% - val = get.PackageListFlattend()
+        function val = get.PackageListFlattend(this)
+            % function val = get.PackageListFlattend(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = getPackageListFlattend(this);
+            
+        end % function val = get.PackageListFlattend(this)
         
     end % methods
     
@@ -110,6 +129,28 @@ classdef Package < m2plantUML.Meta.Super.Meta
             end % for iObj = 1:length(this.ClassList)
             
         end % function umlStr = getPlantUML(this)
+        
+        %% - val = getPackageListFlattend(this)
+        function val = getPackageListFlattend(this)
+            % function val = getPackageListFlattend(this)
+            %
+            % return as a list of all supbpackages including their
+            % subpackages
+            
+            val = this.PackageList;
+            for iPack = 1:length(val)
+                val = horzcat(...
+                    val,...
+                    this.PackageList(iPack).PackageListFlattend...
+                    );
+            end % for iSup = 1:length(val)
+            
+            % keep only distinct items
+            if length(val) > 1
+                val = unique(val);
+            end
+            
+        end % function val = getPackageListFlattend(this)
         
     end %  methods (Access = protected)
     

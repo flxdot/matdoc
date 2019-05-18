@@ -296,7 +296,7 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
                 prefix = sprintf('%s{static} ', prefix(1:end-1));
             end
             if this.Abstract
-                prefix = sprintf('%s{abtract} ', prefix(1:end-1));
+                prefix = sprintf('%s{abstract} ', prefix(1:end-1));
             end
             
             % acces level

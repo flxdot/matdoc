@@ -35,9 +35,6 @@ classdef Class < m2plantUML.Meta.Super.Meta
         % The list of super classes
         SuperclassList;
         
-        % The inheritation relation ships
-        InheritationRelations = cell(0, 1);
-        
     end % properties (SetAccess = protected)
     
     %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
@@ -53,6 +50,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
         
         % A complete list of super classes incl. nested inheritated classes
         SuperclassListFlattend;
+        
+        % The inheritation relation ships
+        InheritationRelations = cell(0, 1);
         
         % The name of Class
         Name;
@@ -83,6 +83,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
         
         % ContainingPackage
         ContainingPackage;
+        
+        % If true the wrapped class is a built in matlab class
+        isBuiltIn;
         
     end % properties (Dependent, SetAccess = protected)
     
@@ -141,6 +144,31 @@ classdef Class < m2plantUML.Meta.Super.Meta
             val = getSuperclassListFlattend(this);
             
         end % function val = get.SuperclassListFlattend(this)
+        
+        %% - val = get.InheritationRelations()
+        function val = get.InheritationRelations(this)
+            % function val = get.InheritationRelations(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = cell(0, 1);
+            for iSup = 1:length(this.SuperclassList)
+                
+                % get the current super class
+                curSuperClass = this.SuperclassList(iSup);
+                
+                % may be the class needs to be skipped?
+                if this.Configuration.IgnoreBuiltInClass && curSuperClass.isBuiltIn
+                    continue;
+                end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
+                
+                % add the string of the inheritation relations
+                val{end + 1, 1} = sprintf('%s --|> %s', this.Name, curSuperClass.Name);
+                
+            end % for iSup = 1:length(this.SuperclassList)
+            
+        end % function val = get.InheritationRelations(this)
         
         %% - val = get.Name()
         function val = get.Name(this)
@@ -252,6 +280,17 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
         end % function val = get.ContainingPackage(this)
         
+        %% - val = get.isBuiltIn()
+        function val = get.isBuiltIn(this)
+            % function val = get.isBuiltIn(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = m2plantUML.isBuiltIn(this.metaObj);
+            
+        end % function val = get.isBuiltIn(this)
+
     end % methods
     
     %% METHODS: PROTECTED
@@ -309,8 +348,6 @@ classdef Class < m2plantUML.Meta.Super.Meta
                     this.SuperclassList(iPack) = m2plantUML.Meta.Class(this.metaObj.SuperclassList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EventList)
             end % if ~isempty(this.metaObj.EventList)
-            
-            discoverInheritanceRelation(this);
             
         end % function walkMeta(this)
         
@@ -428,22 +465,6 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
         end % function val = getSuperclassListFlattend(this)
         
-        %% - discoverInheritanceRelation()
-        function discoverInheritanceRelation(this)
-            % function discoverInheritanceRelation(this)
-            %
-            % This call will fill the InheritationRelations property with
-            % the actual uml pseudo code for the class relations to its
-            % super classes
-            
-            this.InheritationRelations = cell(0, 1);
-            for iSup = 1:length(this.SuperclassList)
-                this.InheritationRelations{end + 1, 1} = sprintf('%s --|> %s',...
-                    this.Name, this.SuperclassList(iSup).Name);
-            end % for iSup = 1:length(this.SuperclassList)
-            
-        end % function discoverInheritanceRelation(this)
-        
         %% - umlStr = getPlantUML()
         function umlStr = getPlantUML(this)
             % function umlStr = getPlantUML(this)
@@ -462,23 +483,23 @@ classdef Class < m2plantUML.Meta.Super.Meta
             end % if this.Abstract
             umlStr = sprintf('%s %s {', classPrefix, this.Name);
             
+            % add UML String for each enumeration value %%%%%%%%%%%%%%%%%%%
+            umlStr = sprintf('%s%s', umlStr, getPlantUmlEnumerationValues(this));
+            
             % add UML String of each field %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlProperties(this));
+            umlStr = sprintf('%s%s', umlStr, getPlantUmlProperties(this));
             
             % add UML String for each method %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlMethods(this));
+            umlStr = sprintf('%s%s', umlStr, getPlantUmlMethods(this));
             
             % add UML String for each event %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlEvents(this));
-            
-            % add UML String for each enumeration value %%%%%%%%%%%%%%%%%%%
-            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlEnumerationValues(this));
+            umlStr = sprintf('%s%s', umlStr, getPlantUmlEvents(this));
             
             % close the class section the UML end %%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n}', umlStr);
             
             % add UML String for each superclass inheritance %%%%%%%%%%%%%%
-            umlStr = sprintf('%s\n%s', umlStr, getPlantUmlInheritanceRelation(this));
+            umlStr = sprintf('%s%s', umlStr, getPlantUmlInheritanceRelation(this));
             
         end % function umlStr = getPlantUML(this)
         
@@ -494,19 +515,43 @@ classdef Class < m2plantUML.Meta.Super.Meta
                 return;
             end % if isempty(this.PropertyList)
             
-            umlStr = '   -- PROPERTIES --';
-            
+            umlStr = '';
+            umlCatStr = '';
             for iCat = 1:size(this.SortedPropertyList, 1)
-                % add the headline of the current category
-                umlStr = sprintf('%s\n   .. %s ..', umlStr, this.SortedPropertyList{iCat, 1});
                 
-                % loop over the properties
-                theProps = this.SortedPropertyList{iCat, 2};
-                for iProp = 1:length(theProps)
-                    curMetaObj = theProps(iProp);
-                    umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
+                % loop over the methods
+                curUmlCatStr = '';
+                theProperties = this.SortedPropertyList{iCat, 2};
+                for iProperty = 1:length(theProperties)
+                    % get the currently processed method
+                    curMetaObj = theProperties(iProperty);
+                    
+                    % may be the class needs to be skipped?
+                    if this.Configuration.IngoreBuiltInPropertyInheritance && ...
+                            m2plantUML.isBuiltIn(curMetaObj.metaObj.DefiningClass)
+                        continue;
+                    end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
+                    
+                    % add it to the string
+                    curUmlCatStr = sprintf('%s\n%s', curUmlCatStr, curMetaObj.plantUML);
                 end % for iObj = 1:length(this.PropertyList)
+                
+                % check if this category needs to be added or if they are
+                % empty
+                if ~isempty(curUmlCatStr)
+                    % add the headline of the current category
+                    umlCatStr = sprintf('%s\n   .. %s ..%s',...
+                        umlCatStr,...
+                        this.SortedPropertyList{iCat, 1},...
+                        curUmlCatStr...
+                        );
+                end % if ~isempty(umlCatStr)
             end % for iCat = 1:size(this.SortedPropertyList, 1)
+            
+            % check if the method have to be added after all
+            if ~isempty(umlCatStr)
+                umlStr = sprintf('\n   -- Properties --%s', umlCatStr);
+            end % if ~isempty(umlCatStr)
             
         end % function umlStr = getPlantUmlProperties(this)
         
@@ -522,19 +567,43 @@ classdef Class < m2plantUML.Meta.Super.Meta
                 return;
             end % if isempty(this.MethodList)
             
-            umlStr = '   -- Methods --';
-            
+            umlStr = '';
+            umlCatStr = '';
             for iCat = 1:size(this.SortedMethodList, 1)
-                % add the headline of the current category
-                umlStr = sprintf('%s\n   .. %s ..', umlStr, this.SortedMethodList{iCat, 1});
                 
-                % loop over the properties
-                theProps = this.SortedMethodList{iCat, 2};
-                for iProp = 1:length(theProps)
-                    curMetaObj = theProps(iProp);
-                    umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
+                % loop over the methods
+                curUmlCatStr = '';
+                theMethods = this.SortedMethodList{iCat, 2};
+                for iMethod = 1:length(theMethods)
+                    % get the currently processed method
+                    curMetaObj = theMethods(iMethod);
+                    
+                    % may be the class needs to be skipped?
+                    if this.Configuration.IngoreBuiltInMethodInheritance &&...
+                            m2plantUML.isBuiltIn(curMetaObj.metaObj.DefiningClass)
+                        continue;
+                    end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
+                    
+                    % add it to the string
+                    curUmlCatStr = sprintf('%s\n%s', curUmlCatStr, curMetaObj.plantUML);
                 end % for iObj = 1:length(this.MethodList)
+                
+                % check if this category needs to be added or if they are
+                % empty
+                if ~isempty(curUmlCatStr)
+                    % add the headline of the current category
+                    umlCatStr = sprintf('%s\n   .. %s ..%s',...
+                        umlCatStr,...
+                        this.SortedMethodList{iCat, 1},...
+                        curUmlCatStr...
+                        );
+                end % if ~isempty(umlCatStr)
             end % for iCat = 1:size(this.SortedMethodList, 1)
+            
+            % check if the method have to be added after all
+            if ~isempty(umlCatStr)
+                umlStr = sprintf('\n   -- Methods --%s', umlCatStr);
+            end % if ~isempty(umlCatStr)
             
         end % function umlStr = getPlantUmlMethods(this)
         
@@ -550,7 +619,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
                 return;
             end % if isempty(this.EventList)
             
-            umlStr = '   -- Events --';
+            umlStr = sprintf('\n   -- Events --');
         
             for iObj = 1:length(this.EventList)
                 curMetaObj = this.EventList(iObj);
@@ -571,7 +640,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
                 return;
             end % if isempty(this.EnumerationMemberList)
             
-            umlStr = '   -- Enumeration Values --';
+            umlStr = sprintf('\n   -- Enumeration Values --');
             
             for iObj = 1:length(this.EnumerationMemberList)
                 curMetaObj = this.EnumerationMemberList(iObj);
@@ -586,12 +655,13 @@ classdef Class < m2plantUML.Meta.Super.Meta
             %
             % Returns the uml string defining the class inheritances
             
-            umlStr = '';
+            umlStr = sprintf('\n');
             
-            for idx = 1:length(this.InheritationRelations)
+            relations = this.InheritationRelations;
+            for idx = 1:length(relations)
                 umlStr = sprintf('%s\n%s',...
                     umlStr,...
-                    this.InheritationRelations{idx}...
+                    relations{idx}...
                     );
             end % for idx = 1:length(this.InheritationRelations)
             

@@ -28,6 +28,12 @@ classdef Meta < m2plantUML.Super.DisplayUML
         % the parent object
         Parent;
         
+        % The handle to the export configuration
+        Configuration;
+        
+        % Handle to the parent m2plantUML.UML class
+        UmlRoot;
+        
     end % properties (Access = protected)
     
     %% PROPERTIES: CONSTANT
@@ -45,10 +51,17 @@ classdef Meta < m2plantUML.Super.DisplayUML
             %
             
             % store the property
+            this.Parent = parent;
             this.metaObj = metaObj;
-            if nargin > 1
-                this.Parent = parent;
-            end % if nargin > 1
+            
+            % get the umlRoot %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            this.UmlRoot = this.Parent;
+            while ~isa(this.UmlRoot, 'm2plantUML.UML') && ~isempty(this.UmlRoot)
+                this.UmlRoot = this.UmlRoot.Parent;
+            end % while ~isa(this.UmlRoot, 'm2plantUML.UML') && ~isempty(this.UmlRoot)
+            
+            % Store handle to the config
+            this.Configuration = this.UmlRoot.Configuration;
             
         end % function this = ColumnDataDisplay()
         
