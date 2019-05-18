@@ -14,6 +14,7 @@ theUMLCfg = m2plantUML.UML({...
     );
 cfgMeta = theUMLCfg.UmlObjects{1};
 cfgProps = sort(cfgMeta.PropertyList([cfgMeta.PropertyList(:).SetAccess] == 'public'));
+specialSettings = {'IngoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelationship'};
 
 % export default diagram
 fileName = 'export-class';
@@ -23,12 +24,15 @@ theUML.toFile(fullfile(exportPath, sprintf('%s.txt', fileName)));
 % Build the Doc string
 
 DocStr = sprintf('# m2plantUML.Configuration: Examples');
-DocStr = sprintf('%s\n\nThe sections below will show you how each of the configuration work and the output is changed.', DocStr);
-DocStr = sprintf('%s\n\nThe following strings are valid settings:', DocStr);
+DocStr = sprintf('%s\n\nThe configuration of the UML export is generally controlled by the public properties.', DocStr);
+DocStr = sprintf('%s\n\nThe following properties can be set:', DocStr);
 for iProp = 1:length(cfgProps)
     DocStr = sprintf('%s\n - %s', DocStr, cfgProps(iProp).Name);
 end
-
+DocStr = sprintf('%s\n\nThere are also some special settings which can be used as a short cut and only in combination with a value of `true`:', DocStr);
+for iSett = 1:length(specialSettings)
+    DocStr = sprintf('%s\n - %s', DocStr, specialSettings{iSett});
+end
 DocStr = sprintf('%s\n\n## Default Behaviour', DocStr);
 DocStr = sprintf('%s\n\nThe behavior of each setting, the class diagram of `m2plantUML.Meta.Class` and `m2plantUML.Enums.AccessLevel` is used. Below you''ll the output with the default settings:', DocStr);
 DocStr = sprintf('%s\n\n```matlab', DocStr);
@@ -84,7 +88,6 @@ end % for iProp = 1:length(CfgProps)
 
 % Generate a section for each special setting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 DocStr = sprintf('%s\n\n## Special Settings', DocStr);
-specialSettings = {'IngoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelationship'};
 specialDescription = {...
     'IngoreBuiltInMethodInheritance and IngoreBuiltInPropertyInheritance combined.',... IngoreBuiltInInheritance
     'MethodInheritanceHint and PropertyInheritanceHint combined.',... InheritanceHint

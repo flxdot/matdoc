@@ -1,8 +1,8 @@
 # m2plantUML.Configuration: Examples
 
-The sections below will show you how each of the configuration work and the output is changed.
+The configuration of the UML export is generally controlled by the public properties.
 
-The following strings are valid settings:
+The following properties can be set:
  - HideEnumerationMember
  - HideEvents
  - HideMethods
@@ -13,6 +13,11 @@ The following strings are valid settings:
  - MethodInheritanceHint
  - PropertyDescription
  - PropertyInheritanceHint
+
+There are also some special settings which can be used as a short cut and only in combination with a value of `true`:
+ - IngoreBuiltInInheritance
+ - InheritanceHint
+ - OnlyRelationship
 
 ## Default Behaviour
 
