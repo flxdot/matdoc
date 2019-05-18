@@ -114,9 +114,12 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             
             if ~isempty(this.metaObj.Description)
                 val = this.metaObj.Description;
-            else
+            else % if ~isempty(this.metaObj.Description)
                 val = help(sprintf('%s/%s', this.DefiningClass.Name, this.Name));
-            end
+            end % if ~isempty(this.metaObj.Description)
+            
+            % mae sure to remove trailing white spaces as good as possible
+            val = strtrim(val);
             
         end % function val = get.Description(this)
         
@@ -312,9 +315,17 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             % name
             umlStr = sprintf('%s%s%s', prefix, AccessLevel, this.Name);
             
+            % print inheritance hint?
+            if this.Configuration.PropertyInheritanceHint && ...
+                    ~strcmp(this.metaObj.DefiningClass.Name, this.Parent.Name)
+                umlStr = sprintf('%s < %s', umlStr, this.metaObj.DefiningClass.Name);
+            end % if this.Configuration.PropertyInheritanceHint
+            
             % print description?
-            % spacer = char(31 * ones(1, length(prefix) + length(AccessLevel)));
-            % umlStr = sprintf('%s\n%s%s\n%s', umlStr, spacer, this.Description, spacer);
+            if this.Configuration.PropertyDescription
+                spacer = char(31 * ones(1, length(prefix) + length(AccessLevel)));
+                umlStr = sprintf('%s\n%s%s\n%s', umlStr, spacer, this.Description, spacer);
+            end % if this.Configuration.PropertyDescription
             
         end % function umlStr = getPlantUML(this)
         

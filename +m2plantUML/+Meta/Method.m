@@ -250,9 +250,14 @@ classdef Method < m2plantUML.Meta.Super.Meta & ...
             end
             MethodSignature = sprintf('%s%s(%s)', Outputs, this.Name, Inputs);
             
-            
-            % name
+            % combine everything
             umlStr = sprintf('%s%s%s', prefix, AccessLevel, MethodSignature);
+            
+            % print inheritance hint?
+            if this.Configuration.MethodInheritanceHint && ...
+                    ~strcmp(this.metaObj.DefiningClass.Name, this.Parent.Name)
+                umlStr = sprintf('%s < %s', umlStr, this.metaObj.DefiningClass.Name);
+            end % if this.Configuration.PropertyInheritanceHint
             
         end % function umlStr = getPlantUML(this)
         

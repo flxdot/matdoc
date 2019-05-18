@@ -82,7 +82,9 @@ classdef Configuration < handle
             
             % reshape the config values
             CfgCnt = length(varargin) / 2;
-            cfgVals = reshape(varargin, CfgCnt, 2)';
+            cfgVals = cell(CfgCnt, 2);
+            cfgVals(:, 1) = varargin(1:2:end);
+            cfgVals(:, 2) = varargin(2:2:end);
             for iCfg = 1:CfgCnt
                 setSetting(this,...
                     cfgVals{iCfg, 1},... key
