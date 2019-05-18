@@ -31,6 +31,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('\doc\uml-examples\export-class.txt');
 ```
 ![export-class.png](uml-examples/export-class.png)
+
 The UML output: **[export-class.txt](uml-examples/export-class.txt)**
 
 ## Properties
@@ -56,6 +57,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-HideEnumerationMember-true.txt');
 ```
 ![export-class-HideEnumerationMember-true.png](uml-examples/export-class-HideEnumerationMember-true.png)
+
 The UML output: **[export-class-HideEnumerationMember-true.txt](uml-examples/export-class-HideEnumerationMember-true.txt)**
 
 ### HideEvents
@@ -78,6 +80,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-HideEvents-true.txt');
 ```
 ![export-class-HideEvents-true.png](uml-examples/export-class-HideEvents-true.png)
+
 The UML output: **[export-class-HideEvents-true.txt](uml-examples/export-class-HideEvents-true.txt)**
 
 ### HideMethods
@@ -100,6 +103,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-HideMethods-true.txt');
 ```
 ![export-class-HideMethods-true.png](uml-examples/export-class-HideMethods-true.png)
+
 The UML output: **[export-class-HideMethods-true.txt](uml-examples/export-class-HideMethods-true.txt)**
 
 ### HideProperties
@@ -122,6 +126,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-HideProperties-true.txt');
 ```
 ![export-class-HideProperties-true.png](uml-examples/export-class-HideProperties-true.png)
+
 The UML output: **[export-class-HideProperties-true.txt](uml-examples/export-class-HideProperties-true.txt)**
 
 ### IgnoreBuiltInClass
@@ -145,6 +150,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-IgnoreBuiltInClass-true.txt');
 ```
 ![export-class-IgnoreBuiltInClass-true.png](uml-examples/export-class-IgnoreBuiltInClass-true.png)
+
 The UML output: **[export-class-IgnoreBuiltInClass-true.txt](uml-examples/export-class-IgnoreBuiltInClass-true.txt)**
 
 ### IngoreBuiltInMethodInheritance
@@ -168,6 +174,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-IngoreBuiltInMethodInheritance-false.txt');
 ```
 ![export-class-IngoreBuiltInMethodInheritance-false.png](uml-examples/export-class-IngoreBuiltInMethodInheritance-false.png)
+
 The UML output: **[export-class-IngoreBuiltInMethodInheritance-false.txt](uml-examples/export-class-IngoreBuiltInMethodInheritance-false.txt)**
 
 ### IngoreBuiltInPropertyInheritance
@@ -191,6 +198,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-IngoreBuiltInPropertyInheritance-false.txt');
 ```
 ![export-class-IngoreBuiltInPropertyInheritance-false.png](uml-examples/export-class-IngoreBuiltInPropertyInheritance-false.png)
+
 The UML output: **[export-class-IngoreBuiltInPropertyInheritance-false.txt](uml-examples/export-class-IngoreBuiltInPropertyInheritance-false.txt)**
 
 ### MethodInheritanceHint
@@ -214,6 +222,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-MethodInheritanceHint-false.txt');
 ```
 ![export-class-MethodInheritanceHint-false.png](uml-examples/export-class-MethodInheritanceHint-false.png)
+
 The UML output: **[export-class-MethodInheritanceHint-false.txt](uml-examples/export-class-MethodInheritanceHint-false.txt)**
 
 ### PropertyDescription
@@ -237,6 +246,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-PropertyDescription-true.txt');
 ```
 ![export-class-PropertyDescription-true.png](uml-examples/export-class-PropertyDescription-true.png)
+
 The UML output: **[export-class-PropertyDescription-true.txt](uml-examples/export-class-PropertyDescription-true.txt)**
 
 ### PropertyInheritanceHint
@@ -260,6 +270,7 @@ theUML = m2plantUML.UML({...
 theUML.toFile('doc\uml-examples\export-class-PropertyInheritanceHint-false.txt');
 ```
 ![export-class-PropertyInheritanceHint-false.png](uml-examples/export-class-PropertyInheritanceHint-false.png)
+
 The UML output: **[export-class-PropertyInheritanceHint-false.txt](uml-examples/export-class-PropertyInheritanceHint-false.txt)**
 
 ## Special Settings
@@ -277,10 +288,11 @@ theUML = m2plantUML.UML({...
     },...
     'IngoreBuiltInInheritance', true...
     );
-theUML.toFile('doc\uml-examples\export-class-PropertyInheritanceHint-false.txt');
+theUML.toFile('doc\uml-examples\export-class-IngoreBuiltInInheritance-true.txt');
 ```
-![export-class-PropertyInheritanceHint-false.png](uml-examples/export-class-PropertyInheritanceHint-false.png)
-The UML output: **[export-class-PropertyInheritanceHint-false.txt](uml-examples/export-class-PropertyInheritanceHint-false.txt)**
+![export-class-IngoreBuiltInInheritance-true.png](uml-examples/export-class-IngoreBuiltInInheritance-true.png)
+
+The UML output: **[export-class-IngoreBuiltInInheritance-true.txt](uml-examples/export-class-IngoreBuiltInInheritance-true.txt)**
 
 ### InheritanceHint
 
@@ -295,10 +307,11 @@ theUML = m2plantUML.UML({...
     },...
     'InheritanceHint', true...
     );
-theUML.toFile('doc\uml-examples\export-class-PropertyInheritanceHint-false.txt');
+theUML.toFile('doc\uml-examples\export-class-InheritanceHint-true.txt');
 ```
-![export-class-PropertyInheritanceHint-false.png](uml-examples/export-class-PropertyInheritanceHint-false.png)
-The UML output: **[export-class-PropertyInheritanceHint-false.txt](uml-examples/export-class-PropertyInheritanceHint-false.txt)**
+![export-class-InheritanceHint-true.png](uml-examples/export-class-InheritanceHint-true.png)
+
+The UML output: **[export-class-InheritanceHint-true.txt](uml-examples/export-class-InheritanceHint-true.txt)**
 
 ### OnlyRelationship
 
@@ -313,7 +326,8 @@ theUML = m2plantUML.UML({...
     },...
     'OnlyRelationship', true...
     );
-theUML.toFile('doc\uml-examples\export-class-PropertyInheritanceHint-false.txt');
+theUML.toFile('doc\uml-examples\export-class-OnlyRelationship-true.txt');
 ```
-![export-class-PropertyInheritanceHint-false.png](uml-examples/export-class-PropertyInheritanceHint-false.png)
-The UML output: **[export-class-PropertyInheritanceHint-false.txt](uml-examples/export-class-PropertyInheritanceHint-false.txt)**
+![export-class-OnlyRelationship-true.png](uml-examples/export-class-OnlyRelationship-true.png)
+
+The UML output: **[export-class-OnlyRelationship-true.txt](uml-examples/export-class-OnlyRelationship-true.txt)**

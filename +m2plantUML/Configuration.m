@@ -3,6 +3,27 @@ classdef Configuration < handle
     %% PROPERTIES: PUBLIC
     properties
         
+        % Flag: true or false
+        % Default: false
+        % If set the UML won't contain any information about enumeration
+        % members
+        HideEnumerationMember = false;
+        
+        % Flag: true or false
+        % Default: false
+        % If set the UML won't contain any information about events
+        HideEvents = false;
+        
+        % Flag: true or false
+        % Default: false
+        % If set the UML won't contain any information about methods
+        HideMethods = false;
+        
+        % Flag: true or false
+        % Default: false
+        % If set the UML won't contain any information about properties
+        HideProperties = false;
+        
         % Flag: true or false 
         % Default: false
         % If set the uml export will not contain refrences to built-in
@@ -22,6 +43,12 @@ classdef Configuration < handle
         IngoreBuiltInPropertyInheritance = true;
         
         % Flag: true or false
+        % Default: true
+        % If set the UML will contain information about inhertitated
+        % methods at the end of the line
+        MethodInheritanceHint = true;
+        
+        % Flag: true or false
         % Default: false
         % If set the description of each property will be added to the UML
         % diagram
@@ -32,33 +59,6 @@ classdef Configuration < handle
         % If set the UML will contain information about inhertitated
         % properties at the end of the line
         PropertyInheritanceHint = true;
-        
-        % Flag: true or false
-        % Default: true
-        % If set the UML will contain information about inhertitated
-        % methods at the end of the line
-        MethodInheritanceHint = true;
-        
-        % Flag: true or false
-        % Default: false
-        % If set the UML won't contain any information about properties
-        HideProperties = false;
-        
-        % Flag: true or false
-        % Default: false
-        % If set the UML won't contain any information about methods
-        HideMethods = false;
-        
-        % Flag: true or false
-        % Default: false
-        % If set the UML won't contain any information about events
-        HideEvents = false;
-        
-        % Flag: true or false
-        % Default: false
-        % If set the UML won't contain any information about enumeration
-        % members
-        HideEnumerationMember = false;
         
     end % properties
     

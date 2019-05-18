@@ -40,7 +40,7 @@ DocStr = sprintf('%s\n\n```matlab', DocStr);
 DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    });\ntheUML.toFile(''\\doc\\uml-examples\\export-class.txt'');', DocStr);
 DocStr = sprintf('%s\n```', DocStr);
 DocStr = sprintf('%s\n![export-class.png](uml-examples/export-class.png)', DocStr);
-DocStr = sprintf('%s\nThe UML output: **[export-class.txt](uml-examples/export-class.txt)**', DocStr);
+DocStr = sprintf('%s\n\nThe UML output: **[export-class.txt](uml-examples/export-class.txt)**', DocStr);
 
 
 % Generate a section for each property %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,7 +83,7 @@ for iProp = 1:length(cfgProps)
     DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheUML.toFile(''%s'');', DocStr, curPropName, bool2str(~curProp.DefaultValue), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
     DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
-    DocStr = sprintf('%s\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
+    DocStr = sprintf('%s\n\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
     
 end % for iProp = 1:length(CfgProps)
 
@@ -98,6 +98,11 @@ for iSett = 1:length(specialSettings)
     % get the name of the current setting
     curSett = specialSettings{iSett};
     
+    % build name of the files to export
+    umlFile = sprintf('%s-%s-true', fileName, curSett);
+    umlFileTxt = sprintf('%s.txt', umlFile);
+    umlFilePng = sprintf('%s.png', umlFile);
+    
     % Export UML %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % reset the settings
     theUML.Configuration.reset();
@@ -106,7 +111,7 @@ for iSett = 1:length(specialSettings)
     theUML.Configuration.setSetting(curSett, true);
     
     % export the uml again
-    theUML.toFile(fullfile(exportPath, sprintf('%s-%s-true.txt', fileName, curSett)));
+    theUML.toFile(fullfile(exportPath, umlFile));
     
     % Write Documentation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
@@ -122,7 +127,7 @@ for iSett = 1:length(specialSettings)
     DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheUML.toFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
     DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
-    DocStr = sprintf('%s\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
+    DocStr = sprintf('%s\n\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
     
 end % for iSett = 1:length(specialSettings)
 
