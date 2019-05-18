@@ -39,8 +39,8 @@ DocStr = sprintf('%s\n\nThe behavior of each setting, the class diagram of `m2pl
 DocStr = sprintf('%s\n\n```matlab', DocStr);
 DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    });\ntheUML.toFile(''\\doc\\uml-examples\\export-class.txt'');', DocStr);
 DocStr = sprintf('%s\n```', DocStr);
-DocStr = sprintf('%s\n![export-class.png](m2plantUML\\doc\\uml-examples\\export-class.png)', DocStr);
-DocStr = sprintf('%s\nThe UML output: **[export-class.txt](m2plantUML\\doc\\uml-examples\\export-class.txt)**', DocStr);
+DocStr = sprintf('%s\n![export-class.png](uml-examples/export-class.png)', DocStr);
+DocStr = sprintf('%s\nThe UML output: **[export-class.txt](uml-examples/export-class.txt)**', DocStr);
 
 
 % Generate a section for each property %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -82,8 +82,8 @@ for iProp = 1:length(cfgProps)
     DocStr = sprintf('%s\n\n```matlab', DocStr);
     DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheUML.toFile(''%s'');', DocStr, curPropName, bool2str(~curProp.DefaultValue), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
-    DocStr = sprintf('%s\n![%s](%s)', DocStr, umlFilePng, fullfile(linkPath, umlFilePng));
-    DocStr = sprintf('%s\nThe UML output: **[%s](%s)**', DocStr, umlFileTxt, fullfile(linkPath, umlFileTxt));
+    DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
+    DocStr = sprintf('%s\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
     
 end % for iProp = 1:length(CfgProps)
 
@@ -121,8 +121,8 @@ for iSett = 1:length(specialSettings)
     DocStr = sprintf('%s\n\n```matlab', DocStr);
     DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheUML.toFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
-    DocStr = sprintf('%s\n![%s](%s)', DocStr, umlFilePng, fullfile(linkPath, umlFilePng));
-    DocStr = sprintf('%s\nThe UML output: **[%s](%s)**', DocStr, umlFileTxt, fullfile(linkPath, umlFileTxt));
+    DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
+    DocStr = sprintf('%s\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
     
 end % for iSett = 1:length(specialSettings)
 
