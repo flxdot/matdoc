@@ -84,7 +84,18 @@ classdef Method < matdoc.meta.super.Base & ...
             % The getter method will return the private member of the property
             % set.
             
-            val = this.metaObj.Name;
+            if isa(this.metaObj, 'function_handle')
+                nameParts = strsplit(func2str(this.metaObj), '>');
+                if length(nameParts) == 2 && exist(nameParts{1}, 'file') == 2
+                    [~,ClassName,~] = fileparts(nameParts{1});
+                    val = strrep(nameParts{2}, ClassName, '');
+                else % if length(nameParts) == 2 && exist(nameParts{1}, 'file') == 2
+                    val = nameParts{1};
+                end % if length(nameParts) == 2 && exist(nameParts{1}, 'file') == 2
+            else % if isa(this.metaObj, 'function_handle')
+                val = this.metaObj.Name;
+            end % if isa(this.metaObj, 'function_handle')
+            
             
         end % function val = get.Name(this)
         

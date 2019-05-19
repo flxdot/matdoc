@@ -14,15 +14,6 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
         % Cell array of objects which will be added to the UML
         UmlObjects;
         
-        % List of all classes in the UmlObjects
-        % This list also includes the super classes for each class
-        % All classes of the added packages will also be part of this list
-        ListAllClass = matdoc.meta.Class.empty(1, 0);
-        
-        % List of all packages in the UmlObjects
-        % This list also includes the sub packages of package
-        ListAllPackages = matdoc.meta.Package.empty(1, 0);
-        
     end % properties (Dependent)
     
     %% PROPERTIES: SETACCESS = PROTECTED
@@ -32,9 +23,18 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
         % This list only contains the classes directly added to UmlObjects
         ClassList = matdoc.meta.Class.empty(1, 0);
         
+        % List of all classes in the UmlObjects
+        % This list also includes the super classes for each class
+        % All classes of the added packages will also be part of this list
+        ClassListFlattened = matdoc.meta.Class.empty(1, 0);
+        
         % List of all packages in the UmlObjects
         % This list only contains the packages directly added to UmlObjects
         PackageList = matdoc.meta.Package.empty(1, 0);
+        
+        % List of all packages in the UmlObjects
+        % This list also includes the sub packages of package
+        PackageListFlattened = matdoc.meta.Package.empty(1, 0);
         
     end % properties (SetAccess = protected)
     
@@ -43,6 +43,13 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
         
         % private member of the UmlObjects property
         UmlObjects_;
+        
+        % list of classes which are not contained within a sub package
+        StandaloneClassList = matdoc.meta.Class.empty(1, 0);
+        
+        % struct representing the hierarchy of all classes within their
+        % packages
+        ClassHierarchy = struct();
         
     end % properties (Access = protected)
     
@@ -130,7 +137,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             if fid > 0
                 try
                     % write the UML string to the file
-                    fwrite(fid, this.plantUML);
+                    fwrite(fid, this.getPlantUML());
                     % close the file
                     fclose(fid);
                 catch ex
@@ -144,6 +151,35 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             end % if fid > 0
             
         end % function UmlToFile(this, File_)
+        
+        %% - umlStr = getPlantUML()
+        function umlStr = getPlantUML(this)
+            % function umlStr = getPlantUML(this)
+            %
+            % Returns the plantUML representation of this meta object.
+            % Note: This method will be called by the getter of the
+            % plantUML property of the matdoc.meta.super.Base.
+            
+            % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            umlStr = '@startuml';
+            
+            % add some plantUML settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % namespaceSeparator
+            umlStr = sprintf('%s\n\n%s', umlStr, 'set namespaceSeparator none');
+            
+            % add ClassHierarchy %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            umlStr = sprintf('%s\n\n%s',...
+                umlStr,...
+                strtrim(this.ClassHierarchy.getPlantUML())...
+                );
+            
+            % add UML String for the relations %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % add the UML end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            umlStr = sprintf('%s\n\n%s', umlStr, '@enduml');
+            
+        end % function umlStr = getPlantUML(this)
         
         %% - clear()
         function clear(this)
@@ -176,6 +212,12 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
                 addObj(this, val{iObj});
             end % for iObj = 1:length(val)
             
+            % get the flattened Class and Package list
+            getFlattenedLists(this);
+            
+            % figure out how the class and package hierachy is
+            discoverClassHierarchy(this);
+            
         end % function set.UmlObjects(this, val)
         
         %% - val = get.UmlObjects()
@@ -188,63 +230,6 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             val = this.UmlObjects_;
             
         end % function val = get.UmlObjects(this)
-        
-        %% - val = get.ListAllClass()
-        function val = get.ListAllClass(this)
-            % function val = get.ListAllClass(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            % Get classes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            
-            % get the directly added classes
-            val = this.ClassList;
-            
-            % get their super classes
-            for iClass = 1:length(this.ClassList)
-                val = horzcat(val, this.ClassList(iClass).SuperclassListFlattened);
-            end % for iClass = 1:length(this.ClassList)
-            
-            % Get classes from packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            
-            flattenedPackList = this.ListAllPackages;
-            for iPack = 1:length(flattenedPackList)
-                % get class list
-                packageClassList = flattenedPackList(iPack).ClassList;
-                
-                % get the superclasses of the package classes
-                for iClass = 1:length(packageClassList)
-                    val = horzcat(val,...
-                        packageClassList(iClass),...
-                        packageClassList(iClass).SuperclassListFlattened...
-                        );
-                end % for iClass = 1:length(packageClassList)
-            end % for iPack = 1:length(flattenedPackList)
-            
-            % make sure to return only distinct classes %%%%%%%%%%%%%%%%%%%
-            val = unique(val);
-            
-        end % function val = get.ListAllClass(this)
-        
-        %% - val = get.ListAllPackages()
-        function val = get.ListAllPackages(this)
-            % function val = get.ListAllPackages(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = this.PackageList;
-            
-            % get their super classes
-            for iClass = 1:length(this.PackageList)
-                val = horzcat(val, this.PackageList(iClass).PackageListFlattened);
-            end % for iClass = 1:length(this.ClassList)
-            
-            % make sure to return only distinct classes
-            val = unique(val);
-            
-        end % function val = get.ListAllPackages(this)
         
     end % methods
     
@@ -293,46 +278,129 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
         end % function addMetaObj(this, metaObj)
         
-        %% - umlStr = getPlantUML()
-        function umlStr = getPlantUML(this)
-            % function umlStr = getPlantUML(this)
+        %% - getFlattenedLists()
+        function getFlattenedLists(this)
+            % function getFlattenedLists(this)
             %
-            % Returns the plantUML representation of this meta object.
-            % Note: This method will be called by the getter of the
-            % plantUML property of the matdoc.meta.super.Base.
+            % Calls getPackageListFlattened() and getClassListFlattened()
+            % to fill all flattened list properties.
             
-            % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            umlStr = '@startuml';
+            getPackageListFlattened(this);
+            getClassListFlattened(this);
             
-            % add UML String for each package %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        end % function getFlattenedLists(this)
+        
+        %% - getClassListFlattened()
+        function getClassListFlattened(this)
+            % function getClassListFlattened(this)
+            %
+            % Sets the ClassListFlattened property by checking every added
+            % class for its super classes and every added package (and 
+            % their subpackages) for their containing classes.
             
-            % The packages will not directly be exported to UML because
-            % their classes are discovered on the ListAllClass
-            % property
+            % Get classes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
-            %for iObj = 1:length(this.PackageList)
-            %    umlStr = sprintf('%s\n\n%s', ...
-            %        umlStr, this.PackageList(iObj).plantUML);
-            %end % for iObj = 1:length(this.PackageList)
+            % get the directly added classes
+            val = this.ClassList;
             
-            % add UML String of each class %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            for iObj = 1:length(this.ListAllClass)
-                curMetaClass = this.ListAllClass(iObj);
+            % get their super classes
+            for iClass = 1:length(this.ClassList)
+                val = horzcat(val, this.ClassList(iClass).SuperclassListFlattened);
+            end % for iClass = 1:length(this.ClassList)
+            
+            % Get classes from packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            flattenedPackList = this.PackageListFlattened;
+            for iPack = 1:length(flattenedPackList)
+                % get class list
+                packageClassList = flattenedPackList(iPack).ClassList;
                 
-                % may be the class needs to be skipped?
-                if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
+                % get the superclasses of the package classes
+                for iClass = 1:length(packageClassList)
+                    val = horzcat(val,...
+                        packageClassList(iClass),...
+                        packageClassList(iClass).SuperclassListFlattened...
+                        );
+                end % for iClass = 1:length(packageClassList)
+            end % for iPack = 1:length(flattenedPackList)
+            
+            % make sure to return only distinct classes %%%%%%%%%%%%%%%%%%%
+            this.ClassListFlattened = unique(val);
+            
+        end % function val = getClassListFlattened(this)
+        
+        %% - getPackageListFlattened()
+        function getPackageListFlattened(this)
+            % function getPackageListFlattened(this)
+            %
+            % Sets the PackageListFlattened property by finding all
+            % subpackages of all directly added packages.
+            
+            val = this.PackageList;
+            
+            % get their super classes
+            for iClass = 1:length(this.PackageList)
+                val = horzcat(val, this.PackageList(iClass).PackageListFlattened);
+            end % for iClass = 1:length(this.ClassList)
+            
+            % make sure to return only distinct classes
+            this.PackageListFlattened = unique(val);
+            
+        end % function getPackageListFlattened(this)
+        
+        %% - discoverClassHierarchy(this)
+        function discoverClassHierarchy(this)
+            % function discoverClassHierarchy(this)
+            % 
+            % This function will find out how the class hierarchy is.
+            % Therefore it will check every class for the package it is
+            % contained recursivlely. If the class is not contained in a
+            % package or is a built-in the class will be added to the
+            % StandaloneClassList.
+            
+            % reset the properties
+            this.ClassHierarchy = matdoc.tools.CustomPackage('');
+            
+            % check each class
+            for iClass = 1:length(this.ClassListFlattened)
+                % get the handle to the currently processed class
+                curClass = this.ClassListFlattened(iClass);
+                
+                % get the containing package
+                curContainingPackage = curClass.metaObj.ContainingPackage;
+                
+                % is the current class a built-in or not contained by a
+                % package?
+                if curClass.isBuiltIn || isempty(curContainingPackage)
+                    this.ClassHierarchy.addClass(curClass);
                     continue;
-                end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
+                end % if curClass.isBuiltIn || isempty(curContainingPackage)
                 
-                umlStr = sprintf('%s\n\n%s', umlStr, curMetaClass.plantUML);
-            end % for iObj = 1:length(this.UmlObjects_)
+                % does the class contain the
+                route = cell(0, 1);
+                while ~isempty(curContainingPackage)
+                    % add the current package to the route
+                    route{end + 1, 1} = curContainingPackage.Name;
+                    
+                    % get the package that contains this package
+                    try
+                        curContainingPackage = curContainingPackage.ContainingPackage;
+                    catch ex
+                        curContainingPackage = curContainingPackage.metaObj.ContainingPackage;
+                    end
+                end % while ~isempty(curContainingPackage)
+                
+                % add the class to the packge
+                % build the classes from the back
+                curPackage = this.ClassHierarchy;
+                for iRoute = length(route):-1:1
+                    curPackage = curPackage.getPackage(route{iRoute});
+                end % for iRoute = length(route):-1:1
+                curPackage.addClass(curClass);
+                
+            end % for iClass = 1:length(this.ClassListFlattened)
             
-            % add UML String for the relations %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            
-            % add the UML end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            umlStr = sprintf('%s\n\n%s', umlStr, '@enduml');
-            
-        end % function umlStr = getPlantUML(this)
+        end % function discoverClassHierarchy(this)
         
     end %  methods (Access = protected)
     

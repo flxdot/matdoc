@@ -1,4 +1,6 @@
-classdef Base < matdoc.super.WithMetaObjProps
+classdef Base < matdoc.super.WithMetaObjProps & ...
+        matdoc.super.WithNameRaw & ...
+        matdoc.super.WithAlias
     
     %% PROPERTIES: PUBLIC
     properties
@@ -80,6 +82,10 @@ classdef Base < matdoc.super.WithMetaObjProps
             
             % store the property
             this.metaObj = val;
+            
+            % set some other properties
+            setNameRaw(this);
+            setAlias(this);
             
             % make sure to wrap the sub meta classes
             walkMeta(this);
@@ -189,16 +195,37 @@ classdef Base < matdoc.super.WithMetaObjProps
     end % methods
     
     %% METHODS: PROTECTED
+    methods (Access = protected)
+       
+        %% - setNameRaw()
+        function setNameRaw(this)
+            % function setNameRaw()(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            if isprop(this, 'metaObj') && isa(this.metaObj, 'function_handle')
+                nameParts = strsplit(func2str(this.metaObj), '>');
+                if length(nameParts) == 2 && exist(nameParts{1}, 'file') == 2
+                    [~,ClassName,~] = fileparts(nameParts{1});
+                    nameParts{2} = strrep(nameParts{2}, ClassName, '');
+                    nameParts{2} = strrep(nameParts{2}, '.', '');
+                end % if length(nameParts) == 2 && exist(nameParts{1}, 'file') == 2
+            else % if isprop(this, 'metaObj') && isa(this.metaObj, 'function_handle')
+                nameParts = strsplit(this.metaObj.Name, '.');
+            end % if isprop(this, 'metaObj') && isa(this.metaObj, 'function_handle')
+            this.NameRaw = nameParts{end};
+            
+        end % function setNameRaw(this)
+        
+    end % methods (Access = protected)
+    
+    %% METHODS: ABSTRACT, PROTECTED
     methods (Abstract, Access = protected)
         
         %% - walkMeta()
         walkMeta(this);
         
     end %  methods (Access = protected)
-    
-    %% METHODS: STATIC
-    methods (Static)
-        
-    end % methods (Static)
     
 end % classdef Base < handle

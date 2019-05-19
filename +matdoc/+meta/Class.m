@@ -65,10 +65,6 @@ classdef Class < matdoc.meta.super.Base & ...
         % The name of Class
         Name;
         
-        % The raw name of the class without the leading package or
-        % namepace
-        NameRaw;
-        
         % Class description
         Description;
         
@@ -200,18 +196,6 @@ classdef Class < matdoc.meta.super.Base & ...
             val = this.metaObj.Name;
             
         end % function val = get.Name(this)
-        
-        %% - val = get.NameRaw()
-        function val = get.NameRaw(this)
-            % function val = get.NameRaw(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            nameParts = strsplit(this.metaObj.Name, '.');
-            val = nameParts{end};
-            
-        end % function val = get.NameRaw(this)
         
         %% - val = get.Description()
         function val = get.Description(this)

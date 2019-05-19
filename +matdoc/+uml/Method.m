@@ -1,33 +1,50 @@
 classdef Method < matdoc.uml.super.Base
     
-    %% METHODS: PROTECTED
-    methods (Access = protected)
+    %% METHODS: PUBLIC
+    methods
         
-        %% - umlStr = getPlantUML()
-        function umlStr = getPlantUML(this)
-            % function umlStr = getPlantUML(this)
+        %% - umlStr = getPlantUML(ident_)
+        function umlStr = getPlantUML(this, ident_)
+            % function umlStr = getPlantUML(this, ident_)
             %
             % Returns the plantUML representation of this meta object.
             % Note: This method will be called by the getter of the
             % plantUML property of the matdoc.uml.super.Base.
             
+            % process input %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if nargin < 2 || isempty(ident_)
+                ident_ = 0;
+            end % if nargin < 2 || isempty(ident_)
+            if ~isnumeric(ident_)
+                error('matdoc:uml:Package:getPlantUML:TypeError',...
+                    'Input ident_ has to be numeric.');
+            end % if ~isnumeric(ident_)
+            
+            % make sure its a scalar integer value
+            ident_ = abs(round(ident_(1)));
+            
+            % build the identStr
+            identStr = char(32 * ones(1, ident_));
+            
+            % build the UML string %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
             % prefix
-            prefix = '   {method} ';
+            prefix = sprintf('%s{method}', identStr);
             if this.Static
-               prefix = sprintf('%s{static} ', prefix(1:end-1)); 
+               prefix = sprintf('%s {static}', prefix); 
             end
             if this.Abstract
-               prefix = sprintf('%s{abstract} ', prefix(1:end-1)); 
+               prefix = sprintf('%s {abstract}', prefix); 
             end
             
             % acces level
             switch this.Access
                 case 'private'
-                    AccessLevel = '- ';
+                    AccessLevel = '-';
                 case 'protected'
-                    AccessLevel = '# ';
+                    AccessLevel = '#';
                 otherwise
-                    AccessLevel = '+ ';
+                    AccessLevel = '+';
             end % switch this.GetAccess
             
             % method signature
@@ -50,7 +67,7 @@ classdef Method < matdoc.uml.super.Base
             MethodSignature = sprintf('%s%s(%s)', Outputs, this.Name, Inputs);
             
             % combine everything
-            umlStr = sprintf('%s%s%s', prefix, AccessLevel, MethodSignature);
+            umlStr = sprintf('%s %s %s', prefix, AccessLevel, MethodSignature);
             
             % print inheritance hint?
             if this.Configuration.MethodInheritanceHint && ...
@@ -60,6 +77,6 @@ classdef Method < matdoc.uml.super.Base
             
         end % function umlStr = getPlantUML(this)
         
-    end %  methods (Access = protected)
+    end %  methods
     
 end % classdef Method < handle

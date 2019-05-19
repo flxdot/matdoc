@@ -21,6 +21,13 @@ classdef Configuration < handle
         
         % Flag: true or false
         % Default: false
+        % If set the UML won't contain any information about inheritances
+        % If you specify inheritances your self, they will still be
+        % displayed!
+        HideInheritance = false;
+        
+        % Flag: true or false
+        % Default: false
         % If set the UML won't contain any information about properties
         HideProperties = false;
         
