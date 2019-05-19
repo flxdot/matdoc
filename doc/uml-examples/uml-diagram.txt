@@ -113,6 +113,22 @@ abstract class matdoc.meta.super.Base {
 
 matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
 
+class matdoc.super.WithMetaObjProps {
+   -- Properties --
+   .. Protected ..
+   {field} # Configuration
+   {field} # Parent
+   {field} # UmlRoot
+   -- Methods --
+   {method} + obj = WithMetaObjProps()
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.super.WithMetaObjProps ..|> handle
+
 abstract class matdoc.uml.super.WithPlantUML {
    -- Properties --
    .. SetAccess = Protected ..
@@ -128,5 +144,11 @@ abstract class matdoc.uml.super.WithPlantUML {
 }
 
 matdoc.uml.super.WithPlantUML ..|> handle
+
+class uint32 {
+   -- Methods --
+   {method} + varargout = uint32(varargin)
+}
+
 
 @enduml

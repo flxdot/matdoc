@@ -210,7 +210,16 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
             flattenedPackList = this.PackageListFlattend;
             for iPack = 1:length(flattenedPackList)
-                val = horzcat(val, flattenedPackList(iPack).ClassList);
+                % get class list
+                packageClassList = flattenedPackList(iPack).ClassList;
+                
+                % get the superclasses of the package classes
+                for iClass = 1:length(packageClassList)
+                    val = horzcat(val,...
+                        packageClassList(iClass),...
+                        packageClassList(iClass).SuperclassListFlattend...
+                        );
+                end % for iClass = 1:length(packageClassList)
             end % for iPack = 1:length(flattenedPackList)
             
             % make sure to return only distinct classes %%%%%%%%%%%%%%%%%%%
