@@ -168,12 +168,40 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
                 % get the handle to the currently processed class
                 curClass = this.ClassListFlattened(iClass);
                 
+                % do the built-in classes need to be skipped?
+                if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                    continue;
+                end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                
                 umlStr = sprintf('%s\n\n%s',...
                     umlStr,...
                     curClass.getPlantUML()...
                     );
                 
             end % for iClass = 1:length(this.ClassListFlattened)
+            
+            % get inheritance relation ships %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if ~this.Configuration.HideInheritance
+                for iClass = 1:length(this.ClassListFlattened)
+                    if iClass == 1
+                        umlStr = sprintf('%s\n', umlStr);
+                    end % if iClass == 1
+                    
+                    % get the handle to the currently processed class
+                    curClass = this.ClassListFlattened(iClass);
+                    
+                    % do the built-in classes need to be skipped?
+                    if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                        continue;
+                    end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                    
+                    umlStr = sprintf('%s\n%s',...
+                        umlStr,...
+                        curClass.getPlantUmlInheritanceRelation()...
+                        );
+                    
+                end % for iClass = 1:length(this.ClassListFlattened)
+            end % if ~this.Configuration.HideInheritance
             
 %             % add some plantUML settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %             

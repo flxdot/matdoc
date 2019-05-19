@@ -67,7 +67,6 @@ class matdoc.meta.Class {
    .. Protected ..
    {method} # umlStr = getPlantUmlEnumerationValues(this, ident_) < matdoc.uml.Class
    {method} # umlStr = getPlantUmlEvents(this, ident_) < matdoc.uml.Class
-   {method} # umlStr = getPlantUmlInheritanceRelation(this, ident_) < matdoc.uml.Class
    {method} # umlStr = getPlantUmlMethods(this, ident_) < matdoc.uml.Class
    {method} # umlStr = getPlantUmlProperties(this, ident_) < matdoc.uml.Class
    {method} # getSortedMethodList(this)
@@ -79,6 +78,7 @@ class matdoc.meta.Class {
    .. Public ..
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
    {method} + umlStr = getPlantUML(this, ident_) < matdoc.uml.Class
+   {method} + umlStr = getPlantUmlInheritanceRelation(this, ident_) < matdoc.uml.Class
    {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
    {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
    .. Static Hidden ..
@@ -199,11 +199,11 @@ class matdoc.uml.Class {
    .. Protected ..
    {method} # umlStr = getPlantUmlEnumerationValues(this, ident_)
    {method} # umlStr = getPlantUmlEvents(this, ident_)
-   {method} # umlStr = getPlantUmlInheritanceRelation(this, ident_)
    {method} # umlStr = getPlantUmlMethods(this, ident_)
    {method} # umlStr = getPlantUmlProperties(this, ident_)
    .. Public ..
    {method} + umlStr = getPlantUML(this, ident_)
+   {method} + umlStr = getPlantUmlInheritanceRelation(this, ident_)
    .. Static Hidden ..
    {method} {static} + E = empty(varargin)
    -- Events --

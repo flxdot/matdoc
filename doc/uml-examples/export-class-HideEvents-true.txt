@@ -3,7 +3,6 @@
 abstract class handle {
 }
 
-
 enum matdoc.enums.AccessLevel {
    -- Enumeration Values --
    Public
@@ -24,8 +23,6 @@ enum matdoc.enums.AccessLevel {
    .. Static Hidden ..
    {method} {static} + E = empty(varargin)
 }
-
-matdoc.enums.AccessLevel --|> uint32
 
 class matdoc.meta.Class {
    -- Properties --
@@ -68,7 +65,6 @@ class matdoc.meta.Class {
    .. Protected ..
    {method} # umlStr = getPlantUmlEnumerationValues(this, ident_) < matdoc.uml.Class
    {method} # umlStr = getPlantUmlEvents(this, ident_) < matdoc.uml.Class
-   {method} # umlStr = getPlantUmlInheritanceRelation(this, ident_) < matdoc.uml.Class
    {method} # umlStr = getPlantUmlMethods(this, ident_) < matdoc.uml.Class
    {method} # umlStr = getPlantUmlProperties(this, ident_) < matdoc.uml.Class
    {method} # getSortedMethodList(this)
@@ -80,14 +76,12 @@ class matdoc.meta.Class {
    .. Public ..
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
    {method} + umlStr = getPlantUML(this, ident_) < matdoc.uml.Class
+   {method} + umlStr = getPlantUmlInheritanceRelation(this, ident_) < matdoc.uml.Class
    {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
    {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
    .. Static Hidden ..
    {method} {static} + E = empty(varargin)
 }
-
-matdoc.meta.Class ..|> matdoc.meta.super.Container
-matdoc.meta.Class --|> matdoc.uml.Class
 
 abstract class matdoc.meta.super.Base {
    -- Properties --
@@ -110,8 +104,6 @@ abstract class matdoc.meta.super.Base {
    .. Static Hidden ..
    {method} {static} + E = empty(varargin)
 }
-
-matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
 
 abstract class matdoc.meta.super.Container {
    -- Properties --
@@ -139,10 +131,6 @@ abstract class matdoc.meta.super.Container {
    {method} {static} + E = empty(varargin)
 }
 
-matdoc.meta.super.Container ..|> matdoc.meta.super.Base
-matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
-matdoc.meta.super.Container ..|> matdoc.super.WithAlias
-
 abstract class matdoc.super.WithAlias {
    -- Properties --
    .. Abstract  SetAccess = Protected ..
@@ -158,8 +146,6 @@ abstract class matdoc.super.WithAlias {
    {method} {static} + E = empty(varargin)
 }
 
-matdoc.super.WithAlias ..|> handle
-
 class matdoc.super.WithMetaObjProps {
    -- Properties --
    .. Protected ..
@@ -171,8 +157,6 @@ class matdoc.super.WithMetaObjProps {
    .. Static Hidden ..
    {method} {static} + E = empty(varargin)
 }
-
-matdoc.super.WithMetaObjProps ..|> handle
 
 abstract class matdoc.super.WithNameRaw {
    -- Properties --
@@ -188,8 +172,6 @@ abstract class matdoc.super.WithNameRaw {
    {method} {static} + E = empty(varargin)
 }
 
-matdoc.super.WithNameRaw ..|> handle
-
 class matdoc.uml.Class {
    -- Properties --
    .. Constant ..
@@ -203,16 +185,14 @@ class matdoc.uml.Class {
    .. Protected ..
    {method} # umlStr = getPlantUmlEnumerationValues(this, ident_)
    {method} # umlStr = getPlantUmlEvents(this, ident_)
-   {method} # umlStr = getPlantUmlInheritanceRelation(this, ident_)
    {method} # umlStr = getPlantUmlMethods(this, ident_)
    {method} # umlStr = getPlantUmlProperties(this, ident_)
    .. Public ..
    {method} + umlStr = getPlantUML(this, ident_)
+   {method} + umlStr = getPlantUmlInheritanceRelation(this, ident_)
    .. Static Hidden ..
    {method} {static} + E = empty(varargin)
 }
-
-matdoc.uml.Class ..|> matdoc.uml.super.Base
 
 abstract class matdoc.uml.super.Base {
    -- Properties --
@@ -230,9 +210,6 @@ abstract class matdoc.uml.super.Base {
    {method} {static} + E = empty(varargin)
 }
 
-matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
-matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
-
 abstract class matdoc.uml.super.WithPlantUML {
    -- Methods --
    {method} + obj = WithPlantUML()
@@ -242,12 +219,26 @@ abstract class matdoc.uml.super.WithPlantUML {
    {method} {static} + E = empty(varargin)
 }
 
-matdoc.uml.super.WithPlantUML ..|> handle
-
 class uint32 {
    -- Methods --
    {method} + varargout = uint32(varargin)
 }
+
+
+matdoc.enums.AccessLevel --|> uint32
+matdoc.meta.Class ..|> matdoc.meta.super.Container
+matdoc.meta.Class --|> matdoc.uml.Class
+matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.meta.super.Container ..|> matdoc.meta.super.Base
+matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
+matdoc.meta.super.Container ..|> matdoc.super.WithAlias
+matdoc.super.WithAlias ..|> handle
+matdoc.super.WithMetaObjProps ..|> handle
+matdoc.super.WithNameRaw ..|> handle
+matdoc.uml.Class ..|> matdoc.uml.super.Base
+matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
+matdoc.uml.super.WithPlantUML ..|> handle
 
 
 @enduml

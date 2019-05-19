@@ -74,14 +74,60 @@ classdef Class < matdoc.uml.super.Base
             umlStr = sprintf('%s\n%s}', umlStr, identStr);
             
             % add UML String for each superclass inheritance %%%%%%%%%%%%%%
-            if ~this.Configuration.HideInheritance
-                umlStr = sprintf('%s%s',...
-                    umlStr,...
-                    getPlantUmlInheritanceRelation(this, ident_)...
-                    );
-            end % if ~this.Configuration.HideInheritance
+            %if ~this.Configuration.HideInheritance
+            %    umlStr = sprintf('%s%s',...
+            %        umlStr,...
+            %        getPlantUmlInheritanceRelation(this, ident_)...
+            %        );
+            %end % if ~this.Configuration.HideInheritance
             
         end % function umlStr = getPlantUML(this)
+        
+        %% - umlStr = getPlantUmlInheritanceRelation(ident_)
+        function umlStr = getPlantUmlInheritanceRelation(this, ident_)
+            % function umlStr = getPlantUmlInheritanceRelation(this, ident_)
+            %
+            % Returns the uml string defining the class inheritances
+            
+            if this.Configuration.HideInheritance
+                  umlStr = '';
+                  return;
+            end % if this.Configuration.HideInheritance
+            
+            % process input %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if nargin < 2 || isempty(ident_)
+                ident_ = 0;
+            end % if nargin < 2 || isempty(ident_)
+            if ~isnumeric(ident_)
+                error('matdoc:uml:Package:getPlantUML:TypeError',...
+                    'Input ident_ has to be numeric.');
+            end % if ~isnumeric(ident_)
+            
+            % make sure its a scalar integer value
+            ident_ = abs(round(ident_(1)));
+            
+            % build the identStr
+            identStr = char(32 * ones(1, ident_));
+            
+            umlStr = '';
+            relations = this.InheritationRelations;
+            relationCnt = length(relations);
+            if relationCnt > 0
+                % add first relation without a new line
+                umlStr = sprintf('%s%s',...
+                    identStr,...
+                    relations{1}...
+                    );
+                for idx = 2:relationCnt
+                    umlStr = sprintf('%s\n%s%s',...
+                        umlStr,...
+                        identStr,...
+                        relations{idx}...
+                        );
+                end % for idx = 1:length(this.InheritationRelations)
+            end % if relationCnt > 0
+            
+        end % function umlStr = getPlantUmlInheritanceRelation(this, ident_)
         
     end % methods
     
@@ -268,28 +314,6 @@ classdef Class < matdoc.uml.super.Base
             end % for iObj = 1:length(this.EnumerationMemberList)
             
         end % function umlStr = getPlantUmlEnumerationValues(this, ident_)
-        
-        %% - umlStr = getPlantUmlInheritanceRelation(ident_)
-        function umlStr = getPlantUmlInheritanceRelation(this, ident_)
-            % function umlStr = getPlantUmlInheritanceRelation(this, ident_)
-            %
-            % Returns the uml string defining the class inheritances
-            
-            % build the identStr
-            identStr = char(32 * ones(1, ident_));
-            
-            umlStr = sprintf('\n%s', identStr);
-            
-            relations = this.InheritationRelations;
-            for idx = 1:length(relations)
-                umlStr = sprintf('%s\n%s%s',...
-                    umlStr,...
-                    identStr,...
-                    relations{idx}...
-                    );
-            end % for idx = 1:length(this.InheritationRelations)
-            
-        end % function umlStr = getPlantUmlInheritanceRelation(this, ident_)
         
     end %  methods (Access = protected)
     

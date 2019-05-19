@@ -5,7 +5,6 @@ abstract class handle {
    ObjectBeingDestroyed
 }
 
-
 class matdoc.Configuration {
    -- Properties --
    .. Protected ..
@@ -32,8 +31,6 @@ class matdoc.Configuration {
    -- Events --
    ObjectBeingDestroyed < handle
 }
-
-matdoc.Configuration ..|> handle
 
 class matdoc.Documentation {
    -- Properties --
@@ -68,8 +65,6 @@ class matdoc.Documentation {
    ObjectBeingDestroyed < handle
 }
 
-matdoc.Documentation ..|> matdoc.uml.super.WithPlantUML
-
 enum matdoc.enums.AccessLevel {
    -- Enumeration Values --
    Public
@@ -90,8 +85,6 @@ enum matdoc.enums.AccessLevel {
    .. Static Hidden ..
    {method} {static} + E = empty(varargin)
 }
-
-matdoc.enums.AccessLevel --|> uint32
 
 abstract class matdoc.meta.super.Base {
    -- Properties --
@@ -116,8 +109,6 @@ abstract class matdoc.meta.super.Base {
    -- Events --
    ObjectBeingDestroyed < handle
 }
-
-matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
 
 abstract class matdoc.meta.super.Container {
    -- Properties --
@@ -147,10 +138,6 @@ abstract class matdoc.meta.super.Container {
    ObjectBeingDestroyed < handle
 }
 
-matdoc.meta.super.Container ..|> matdoc.meta.super.Base
-matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
-matdoc.meta.super.Container ..|> matdoc.super.WithAlias
-
 abstract class matdoc.super.WithAlias {
    -- Properties --
    .. Abstract  SetAccess = Protected ..
@@ -168,8 +155,6 @@ abstract class matdoc.super.WithAlias {
    ObjectBeingDestroyed < handle
 }
 
-matdoc.super.WithAlias ..|> handle
-
 class matdoc.super.WithMetaObjProps {
    -- Properties --
    .. Protected ..
@@ -183,8 +168,6 @@ class matdoc.super.WithMetaObjProps {
    -- Events --
    ObjectBeingDestroyed < handle
 }
-
-matdoc.super.WithMetaObjProps ..|> handle
 
 abstract class matdoc.super.WithNameRaw {
    -- Properties --
@@ -202,8 +185,6 @@ abstract class matdoc.super.WithNameRaw {
    ObjectBeingDestroyed < handle
 }
 
-matdoc.super.WithNameRaw ..|> handle
-
 abstract class matdoc.uml.super.WithPlantUML {
    -- Methods --
    {method} + obj = WithPlantUML()
@@ -215,12 +196,23 @@ abstract class matdoc.uml.super.WithPlantUML {
    ObjectBeingDestroyed < handle
 }
 
-matdoc.uml.super.WithPlantUML ..|> handle
-
 class uint32 {
    -- Methods --
    {method} + varargout = uint32(varargin)
 }
+
+
+matdoc.Configuration ..|> handle
+matdoc.Documentation ..|> matdoc.uml.super.WithPlantUML
+matdoc.enums.AccessLevel --|> uint32
+matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.meta.super.Container ..|> matdoc.meta.super.Base
+matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
+matdoc.meta.super.Container ..|> matdoc.super.WithAlias
+matdoc.super.WithAlias ..|> handle
+matdoc.super.WithMetaObjProps ..|> handle
+matdoc.super.WithNameRaw ..|> handle
+matdoc.uml.super.WithPlantUML ..|> handle
 
 
 @enduml
