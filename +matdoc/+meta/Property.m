@@ -1,5 +1,6 @@
-classdef Property < matdoc.Meta.Super.Meta & ...
-        matdoc.Super.DisplayUMLCategory
+classdef Property < matdoc.meta.super.Base & ...
+        matdoc.super.AccessCategory & ...
+        matdoc.uml.Property
     
     %% PROPERTIES: PUBLIC
     properties
@@ -90,7 +91,7 @@ classdef Property < matdoc.Meta.Super.Meta & ...
             %
             %
             
-            this = this@matdoc.Meta.Super.Meta(metaObj, parent);
+            this = this@matdoc.meta.super.Base(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -269,69 +270,25 @@ classdef Property < matdoc.Meta.Super.Meta & ...
             
             % GetMethod %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.GetMethod)
-                this.GetMethod = matdoc.Meta.Method(this.metaObj.GetMethod, this);
+                this.GetMethod = matdoc.meta.Method(this.metaObj.GetMethod, this);
             end % if ~isempty(this.metaObj.PackageList)
             
             % SetMethod %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.SetMethod)
-                this.SetMethod = matdoc.Meta.Method(this.metaObj.SetMethod, this);
+                this.SetMethod = matdoc.meta.Method(this.metaObj.SetMethod, this);
             end % if ~isempty(this.metaObj.PackageList)
             
             % The get access level
-            this.GetAccess  = matdoc.Enums.AccessLevel.from(this.metaObj.GetAccess);
+            this.GetAccess  = matdoc.enums.AccessLevel.from(this.metaObj.GetAccess);
             
             % The set access level
-            this.SetAccess  = matdoc.Enums.AccessLevel.from(this.metaObj.SetAccess);
+            this.SetAccess  = matdoc.enums.AccessLevel.from(this.metaObj.SetAccess);
             
         end % function walkMeta(this)
         
-        %% - umlStr = getPlantUML()
-        function umlStr = getPlantUML(this)
-            % function umlStr = getPlantUML(this)
-            %
-            % Returns the plantUML representation of this meta object.
-            % Note: This method will be called by the getter of the
-            % plantUML property of the matdoc.Meta.Super.Meta.
-            
-            % prefix
-            prefix = '   {field} ';
-            if this.Constant
-                prefix = sprintf('%s{static} ', prefix(1:end-1));
-            end
-            if this.Abstract
-                prefix = sprintf('%s{abstract} ', prefix(1:end-1));
-            end
-            
-            % acces level
-            switch this.GetAccess
-                case 'private'
-                    AccessLevel = '- ';
-                case 'protected'
-                    AccessLevel = '# ';
-                otherwise
-                    AccessLevel = '+ ';
-            end % switch this.GetAccess
-            
-            % name
-            umlStr = sprintf('%s%s%s', prefix, AccessLevel, this.Name);
-            
-            % print inheritance hint?
-            if this.Configuration.PropertyInheritanceHint && ...
-                    ~strcmp(this.metaObj.DefiningClass.Name, this.Parent.Name)
-                umlStr = sprintf('%s < %s', umlStr, this.metaObj.DefiningClass.Name);
-            end % if this.Configuration.PropertyInheritanceHint
-            
-            % print description?
-            if this.Configuration.PropertyDescription
-                spacer = char(32 * ones(1, length(prefix) + length(AccessLevel)));
-                umlStr = sprintf('%s\n%s%s\n%s', umlStr, spacer, this.Description, spacer);
-            end % if this.Configuration.PropertyDescription
-            
-        end % function umlStr = getPlantUML(this)
-        
-        %% - umlCat = getCategoryUML(this)
-        function umlCat = getCategoryUML(this)
-            % function umlCat = getCategoryUML(this)
+        %% - umlCat = getAccessCategory(this)
+        function umlCat = getAccessCategory(this)
+            % function umlCat = getAccessCategory(this)
             %
             % Returns the string of the category within a class or package
             % based on its access level and other (abstract, hidden, etc.)
@@ -352,16 +309,16 @@ classdef Property < matdoc.Meta.Super.Meta & ...
                 umlCat = '';
                 
                 % GetAccess
-                if this.GetAccess > matdoc.Enums.AccessLevel.Public
+                if this.GetAccess > matdoc.enums.AccessLevel.Public
                     umlCat = sprintf('%s GetAccess = %s,',...
                         umlCat, char(this.GetAccess));
-                end % if this.GetAccess > matdoc.Enums.AccessLevel.Public
+                end % if this.GetAccess > matdoc.enums.AccessLevel.Public
                 
                 % SetAccess
-                if this.SetAccess > matdoc.Enums.AccessLevel.Public
+                if this.SetAccess > matdoc.enums.AccessLevel.Public
                     umlCat = sprintf('%s SetAccess = %s,',...
                         umlCat, char(this.SetAccess));
-                end % if this.SetAccess > matdoc.Enums.AccessLevel.Public
+                end % if this.SetAccess > matdoc.enums.AccessLevel.Public
                 
             end % if this.GetAccess == this.SetAccess
             
@@ -391,7 +348,7 @@ classdef Property < matdoc.Meta.Super.Meta & ...
                 % public
                 if sameAccessLevel
                     umlCat = strrep(umlCat, ...
-                        char(matdoc.Enums.AccessLevel.Public),...
+                        char(matdoc.enums.AccessLevel.Public),...
                         ''...
                         );
                 end % if sameAccessLevel
@@ -404,7 +361,7 @@ classdef Property < matdoc.Meta.Super.Meta & ...
                 % public
                 if sameAccessLevel
                     umlCat = strrep(umlCat, ...
-                        char(matdoc.Enums.AccessLevel.Public),...
+                        char(matdoc.enums.AccessLevel.Public),...
                         ''...
                         );
                 end % if sameAccessLevel
@@ -417,7 +374,7 @@ classdef Property < matdoc.Meta.Super.Meta & ...
                 % public
                 if sameAccessLevel
                     umlCat = strrep(umlCat, ...
-                        char(matdoc.Enums.AccessLevel.Public),...
+                        char(matdoc.enums.AccessLevel.Public),...
                         ''...
                         );
                 end % if sameAccessLevel
@@ -430,7 +387,7 @@ classdef Property < matdoc.Meta.Super.Meta & ...
                 % public
                 if sameAccessLevel
                     umlCat = strrep(umlCat, ...
-                        char(matdoc.Enums.AccessLevel.Public),...
+                        char(matdoc.enums.AccessLevel.Public),...
                         ''...
                         );
                 end % if sameAccessLevel
@@ -444,7 +401,7 @@ classdef Property < matdoc.Meta.Super.Meta & ...
                 umlCat = strtrim(umlCat(1:end-1));
             end
             
-        end % function umlCat = getCategoryUML(this)
+        end % function umlCat = getAccessCategory(this)
         
     end %  methods (Access = protected)
     

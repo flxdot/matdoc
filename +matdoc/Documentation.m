@@ -1,4 +1,4 @@
-classdef Documentation < matdoc.Super.DisplayUML
+classdef Documentation < matdoc.uml.super.WithPlantUML
     
     %% PROPERTIES: PUBLIC
     properties
@@ -17,11 +17,11 @@ classdef Documentation < matdoc.Super.DisplayUML
         % List of all classes in the UmlObjects
         % This list also includes the super classes for each class
         % All classes of the added packages will also be part of this list
-        ClassListFlattend = matdoc.Meta.Class.empty(1, 0);
+        ClassListFlattend = matdoc.meta.Class.empty(1, 0);
         
         % List of all packages in the UmlObjects
         % This list also includes the sub packages of package
-        PackageListFlattend = matdoc.Meta.Package.empty(1, 0);
+        PackageListFlattend = matdoc.meta.Package.empty(1, 0);
         
     end % properties (Dependent)
     
@@ -30,11 +30,11 @@ classdef Documentation < matdoc.Super.DisplayUML
         
         % List of all classes in the UmlObjects
         % This list only contains the classes directly added to UmlObjects
-        ClassList = matdoc.Meta.Class.empty(1, 0);
+        ClassList = matdoc.meta.Class.empty(1, 0);
         
         % List of all packages in the UmlObjects
         % This list only contains the packages directly added to UmlObjects
-        PackageList = matdoc.Meta.Package.empty(1, 0);
+        PackageList = matdoc.meta.Package.empty(1, 0);
         
     end % properties (SetAccess = protected)
     
@@ -256,7 +256,7 @@ classdef Documentation < matdoc.Super.DisplayUML
                 case 'meta.class'
                     % wrapt the matlab meta class with my own to allow uml
                     % export
-                    umlMetaObj = matdoc.Meta.Class(metaObj, this);
+                    umlMetaObj = matdoc.meta.Class(metaObj, this);
                     
                     % add the class to the list of classes
                     if isempty(this.ClassList)
@@ -269,7 +269,7 @@ classdef Documentation < matdoc.Super.DisplayUML
                     
                     % wrap the meta.package with my own class to allow uml
                     % export
-                    umlMetaObj = matdoc.Meta.Package(metaObj, this);
+                    umlMetaObj = matdoc.meta.Package(metaObj, this);
                     
                     % add the class to the list of classes
                     if isempty(this.PackageList)
@@ -290,7 +290,7 @@ classdef Documentation < matdoc.Super.DisplayUML
             %
             % Returns the plantUML representation of this meta object.
             % Note: This method will be called by the getter of the
-            % plantUML property of the matdoc.Meta.Super.Meta.
+            % plantUML property of the matdoc.meta.super.Base.
             
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = '@startuml';

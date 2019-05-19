@@ -6,39 +6,42 @@ abstract class handle {
 }
 
 
-enum matdoc.Enums.AccessLevel {
+enum matdoc.enums.AccessLevel {
    -- Enumeration Values --
    Public
    Protected
    Private
 }
 
-matdoc.Enums.AccessLevel --|> uint32
+matdoc.enums.AccessLevel --|> uint32
 
-class matdoc.Meta.Class {
+class matdoc.meta.Class {
    -- Properties --
    .. Protected ..
-   {field} # Configuration < matdoc.Meta.Super.Meta
-   {field} # Parent < matdoc.Meta.Super.Meta
-   {field} # UmlRoot < matdoc.Meta.Super.Meta
+   {field} # Configuration < matdoc.super.WithMetaObjProps
+   {field} # Parent < matdoc.super.WithMetaObjProps
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
    .. SetAccess = Protected ..
    {field} + Abstract
    {field} + ConstructOnLoad
+   {field} + Constructor
    {field} + ContainingPackage
    {field} + Description
    {field} + DetailedDescription
    {field} + EnumerationMemberList
    {field} + EventList
    {field} + HandleCompatible
+   {field} + hasAbstractMembers
    {field} + Hidden
    {field} + InferiorClasses
    {field} + InheritationRelations
    {field} + isBuiltIn
-   {field} + metaObj < matdoc.Meta.Super.Meta
+   {field} + metaObj < matdoc.meta.super.Base
    {field} + MethodList
    {field} + MethodListFlattend
    {field} + Name
-   {field} + plantUML < matdoc.Super.DisplayUML
+   {field} + NameRaw
+   {field} + plantUML < matdoc.uml.super.WithPlantUML
    {field} + PropertyList
    {field} + PropertyListFlattend
    {field} + Sealed
@@ -47,37 +50,78 @@ class matdoc.Meta.Class {
    {field} + SuperclassList
    {field} + SuperclassListFlattend
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
+matdoc.meta.Class ..|> matdoc.meta.super.Base
+matdoc.meta.Class --|> matdoc.uml.Class
 
-abstract class matdoc.Meta.Super.Meta {
+abstract class matdoc.meta.super.Base {
    -- Properties --
    .. Abstract  SetAccess = Protected ..
    {field}{abstract} + Name
    .. Protected ..
+   {field} # Configuration < matdoc.super.WithMetaObjProps
+   {field} # Parent < matdoc.super.WithMetaObjProps
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
+   .. SetAccess = Protected ..
+   {field} + metaObj
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+
+class matdoc.super.WithMetaObjProps {
+   -- Properties --
+   .. Protected ..
    {field} # Configuration
    {field} # Parent
    {field} # UmlRoot
-   .. SetAccess = Protected ..
-   {field} + metaObj
-   {field} + plantUML < matdoc.Super.DisplayUML
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
+matdoc.super.WithMetaObjProps --|> handle
 
-abstract class matdoc.Super.DisplayUML {
+class matdoc.uml.Class {
+   -- Properties --
+   .. Protected ..
+   {field} # Configuration < matdoc.super.WithMetaObjProps
+   {field} # Parent < matdoc.super.WithMetaObjProps
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
+   .. SetAccess = Protected ..
+   {field} + plantUML < matdoc.uml.super.WithPlantUML
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.uml.Class ..|> matdoc.uml.super.Base
+
+abstract class matdoc.uml.super.Base {
+   -- Properties --
+   .. Protected ..
+   {field} # Configuration < matdoc.super.WithMetaObjProps
+   {field} # Parent < matdoc.super.WithMetaObjProps
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
+   .. SetAccess = Protected ..
+   {field} + plantUML < matdoc.uml.super.WithPlantUML
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
+
+abstract class matdoc.uml.super.WithPlantUML {
    -- Properties --
    .. SetAccess = Protected ..
    {field} + plantUML
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Super.DisplayUML --|> handle
+matdoc.uml.super.WithPlantUML --|> handle
 
 class uint32 {
 }

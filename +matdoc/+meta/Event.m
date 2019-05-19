@@ -1,5 +1,6 @@
-classdef Event < matdoc.Meta.Super.Meta & ...
-        matdoc.Super.DisplayUMLCategory
+classdef Event < matdoc.meta.super.Base & ...
+        matdoc.super.AccessCategory & ...
+        matdoc.uml.Event
     
     %% PROPERTIES: PUBLIC
     properties
@@ -51,7 +52,7 @@ classdef Event < matdoc.Meta.Super.Meta & ...
             %
             %
             
-            this = this@matdoc.Meta.Super.Meta(metaObj, parent);
+            this = this@matdoc.meta.super.Base(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -146,28 +147,16 @@ classdef Event < matdoc.Meta.Super.Meta & ...
             
         end % function walkMeta(this)
         
-        %% - umlStr = getPlantUML()
-        function umlStr = getPlantUML(this)
-            % function umlStr = getPlantUML(this)
-            %
-            % Returns the plantUML representation of this meta object.
-            % Note: This method will be called by the getter of the
-            % plantUML property of the matdoc.Meta.Super.Meta.
-            
-            umlStr = sprintf('   %s', this.Name);
-            
-        end % function umlStr = getPlantUML(this)
-        
-        %% - umlCat = getCategoryUML(this)
-        function umlCat = getCategoryUML(this)
-            % function umlCat = getCategoryUML(this)
+        %% - umlCat = getAccessCategory(this)
+        function umlCat = getAccessCategory(this)
+            % function umlCat = getAccessCategory(this)
             %
             % Returns the string of the category within a class or package
             % based on its access level and other (abstract, hidden, etc.)
             
             umlCat = '';
             
-        end % function umlCat = getCategoryUML(this)
+        end % function umlCat = getAccessCategory(this)
         
     end %  methods (Access = protected)
     

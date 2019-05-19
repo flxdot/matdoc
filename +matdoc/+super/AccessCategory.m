@@ -1,4 +1,4 @@
-classdef DisplayUMLCategory < handle
+classdef AccessCategory < handle
     
     %% PROPERTIES: PUBLIC
     properties
@@ -28,8 +28,8 @@ classdef DisplayUMLCategory < handle
     methods
         
         %% - Constructor
-        function this = DisplayUMLCategory()
-            % function this = DisplayUMLCategory()
+        function this = AccessCategory()
+            % function this = AccessCategory()
             %
             %
             
@@ -44,7 +44,7 @@ classdef DisplayUMLCategory < handle
             % The getter method will return the private member of the property
             % set.
             
-            val = getCategoryUML(this);
+            val = getAccessCategory(this);
             
         end % function val = get.categoryUML(this)
         
@@ -53,8 +53,8 @@ classdef DisplayUMLCategory < handle
     %% METHODS: ABSTRACT, PROTECTED
     methods (Abstract, Access = protected)
         
-        %% - umlCat = getCategoryUML(this
-        umlCat = getCategoryUML(this);
+        %% - umlCat = getAccessCategory(this
+        umlCat = getAccessCategory(this);
         
     end %  methods (Access = protected)
     
@@ -63,4 +63,4 @@ classdef DisplayUMLCategory < handle
         
     end % methods (Static)
     
-end % classdef DisplayUMLCategory < handle
+end % classdef AccessCategory < handle

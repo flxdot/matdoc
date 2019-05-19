@@ -1,10 +1,5 @@
-classdef DisplayUML < handle
+classdef WithPlantUML < handle
    
-    %% PROPERTIES: PUBLIC
-    properties
-        
-    end % properties
-    
     %% PROPERTIES: SETACCESS = PROTECTED
     properties (SetAccess = protected)
         
@@ -13,28 +8,8 @@ classdef DisplayUML < handle
         
     end % properties (SetAccess = protected)
     
-    %% PROPERTIES: ACCESS = PROTECTED
-    properties (Access = protected)
-         
-    end % properties (Access = protected)
-    
-    %% PROPERTIES: CONSTANT
-    properties (Constant)
-         
-    end % properties (Constant)
-    
     %% METHODS: PUBLIC
     methods
-        
-        %% - Constructor
-        function this = DisplayUML()
-            % function this = DisplayUML()
-            %
-            %
-            
-            
-            
-        end % function this = ColumnDataDisplay()
         
         %% - val = get.plantUML()
         function val = get.plantUML(this)
@@ -56,9 +31,4 @@ classdef DisplayUML < handle
         
     end %  methods (Access = protected)
     
-    %% METHODS: STATIC
-    methods (Static)
-        
-    end % methods (Static)
-    
-end % classdef DisplayUML < handle
+end % classdef WithPlantUML < handle

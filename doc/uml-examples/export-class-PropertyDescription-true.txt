@@ -6,12 +6,13 @@ abstract class handle {
 }
 
 
-enum matdoc.Enums.AccessLevel {
+enum matdoc.enums.AccessLevel {
    -- Enumeration Values --
    Public
    Protected
    Private
    -- Methods --
+   {method} + e = AccessLevel(varargin)
    .. Hidden ..
    {method} + varargout = colon(varargin)
    .. Public ..
@@ -27,25 +28,25 @@ enum matdoc.Enums.AccessLevel {
    {method}{static} + E = empty(varargin)
 }
 
-matdoc.Enums.AccessLevel --|> uint32
+matdoc.enums.AccessLevel --|> uint32
 
-class matdoc.Meta.Class {
+class matdoc.meta.Class {
    -- Properties --
    .. Protected ..
-   {field} # Configuration < matdoc.Meta.Super.Meta
+   {field} # Configuration < matdoc.super.WithMetaObjProps
              The handle to the export configuration
 
-Help for matdoc.Meta.Class/Configuration is inherited from superclass MATDOC.META.SUPER.META
+Help for matdoc.meta.Class/Configuration is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
              
-   {field} # Parent < matdoc.Meta.Super.Meta
+   {field} # Parent < matdoc.super.WithMetaObjProps
              the parent object
 
-Help for matdoc.Meta.Class/Parent is inherited from superclass MATDOC.META.SUPER.META
+Help for matdoc.meta.Class/Parent is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
              
-   {field} # UmlRoot < matdoc.Meta.Super.Meta
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
              Handle to the parent matdoc.Documentation class
 
-Help for matdoc.Meta.Class/UmlRoot is inherited from superclass MATDOC.META.SUPER.META
+Help for matdoc.meta.Class/UmlRoot is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
              
    .. SetAccess = Protected ..
    {field} + Abstract
@@ -53,6 +54,10 @@ Help for matdoc.Meta.Class/UmlRoot is inherited from superclass MATDOC.META.SUPE
              
    {field} + ConstructOnLoad
              Construct OnLoad
+             
+   {field} + Constructor
+             Handle to the matdoc.meta.Method instance representing the
+  constructor method
              
    {field} + ContainingPackage
              ContainingPackage
@@ -72,6 +77,9 @@ Help for matdoc.Meta.Class/UmlRoot is inherited from superclass MATDOC.META.SUPE
    {field} + HandleCompatible
              Is the class a handle class?
              
+   {field} + hasAbstractMembers
+             Flag if any of the defined properties or methods are abstract
+             
    {field} + Hidden
              Is the class hidden?
              
@@ -84,11 +92,11 @@ Help for matdoc.Meta.Class/UmlRoot is inherited from superclass MATDOC.META.SUPE
    {field} + isBuiltIn
              If true the wrapped class is a built in matlab class
              
-   {field} + metaObj < matdoc.Meta.Super.Meta
+   {field} + metaObj < matdoc.meta.super.Base
              the actual wrapped meta object (meta.package, meta.class,
   meta.method, meta.property, etc.)
 
-Help for matdoc.Meta.Class/metaObj is inherited from superclass MATDOC.META.SUPER.META
+Help for matdoc.meta.Class/metaObj is inherited from superclass MATDOC.META.SUPER.BASE
              
    {field} + MethodList
              The list of methods
@@ -100,10 +108,14 @@ Help for matdoc.Meta.Class/metaObj is inherited from superclass MATDOC.META.SUPE
    {field} + Name
              The name of Class
              
-   {field} + plantUML < matdoc.Super.DisplayUML
+   {field} + NameRaw
+             The raw name of the class without the leading package or
+  namepace
+             
+   {field} + plantUML < matdoc.uml.super.WithPlantUML
              The plantUML representation of the object
 
-Help for matdoc.Meta.Class/plantUML is inherited from superclass MATDOC.SUPER.DISPLAYUML
+Help for matdoc.meta.Class/plantUML is inherited from superclass MATDOC.UML.SUPER.WITHPLANTUML
              
    {field} + PropertyList
              The list of properties
@@ -134,36 +146,78 @@ Help for matdoc.Meta.Class/plantUML is inherited from superclass MATDOC.SUPER.DI
              A complete list of super classes incl. nested inheritated classes
              
    -- Methods --
+   {method} + this = Class(metaObj, parent)
    .. Protected ..
-   {method} # umlStr = getPlantUML(this)
-   {method} # umlStr = getPlantUmlEnumerationValues(this)
-   {method} # umlStr = getPlantUmlEvents(this)
-   {method} # umlStr = getPlantUmlInheritanceRelation(this)
-   {method} # umlStr = getPlantUmlMethods(this)
-   {method} # umlStr = getPlantUmlProperties(this)
+   {method} # umlStr = getPlantUML(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlEnumerationValues(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlEvents(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlInheritanceRelation(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlMethods(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlProperties(this) < matdoc.uml.Class
    {method} # getSortedMethodList(this)
    {method} # getSortedPropertyList(this)
    {method} # val = getSuperclassListFlattend(this)
    {method} # walkMeta(this)
    .. Public ..
    {method} + this = Class(metaObj, parent)
-   {method} + is_eq = eq(this, other) < matdoc.Meta.Super.Meta
-   {method} + is_ne = ne(this, other) < matdoc.Meta.Super.Meta
-   {method} + [B, IX] = sort(this, dim, mode) < matdoc.Meta.Super.Meta
+   {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
+   {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
+   {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
+matdoc.meta.Class ..|> matdoc.meta.super.Base
+matdoc.meta.Class --|> matdoc.uml.Class
 
-abstract class matdoc.Meta.Super.Meta {
+abstract class matdoc.meta.super.Base {
    -- Properties --
    .. Abstract  SetAccess = Protected ..
    {field}{abstract} + Name
                        The name of the meta object
                        
+   .. Protected ..
+   {field} # Configuration < matdoc.super.WithMetaObjProps
+             The handle to the export configuration
+
+Help for matdoc.meta.super.Base/Configuration is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   {field} # Parent < matdoc.super.WithMetaObjProps
+             the parent object
+
+Help for matdoc.meta.super.Base/Parent is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
+             Handle to the parent matdoc.Documentation class
+
+Help for matdoc.meta.super.Base/UmlRoot is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   .. SetAccess = Protected ..
+   {field} + metaObj
+             the actual wrapped meta object (meta.package, meta.class,
+  meta.method, meta.property, etc.)
+             
+   -- Methods --
+   {method} + this = Base(metaObj, parent)
+   .. Abstract Protected ..
+   {method}{abstract} # walkMeta(this)
+   .. Public ..
+   {method} + this = Base(metaObj, parent)
+   {method} + is_eq = eq(this, other)
+   {method} + is_ne = ne(this, other)
+   {method} + [B, IX] = sort(this, dim, mode)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+
+class matdoc.super.WithMetaObjProps {
+   -- Properties --
    .. Protected ..
    {field} # Configuration
              The handle to the export configuration
@@ -174,53 +228,123 @@ abstract class matdoc.Meta.Super.Meta {
    {field} # UmlRoot
              Handle to the parent matdoc.Documentation class
              
-   .. SetAccess = Protected ..
-   {field} + metaObj
-             the actual wrapped meta object (meta.package, meta.class,
-  meta.method, meta.property, etc.)
-             
-   {field} + plantUML < matdoc.Super.DisplayUML
-             The plantUML representation of the object
-
-Help for matdoc.Meta.Super.Meta/plantUML is inherited from superclass MATDOC.SUPER.DISPLAYUML
-             
    -- Methods --
-   .. Abstract Protected ..
-   {method}{abstract} # getPlantUML(this) < matdoc.Super.DisplayUML
-   {method}{abstract} # walkMeta(this)
+   {method} + obj = WithMetaObjProps()
    .. Public ..
-   {method} + is_eq = eq(this, other)
-   {method} + this = Meta(metaObj, parent)
-   {method} + is_ne = ne(this, other)
-   {method} + [B, IX] = sort(this, dim, mode)
+   {method} + obj = WithMetaObjProps()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
+matdoc.super.WithMetaObjProps --|> handle
 
-abstract class matdoc.Super.DisplayUML {
+class matdoc.uml.Class {
+   -- Properties --
+   .. Protected ..
+   {field} # Configuration < matdoc.super.WithMetaObjProps
+             The handle to the export configuration
+
+Help for matdoc.uml.Class/Configuration is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   {field} # Parent < matdoc.super.WithMetaObjProps
+             the parent object
+
+Help for matdoc.uml.Class/Parent is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
+             Handle to the parent matdoc.Documentation class
+
+Help for matdoc.uml.Class/UmlRoot is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   .. SetAccess = Protected ..
+   {field} + plantUML < matdoc.uml.super.WithPlantUML
+             The plantUML representation of the object
+
+Help for matdoc.uml.Class/plantUML is inherited from superclass MATDOC.UML.SUPER.WITHPLANTUML
+             
+   -- Methods --
+   {method} + obj = Class()
+   .. Protected ..
+   {method} # umlStr = getPlantUML(this)
+   {method} # umlStr = getPlantUmlEnumerationValues(this)
+   {method} # umlStr = getPlantUmlEvents(this)
+   {method} # umlStr = getPlantUmlInheritanceRelation(this)
+   {method} # umlStr = getPlantUmlMethods(this)
+   {method} # umlStr = getPlantUmlProperties(this)
+   .. Public ..
+   {method} + obj = Class()
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.uml.Class ..|> matdoc.uml.super.Base
+
+abstract class matdoc.uml.super.Base {
+   -- Properties --
+   .. Protected ..
+   {field} # Configuration < matdoc.super.WithMetaObjProps
+             The handle to the export configuration
+
+Help for matdoc.uml.super.Base/Configuration is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   {field} # Parent < matdoc.super.WithMetaObjProps
+             the parent object
+
+Help for matdoc.uml.super.Base/Parent is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
+             Handle to the parent matdoc.Documentation class
+
+Help for matdoc.uml.super.Base/UmlRoot is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+             
+   .. SetAccess = Protected ..
+   {field} + plantUML < matdoc.uml.super.WithPlantUML
+             The plantUML representation of the object
+
+Help for matdoc.uml.super.Base/plantUML is inherited from superclass MATDOC.UML.SUPER.WITHPLANTUML
+             
+   -- Methods --
+   {method} + obj = Base()
+   .. Abstract Protected ..
+   {method}{abstract} # getPlantUML(this) < matdoc.uml.super.WithPlantUML
+   .. Public ..
+   {method} + obj = Base()
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
+
+abstract class matdoc.uml.super.WithPlantUML {
    -- Properties --
    .. SetAccess = Protected ..
    {field} + plantUML
              The plantUML representation of the object
              
    -- Methods --
+   {method} + obj = WithPlantUML()
    .. Abstract Protected ..
    {method}{abstract} # getPlantUML(this)
    .. Public ..
-   {method} + this = DisplayUML()
+   {method} + obj = WithPlantUML()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Super.DisplayUML --|> handle
+matdoc.uml.super.WithPlantUML --|> handle
 
 class uint32 {
+   -- Methods --
+   {method} + varargout = uint32(varargin)
 }
 
 

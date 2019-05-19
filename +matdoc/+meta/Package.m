@@ -1,4 +1,5 @@
-classdef Package < matdoc.Meta.Super.Meta
+classdef Package < matdoc.meta.super.Base & ...
+        matdoc.uml.Package
    
     %% PROPERTIES: PUBLIC
     properties
@@ -49,7 +50,7 @@ classdef Package < matdoc.Meta.Super.Meta
             %
             %
             
-            this = this@matdoc.Meta.Super.Meta(metaObj, parent);
+            this = this@matdoc.meta.super.Base(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -89,46 +90,29 @@ classdef Package < matdoc.Meta.Super.Meta
             
             % PackageList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.PackageList)
-                this.PackageList = matdoc.Meta.Package(this.metaObj.PackageList(1), this);
+                this.PackageList = matdoc.meta.Package(this.metaObj.PackageList(1), this);
                 for iPack = 2:length(this.metaObj.PackageList)
-                    this.PackageList(iPack) = matdoc.Meta.Package(this.metaObj.PackageList(iPack), this);
+                    this.PackageList(iPack) = matdoc.meta.Package(this.metaObj.PackageList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.PackageList)
             end % if ~isempty(this.metaObj.PackageList)
             
             % ClassList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.ClassList)
-                this.ClassList = matdoc.Meta.Class(this.metaObj.ClassList(1), this);
+                this.ClassList = matdoc.meta.Class(this.metaObj.ClassList(1), this);
                 for iPack = 2:length(this.metaObj.ClassList)
-                    this.ClassList(iPack) = matdoc.Meta.Class(this.metaObj.ClassList(iPack), this);
+                    this.ClassList(iPack) = matdoc.meta.Class(this.metaObj.ClassList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.ClassList)
             end % if ~isempty(this.metaObj.ClassList)
             
             % FunctionList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.FunctionList)
-                this.FunctionList = matdoc.Meta.Method(this.metaObj.FunctionList(1), this);
+                this.FunctionList = matdoc.meta.Method(this.metaObj.FunctionList(1), this);
                 for iPack = 2:length(this.metaObj.FunctionList)
-                    this.FunctionList(iPack) = matdoc.Meta.Method(this.metaObj.FunctionList(iPack), this);
+                    this.FunctionList(iPack) = matdoc.meta.Method(this.metaObj.FunctionList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.ClassList)
             end % if ~isempty(this.metaObj.ClassList)
             
         end % function walkMeta(this)
-        
-        %% - umlStr = getPlantUML()
-        function umlStr = getPlantUML(this)
-            % function umlStr = getPlantUML(this)
-            %
-            % Returns the plantUML representation of this meta object.
-            % Note: This method will be called by the getter of the
-            % plantUML property of the matdoc.Meta.Super.Meta.
-            
-            umlStr = '';
-            
-            % get all classes contained by this package %%%%%%%%%%%%%%%%%%%
-            for iObj = 1:length(this.ClassList)
-                umlStr = sprintf('%s\n\n%s', umlStr, this.ClassList(iObj).plantUML);
-            end % for iObj = 1:length(this.ClassList)
-            
-        end % function umlStr = getPlantUML(this)
         
         %% - val = getPackageListFlattend(this)
         function val = getPackageListFlattend(this)

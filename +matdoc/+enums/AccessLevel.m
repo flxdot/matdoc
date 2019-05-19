@@ -35,7 +35,7 @@ classdef AccessLevel < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(matdoc.Enums.AccessLevel.from(this)) == double(matdoc.Enums.AccessLevel.from(other));
+                isEqual = double(matdoc.enums.AccessLevel.from(this)) == double(matdoc.enums.AccessLevel.from(other));
             catch ex
                 switch ex.identifier
                     case 'matdoc:Enums:AccessLevel:from:TypeError'
@@ -54,7 +54,7 @@ classdef AccessLevel < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(matdoc.Enums.AccessLevel.from(this)) ~= double(matdoc.Enums.AccessLevel.from(other));
+                isEqual = double(matdoc.enums.AccessLevel.from(this)) ~= double(matdoc.enums.AccessLevel.from(other));
             catch ex
                 switch ex.identifier
                     case 'matdoc:Enums:AccessLevel:from:TypeError'
@@ -77,7 +77,7 @@ classdef AccessLevel < uint32
             %
             % Call to obtain AccessLevel enumeration based on either of
             % the following data types:
-            % - matdoc.Enums.AccessLevel
+            % - matdoc.enums.AccessLevel
             % - string          see method: fromNum
             % - numerical       see method: fromStr
             %
@@ -91,16 +91,16 @@ classdef AccessLevel < uint32
             %
             
             % determine the type of the input
-            if isa(val, 'matdoc.Enums.AccessLevel')
+            if isa(val, 'matdoc.enums.AccessLevel')
                 enum = val;
             elseif isnumeric(val)
-                enum = matdoc.Enums.AccessLevel.fromNum(val);
+                enum = matdoc.enums.AccessLevel.fromNum(val);
             elseif ischar(val)
-                enum = matdoc.Enums.AccessLevel.fromStr(val);
+                enum = matdoc.enums.AccessLevel.fromStr(val);
             else
                 error('matdoc:Enums:AccessLevel:from:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.Enums.AccessLevel'))
+                    class(val), help('matdoc.enums.AccessLevel'))
             end
             
         end % function enum = from(val)
@@ -122,20 +122,20 @@ classdef AccessLevel < uint32
             if ~isnumeric(val)
                 error('matdoc:Enums:AccessLevel:fromNum:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.Enums.AccessLevel.fromNum'))
+                    class(val), help('matdoc.enums.AccessLevel.fromNum'))
             end % if ~isnumeric(val)
             
             % get the enum
             switch val
                 case 0 % Public
-                    enum  = matdoc.Enums.AccessLevel.Public;
+                    enum  = matdoc.enums.AccessLevel.Public;
                 case 1 % Protected
-                    enum  = matdoc.Enums.AccessLevel.Protected;
+                    enum  = matdoc.enums.AccessLevel.Protected;
                 case 2 % Private
-                    enum  = matdoc.Enums.AccessLevel.Private;
+                    enum  = matdoc.enums.AccessLevel.Private;
                 otherwise % find closest match
                     % fetch all names of the LogLevel
-                    avTypes = enumeration('matdoc.Enums.AccessLevel');
+                    avTypes = enumeration('matdoc.enums.AccessLevel');
                     % find the closest matching
                     avTypeValues = double(avTypes);
                     [~, idx] = min(abs(avTypeValues - val));
@@ -163,21 +163,21 @@ classdef AccessLevel < uint32
             if ~ischar(val)
                 error('matdoc:Enums:AccessLevel:fromStr:TypeError',...
                     'Can not build enum from {}. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.Enums.AccessLevel'));
+                    class(val), help('matdoc.enums.AccessLevel'));
             end % if ~isnumeric(val)
             
             % get the enum
             switch lower(val)
                 case {'public', 'none'} % Public
-                    enum  = matdoc.Enums.AccessLevel.Public;
+                    enum  = matdoc.enums.AccessLevel.Public;
                 case 'protected' % Protected
-                    enum  = matdoc.Enums.AccessLevel.Protected;
+                    enum  = matdoc.enums.AccessLevel.Protected;
                 case 'private' % Private
-                    enum  = matdoc.Enums.AccessLevel.Private;
+                    enum  = matdoc.enums.AccessLevel.Private;
                 otherwise % find closest match
                     error('matdoc:Enums:AccessLevel:fromStr:ValueError',...
                     'Can not find exact enum value for %s. Please have a look at the doc:\n\n%s',...
-                    val, help('matdoc.Enums.AccessLevel.fromStr'));
+                    val, help('matdoc.enums.AccessLevel.fromStr'));
             end % switch val
             
         end % function enum = fromStr(val)

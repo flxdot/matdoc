@@ -2,8 +2,8 @@ function write_Configuration_examples()
 
 % create the UML Object %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 theDoc = matdoc.Documentation({...
-    'matdoc.Meta.Class',...
-    'matdoc.Enums.AccessLevel',...
+    'matdoc.meta.Class',...
+    'matdoc.enums.AccessLevel',...
     }...
     );
 
@@ -35,9 +35,9 @@ for iSett = 1:length(specialSettings)
     DocStr = sprintf('%s\n - %s', DocStr, specialSettings{iSett});
 end
 DocStr = sprintf('%s\n\n## Default Behaviour', DocStr);
-DocStr = sprintf('%s\n\nThe behavior of each setting, the class diagram of `matdoc.Meta.Class` and `matdoc.Enums.AccessLevel` is used. Below you''ll the output with the default settings:', DocStr);
+DocStr = sprintf('%s\n\nThe behavior of each setting, the class diagram of `matdoc.meta.Class` and `matdoc.enums.AccessLevel` is used. Below you''ll the output with the default settings:', DocStr);
 DocStr = sprintf('%s\n\n```matlab', DocStr);
-DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.Meta.Class'',...\n   ''matdoc.Enums.AccessLevel''...\n    });\ntheDoc.UmlToFile(''\\doc\\uml-examples\\export-class.txt'');', DocStr);
+DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.meta.Class'',...\n   ''matdoc.enums.AccessLevel''...\n    });\ntheDoc.UmlToFile(''\\doc\\uml-examples\\export-class.txt'');', DocStr);
 DocStr = sprintf('%s\n```', DocStr);
 DocStr = sprintf('%s\n![export-class.png](uml-examples/export-class.png)', DocStr);
 DocStr = sprintf('%s\n\nThe UML output: **[export-class.txt](uml-examples/export-class.txt)**', DocStr);
@@ -80,7 +80,7 @@ for iProp = 1:length(cfgProps)
     % example
     DocStr = sprintf('%s\n\n#### Example', DocStr);
     DocStr = sprintf('%s\n\n```matlab', DocStr);
-    DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.Meta.Class'',...\n   ''matdoc.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheDoc.UmlToFile(''%s'');', DocStr, curPropName, bool2str(~curProp.DefaultValue), fullfile(exportPath, umlFileTxt));
+    DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.meta.Class'',...\n   ''matdoc.enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheDoc.UmlToFile(''%s'');', DocStr, curPropName, bool2str(~curProp.DefaultValue), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
     DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
     DocStr = sprintf('%s\n\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
@@ -124,7 +124,7 @@ for iSett = 1:length(specialSettings)
     % example
     DocStr = sprintf('%s\n\n#### Example', DocStr);
     DocStr = sprintf('%s\n\n```matlab', DocStr);
-    DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.Meta.Class'',...\n   ''matdoc.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheDoc.UmlToFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
+    DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.meta.Class'',...\n   ''matdoc.enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheDoc.UmlToFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
     DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
     DocStr = sprintf('%s\n\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);

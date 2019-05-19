@@ -1,4 +1,4 @@
-classdef Meta < matdoc.Super.DisplayUML
+classdef Base < matdoc.super.WithMetaObjProps
     
     %% PROPERTIES: PUBLIC
     properties
@@ -25,15 +25,6 @@ classdef Meta < matdoc.Super.DisplayUML
     %% PROPERTIES: ACCESS = PROTECTED
     properties (Access = protected)
         
-        % the parent object
-        Parent;
-        
-        % The handle to the export configuration
-        Configuration;
-        
-        % Handle to the parent matdoc.Documentation class
-        UmlRoot;
-        
     end % properties (Access = protected)
     
     %% PROPERTIES: CONSTANT
@@ -45,8 +36,8 @@ classdef Meta < matdoc.Super.DisplayUML
     methods
         
         %% - Constructor
-        function this = Meta(metaObj, parent)
-            % function this = Meta()
+        function this = Base(metaObj, parent)
+            % function this = Base()
             %
             %
             
@@ -82,7 +73,7 @@ classdef Meta < matdoc.Super.DisplayUML
                     ~isa(val, 'meta.EnumeratedValue') && ...
                     ~isa(val, 'function_handle')...
                     )
-                error('matdoc:Meta:Super:setmetaObj:TypeError',...
+                error('matdoc:Base:Super:setmetaObj:TypeError',...
                     'The metaObj has to be a non empty meta object. Was of type %s instead.',...
                     class(val));
             end % if ~isnumeric(val)
@@ -210,4 +201,4 @@ classdef Meta < matdoc.Super.DisplayUML
         
     end % methods (Static)
     
-end % classdef Meta < handle
+end % classdef Base < handle

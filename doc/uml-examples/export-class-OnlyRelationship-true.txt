@@ -4,25 +4,42 @@ abstract class handle {
 }
 
 
-enum matdoc.Enums.AccessLevel {
+enum matdoc.enums.AccessLevel {
 }
 
-matdoc.Enums.AccessLevel --|> uint32
+matdoc.enums.AccessLevel --|> uint32
 
-class matdoc.Meta.Class {
+class matdoc.meta.Class {
 }
 
-matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
+matdoc.meta.Class ..|> matdoc.meta.super.Base
+matdoc.meta.Class --|> matdoc.uml.Class
 
-abstract class matdoc.Meta.Super.Meta {
+abstract class matdoc.meta.super.Base {
 }
 
-matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
+matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
 
-abstract class matdoc.Super.DisplayUML {
+class matdoc.super.WithMetaObjProps {
 }
 
-matdoc.Super.DisplayUML --|> handle
+matdoc.super.WithMetaObjProps --|> handle
+
+class matdoc.uml.Class {
+}
+
+matdoc.uml.Class ..|> matdoc.uml.super.Base
+
+abstract class matdoc.uml.super.Base {
+}
+
+matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
+
+abstract class matdoc.uml.super.WithPlantUML {
+}
+
+matdoc.uml.super.WithPlantUML --|> handle
 
 class uint32 {
 }

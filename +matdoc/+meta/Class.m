@@ -1,4 +1,5 @@
-classdef Class < matdoc.Meta.Super.Meta
+classdef Class < matdoc.meta.super.Base & ...
+        matdoc.uml.Class
     
     %% PROPERTIES: PUBLIC
     properties
@@ -35,6 +36,13 @@ classdef Class < matdoc.Meta.Super.Meta
         % The list of super classes
         SuperclassList;
         
+        % Handle to the matdoc.meta.Method instance representing the
+        % constructor method
+        Constructor;
+        
+        % Flag if any of the defined properties or methods are abstract
+        hasAbstractMembers = false;
+        
     end % properties (SetAccess = protected)
     
     %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
@@ -56,6 +64,10 @@ classdef Class < matdoc.Meta.Super.Meta
         
         % The name of Class
         Name;
+        
+        % The raw name of the class without the leading package or
+        % namepace
+        NameRaw;
         
         % Class description
         Description;
@@ -108,7 +120,7 @@ classdef Class < matdoc.Meta.Super.Meta
             %
             %
             
-            this = this@matdoc.Meta.Super.Meta(metaObj, parent);
+            this = this@matdoc.meta.super.Base(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -163,8 +175,16 @@ classdef Class < matdoc.Meta.Super.Meta
                     continue;
                 end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
                 
+                % determine the relation type and direction
+                if curSuperClass.hasAbstractMembers
+                    arrowBody = '..';
+                else % if curSuperClass.hasAbstractMembers
+                    arrowBody = '--';
+                end % if curSuperClass.hasAbstractMembers
+                arrow = sprintf('%s|>', arrowBody);
+                
                 % add the string of the inheritation relations
-                val{end + 1, 1} = sprintf('%s --|> %s', this.Name, curSuperClass.Name);
+                val{end + 1, 1} = sprintf('%s %s %s', this.Name, arrow, curSuperClass.Name);
                 
             end % for iSup = 1:length(this.SuperclassList)
             
@@ -180,6 +200,18 @@ classdef Class < matdoc.Meta.Super.Meta
             val = this.metaObj.Name;
             
         end % function val = get.Name(this)
+        
+        %% - val = get.NameRaw()
+        function val = get.NameRaw(this)
+            % function val = get.NameRaw(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            nameParts = strsplit(this.metaObj.Name, '.');
+            val = nameParts{end};
+            
+        end % function val = get.NameRaw(this)
         
         %% - val = get.Description()
         function val = get.Description(this)
@@ -305,9 +337,9 @@ classdef Class < matdoc.Meta.Super.Meta
             
             % PropertyList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.PropertyList)
-                this.PropertyList = matdoc.Meta.Property(this.metaObj.PropertyList(1), this);
+                this.PropertyList = matdoc.meta.Property(this.metaObj.PropertyList(1), this);
                 for iPack = 2:length(this.metaObj.PropertyList)
-                    this.PropertyList(iPack) = matdoc.Meta.Property(this.metaObj.PropertyList(iPack), this);
+                    this.PropertyList(iPack) = matdoc.meta.Property(this.metaObj.PropertyList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.PropertyList)
             end % if ~isempty(this.metaObj.PropertyList)
             
@@ -316,9 +348,9 @@ classdef Class < matdoc.Meta.Super.Meta
             
             % MethodList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.MethodList)
-                this.MethodList = matdoc.Meta.Method(this.metaObj.MethodList(1), this);
+                this.MethodList = matdoc.meta.Method(this.metaObj.MethodList(1), this);
                 for iPack = 2:length(this.metaObj.MethodList)
-                    this.MethodList(iPack) = matdoc.Meta.Method(this.metaObj.MethodList(iPack), this);
+                    this.MethodList(iPack) = matdoc.meta.Method(this.metaObj.MethodList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.MethodList)
             end % if ~isempty(this.metaObj.MethodList)
             
@@ -327,27 +359,59 @@ classdef Class < matdoc.Meta.Super.Meta
             
             % EventList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.EventList)
-                this.EventList = matdoc.Meta.Event(this.metaObj.EventList(1), this);
+                this.EventList = matdoc.meta.Event(this.metaObj.EventList(1), this);
                 for iPack = 2:length(this.metaObj.EventList)
-                    this.EventList(iPack) = matdoc.Meta.Event(this.metaObj.EventList(iPack), this);
+                    this.EventList(iPack) = matdoc.meta.Event(this.metaObj.EventList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EventList)
             end % if ~isempty(this.metaObj.EventList)
             
             % EnumerationMemberList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.EnumerationMemberList)
-                this.EnumerationMemberList = matdoc.Meta.EnumeratedValue(this.metaObj.EnumerationMemberList(1), this);
+                this.EnumerationMemberList = matdoc.meta.EnumeratedValue(this.metaObj.EnumerationMemberList(1), this);
                 for iPack = 2:length(this.metaObj.EnumerationMemberList)
-                    this.EnumerationMemberList(iPack) = matdoc.Meta.EnumeratedValue(this.metaObj.EnumerationMemberList(iPack), this);
+                    this.EnumerationMemberList(iPack) = matdoc.meta.EnumeratedValue(this.metaObj.EnumerationMemberList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EnumerationMemberList)
             end % if ~isempty(this.metaObj.EnumerationMemberList)
             
             % SuperclassList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.SuperclassList)
-                this.SuperclassList = matdoc.Meta.Class(this.metaObj.SuperclassList(1), this);
+                this.SuperclassList = matdoc.meta.Class(this.metaObj.SuperclassList(1), this);
                 for iPack = 2:length(this.metaObj.SuperclassList)
-                    this.SuperclassList(iPack) = matdoc.Meta.Class(this.metaObj.SuperclassList(iPack), this);
+                    this.SuperclassList(iPack) = matdoc.meta.Class(this.metaObj.SuperclassList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EventList)
             end % if ~isempty(this.metaObj.EventList)
+            
+            % hasAbstractMembers %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            % Properties
+            propsAbstrct = false;
+            if isa(this.PropertyList, 'matdoc.meta.Property') ||...
+                    isa(this.PropertyList, 'meta.property')
+                propsAbstrct = any([this.PropertyList(:).Abstract]);
+            end % if isa(this.PropertyList, 'matdoc.meta.Property') ||...
+            
+            % Methods
+            methodsAbstrct = false;
+            if isa(this.MethodList, 'matdoc.meta.Method') ||...
+                    isa(this.MethodList, 'meta.method')
+                methodsAbstrct = any([this.MethodList(:).Abstract]);
+            end % if isa(this.PropertyList, 'matdoc.meta.Property') ||...
+            
+            % Combine the status
+            this.hasAbstractMembers = propsAbstrct || methodsAbstrct;
+            
+            % Constructor %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            for iMeth = 1:length(this.MethodList)
+                % does the method have the same name as the class? Then
+                % this is the constructor
+                if strcmp(this.NameRaw, this.MethodList(iMeth).Name)
+                    this.Constructor = this.MethodList(iMeth);
+                    % exit the loop since we found what we where looking
+                    % for
+                    break;
+                end % if strcmp(this.Name, this.MethodList(iMeth).Name)
+            end % for iMeth = 1:length(this.MethodList)
             
         end % function walkMeta(this)
         
@@ -464,216 +528,6 @@ classdef Class < matdoc.Meta.Super.Meta
             end
             
         end % function val = getSuperclassListFlattend(this)
-        
-        %% - umlStr = getPlantUML()
-        function umlStr = getPlantUML(this)
-            % function umlStr = getPlantUML(this)
-            %
-            % Returns the plantUML representation of this meta object.
-            % Note: This method will be called by the getter of the
-            % plantUML property of the matdoc.Meta.Super.Meta.
-            
-            % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            if ~isempty(this.EnumerationMemberList)
-                classPrefix = 'enum';
-            elseif this.Abstract
-                classPrefix = 'abstract class';
-            else
-                classPrefix = 'class';
-            end % if this.Abstract
-            umlStr = sprintf('%s %s {', classPrefix, this.Name);
-            
-            % add UML String for each enumeration value %%%%%%%%%%%%%%%%%%%
-            if ~this.Configuration.HideEnumerationMember
-            umlStr = sprintf('%s%s', umlStr, getPlantUmlEnumerationValues(this));
-            end % if ~this.Configuration.HideEnumerationMember
-            
-            % add UML String of each field %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            if ~this.Configuration.HideProperties
-            umlStr = sprintf('%s%s', umlStr, getPlantUmlProperties(this));
-            end % if ~this.Configuration.HideProperties
-            
-            % add UML String for each method %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            if ~this.Configuration.HideMethods
-            umlStr = sprintf('%s%s', umlStr, getPlantUmlMethods(this));
-            end % if ~this.Configuration.HideMethods
-            
-            % add UML String for each event %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            if ~this.Configuration.HideEvents
-            umlStr = sprintf('%s%s', umlStr, getPlantUmlEvents(this));
-            end % if ~this.Configuration.HideEvents
-            
-            % close the class section the UML end %%%%%%%%%%%%%%%%%%%%%%%%%
-            umlStr = sprintf('%s\n}', umlStr);
-            
-            % add UML String for each superclass inheritance %%%%%%%%%%%%%%
-            umlStr = sprintf('%s%s', umlStr, getPlantUmlInheritanceRelation(this));
-            
-        end % function umlStr = getPlantUML(this)
-        
-        %% - umlStr = getPlantUmlProperties()
-        function umlStr = getPlantUmlProperties(this)
-            % function umlStr = getPlantUmlProperties(this)
-            %
-            % Returns the uml string for the properties of this class
-            
-            % if there are no members of the list, return an empty string
-            if isempty(this.PropertyList)
-                umlStr = '';
-                return;
-            end % if isempty(this.PropertyList)
-            
-            umlStr = '';
-            umlCatStr = '';
-            for iCat = 1:size(this.SortedPropertyList, 1)
-                
-                % loop over the methods
-                curUmlCatStr = '';
-                theProperties = this.SortedPropertyList{iCat, 2};
-                for iProperty = 1:length(theProperties)
-                    % get the currently processed method
-                    curMetaObj = theProperties(iProperty);
-                    
-                    % may be the class needs to be skipped?
-                    if this.Configuration.IngoreBuiltInPropertyInheritance && ...
-                            matdoc.isBuiltIn(curMetaObj.metaObj.DefiningClass)
-                        continue;
-                    end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
-                    
-                    % add it to the string
-                    curUmlCatStr = sprintf('%s\n%s', curUmlCatStr, curMetaObj.plantUML);
-                end % for iObj = 1:length(this.PropertyList)
-                
-                % check if this category needs to be added or if they are
-                % empty
-                if ~isempty(curUmlCatStr)
-                    % add the headline of the current category
-                    umlCatStr = sprintf('%s\n   .. %s ..%s',...
-                        umlCatStr,...
-                        this.SortedPropertyList{iCat, 1},...
-                        curUmlCatStr...
-                        );
-                end % if ~isempty(umlCatStr)
-            end % for iCat = 1:size(this.SortedPropertyList, 1)
-            
-            % check if the method have to be added after all
-            if ~isempty(umlCatStr)
-                umlStr = sprintf('\n   -- Properties --%s', umlCatStr);
-            end % if ~isempty(umlCatStr)
-            
-        end % function umlStr = getPlantUmlProperties(this)
-        
-        %% - umlStr = getPlantUmlMethods()
-        function umlStr = getPlantUmlMethods(this)
-            % function umlStr = getPlantUmlMethods(this)
-            %
-            % Returns the uml string for the methods of this class
-            
-            % if there are no members of the list, return an empty string
-            if isempty(this.MethodList)
-                umlStr = '';
-                return;
-            end % if isempty(this.MethodList)
-            
-            umlStr = '';
-            umlCatStr = '';
-            for iCat = 1:size(this.SortedMethodList, 1)
-                
-                % loop over the methods
-                curUmlCatStr = '';
-                theMethods = this.SortedMethodList{iCat, 2};
-                for iMethod = 1:length(theMethods)
-                    % get the currently processed method
-                    curMetaObj = theMethods(iMethod);
-                    
-                    % may be the class needs to be skipped?
-                    if this.Configuration.IngoreBuiltInMethodInheritance &&...
-                            matdoc.isBuiltIn(curMetaObj.metaObj.DefiningClass)
-                        continue;
-                    end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
-                    
-                    % add it to the string
-                    curUmlCatStr = sprintf('%s\n%s', curUmlCatStr, curMetaObj.plantUML);
-                end % for iObj = 1:length(this.MethodList)
-                
-                % check if this category needs to be added or if they are
-                % empty
-                if ~isempty(curUmlCatStr)
-                    % add the headline of the current category
-                    umlCatStr = sprintf('%s\n   .. %s ..%s',...
-                        umlCatStr,...
-                        this.SortedMethodList{iCat, 1},...
-                        curUmlCatStr...
-                        );
-                end % if ~isempty(umlCatStr)
-            end % for iCat = 1:size(this.SortedMethodList, 1)
-            
-            % check if the method have to be added after all
-            if ~isempty(umlCatStr)
-                umlStr = sprintf('\n   -- Methods --%s', umlCatStr);
-            end % if ~isempty(umlCatStr)
-            
-        end % function umlStr = getPlantUmlMethods(this)
-        
-        %% - umlStr = getPlantUmlEvents()
-        function umlStr = getPlantUmlEvents(this)
-            % function umlStr = getPlantUmlEvents(this)
-            %
-            % Returns the uml string for the events of this class
-            
-            % if there are no members of the list, return an empty string
-            if isempty(this.EventList)
-                umlStr = '';
-                return;
-            end % if isempty(this.EventList)
-            
-            umlStr = sprintf('\n   -- Events --');
-        
-            for iObj = 1:length(this.EventList)
-                curMetaObj = this.EventList(iObj);
-                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
-            end % for iObj = 1:length(this.EventList)
-            
-        end % function umlStr = getPlantUmlEvents(this)
-        
-        %% - umlStr = getPlantUmlEnumerationValues()
-        function umlStr = getPlantUmlEnumerationValues(this)
-            % function umlStr = getPlantUmlEnumerationValues(this)
-            %
-            % Returns the uml string for the enumeration values of this class
-            
-            % if there are no members of the list, return an empty string
-            if isempty(this.EnumerationMemberList)
-                umlStr = '';
-                return;
-            end % if isempty(this.EnumerationMemberList)
-            
-            umlStr = sprintf('\n   -- Enumeration Values --');
-            
-            for iObj = 1:length(this.EnumerationMemberList)
-                curMetaObj = this.EnumerationMemberList(iObj);
-                umlStr = sprintf('%s\n%s', umlStr, curMetaObj.plantUML);
-            end % for iObj = 1:length(this.EnumerationMemberList)
-            
-        end % function umlStr = getPlantUmlEnumerationValues(this)
-        
-        %% - umlStr = getPlantUmlInheritanceRelation()
-        function umlStr = getPlantUmlInheritanceRelation(this)
-            % function umlStr = getPlantUmlInheritanceRelation(this)
-            %
-            % Returns the uml string defining the class inheritances
-            
-            umlStr = sprintf('\n');
-            
-            relations = this.InheritationRelations;
-            for idx = 1:length(relations)
-                umlStr = sprintf('%s\n%s',...
-                    umlStr,...
-                    relations{idx}...
-                    );
-            end % for idx = 1:length(this.InheritationRelations)
-            
-        end % function umlStr = getPlantUmlInheritanceRelation(this)
         
     end %  methods (Access = protected)
     

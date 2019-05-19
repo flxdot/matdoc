@@ -6,12 +6,13 @@ abstract class handle {
 }
 
 
-enum matdoc.Enums.AccessLevel {
+enum matdoc.enums.AccessLevel {
    -- Enumeration Values --
    Public
    Protected
    Private
    -- Methods --
+   {method} + e = AccessLevel(varargin)
    .. Hidden ..
    {method} + varargout = colon(varargin)
    .. Public ..
@@ -27,10 +28,70 @@ enum matdoc.Enums.AccessLevel {
    {method}{static} + E = empty(varargin)
 }
 
-matdoc.Enums.AccessLevel --|> uint32
+matdoc.enums.AccessLevel --|> uint32
 
-class matdoc.Meta.Class {
+class matdoc.meta.Class {
    -- Methods --
+   {method} + this = Class(metaObj, parent)
+   .. Protected ..
+   {method} # umlStr = getPlantUML(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlEnumerationValues(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlEvents(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlInheritanceRelation(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlMethods(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlProperties(this) < matdoc.uml.Class
+   {method} # getSortedMethodList(this)
+   {method} # getSortedPropertyList(this)
+   {method} # val = getSuperclassListFlattend(this)
+   {method} # walkMeta(this)
+   .. Public ..
+   {method} + this = Class(metaObj, parent)
+   {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
+   {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
+   {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.meta.Class ..|> matdoc.meta.super.Base
+matdoc.meta.Class --|> matdoc.uml.Class
+
+abstract class matdoc.meta.super.Base {
+   -- Methods --
+   {method} + this = Base(metaObj, parent)
+   .. Abstract Protected ..
+   {method}{abstract} # walkMeta(this)
+   .. Public ..
+   {method} + this = Base(metaObj, parent)
+   {method} + is_eq = eq(this, other)
+   {method} + is_ne = ne(this, other)
+   {method} + [B, IX] = sort(this, dim, mode)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+
+class matdoc.super.WithMetaObjProps {
+   -- Methods --
+   {method} + obj = WithMetaObjProps()
+   .. Public ..
+   {method} + obj = WithMetaObjProps()
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.super.WithMetaObjProps --|> handle
+
+class matdoc.uml.Class {
+   -- Methods --
+   {method} + obj = Class()
    .. Protected ..
    {method} # umlStr = getPlantUML(this)
    {method} # umlStr = getPlantUmlEnumerationValues(this)
@@ -38,56 +99,50 @@ class matdoc.Meta.Class {
    {method} # umlStr = getPlantUmlInheritanceRelation(this)
    {method} # umlStr = getPlantUmlMethods(this)
    {method} # umlStr = getPlantUmlProperties(this)
-   {method} # getSortedMethodList(this)
-   {method} # getSortedPropertyList(this)
-   {method} # val = getSuperclassListFlattend(this)
-   {method} # walkMeta(this)
    .. Public ..
-   {method} + this = Class(metaObj, parent)
-   {method} + is_eq = eq(this, other) < matdoc.Meta.Super.Meta
-   {method} + is_ne = ne(this, other) < matdoc.Meta.Super.Meta
-   {method} + [B, IX] = sort(this, dim, mode) < matdoc.Meta.Super.Meta
+   {method} + obj = Class()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
+matdoc.uml.Class ..|> matdoc.uml.super.Base
 
-abstract class matdoc.Meta.Super.Meta {
+abstract class matdoc.uml.super.Base {
    -- Methods --
+   {method} + obj = Base()
    .. Abstract Protected ..
-   {method}{abstract} # getPlantUML(this) < matdoc.Super.DisplayUML
-   {method}{abstract} # walkMeta(this)
+   {method}{abstract} # getPlantUML(this) < matdoc.uml.super.WithPlantUML
    .. Public ..
-   {method} + is_eq = eq(this, other)
-   {method} + this = Meta(metaObj, parent)
-   {method} + is_ne = ne(this, other)
-   {method} + [B, IX] = sort(this, dim, mode)
+   {method} + obj = Base()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
+matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
 
-abstract class matdoc.Super.DisplayUML {
+abstract class matdoc.uml.super.WithPlantUML {
    -- Methods --
+   {method} + obj = WithPlantUML()
    .. Abstract Protected ..
    {method}{abstract} # getPlantUML(this)
    .. Public ..
-   {method} + this = DisplayUML()
+   {method} + obj = WithPlantUML()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed < handle
+   ObjectBeingDestroyed
 }
 
-matdoc.Super.DisplayUML --|> handle
+matdoc.uml.super.WithPlantUML --|> handle
 
 class uint32 {
+   -- Methods --
+   {method} + varargout = uint32(varargin)
 }
 
 
