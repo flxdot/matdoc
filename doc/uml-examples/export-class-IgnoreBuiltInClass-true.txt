@@ -10,7 +10,6 @@ enum matdoc.enums.AccessLevel {
    .. Hidden ..
    {method} + varargout = colon(varargin)
    .. Public ..
-   {method} + e = AccessLevel(varargin)
    {method} + lhs1 = char(rhs1)
    {method} + isEqual = eq(this, other)
    {method} + isEqual = ne(this, other)
@@ -71,7 +70,6 @@ class matdoc.meta.Class {
    {method} # val = getSuperclassListFlattend(this)
    {method} # walkMeta(this)
    .. Public ..
-   {method} + this = Class(metaObj, parent)
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
    {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
    {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
@@ -99,7 +97,6 @@ abstract class matdoc.meta.super.Base {
    .. Abstract Protected ..
    {method}{abstract} # walkMeta(this)
    .. Public ..
-   {method} + this = Base(metaObj, parent)
    {method} + is_eq = eq(this, other)
    {method} + is_ne = ne(this, other)
    {method} + [B, IX] = sort(this, dim, mode)
@@ -118,8 +115,6 @@ class matdoc.super.WithMetaObjProps {
    {field} # Parent
    {field} # UmlRoot
    -- Methods --
-   {method} + obj = WithMetaObjProps()
-   .. Public ..
    {method} + obj = WithMetaObjProps()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
@@ -145,8 +140,6 @@ class matdoc.uml.Class {
    {method} # umlStr = getPlantUmlInheritanceRelation(this)
    {method} # umlStr = getPlantUmlMethods(this)
    {method} # umlStr = getPlantUmlProperties(this)
-   .. Public ..
-   {method} + obj = Class()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
@@ -167,8 +160,6 @@ abstract class matdoc.uml.super.Base {
    {method} + obj = Base()
    .. Abstract Protected ..
    {method}{abstract} # getPlantUML(this) < matdoc.uml.super.WithPlantUML
-   .. Public ..
-   {method} + obj = Base()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
@@ -186,8 +177,6 @@ abstract class matdoc.uml.super.WithPlantUML {
    {method} + obj = WithPlantUML()
    .. Abstract Protected ..
    {method}{abstract} # getPlantUML(this)
-   .. Public ..
-   {method} + obj = WithPlantUML()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --

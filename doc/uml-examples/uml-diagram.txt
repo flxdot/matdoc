@@ -24,7 +24,6 @@ class matdoc.Configuration {
    -- Methods --
    {method} + this = Configuration(varargin)
    .. Public ..
-   {method} + this = Configuration(varargin)
    {method} + reset(this)
    {method} + setSetting(this, key, value)
    .. Static Hidden ..
@@ -56,7 +55,6 @@ class matdoc.Documentation {
    .. Public ..
    {method} + addObj(this, object)
    {method} + clear(this)
-   {method} + this = Documentation(objects_, varargin)
    {method} + UmlToFile(this, File_)
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
@@ -76,7 +74,6 @@ enum matdoc.enums.AccessLevel {
    .. Hidden ..
    {method} + varargout = colon(varargin)
    .. Public ..
-   {method} + e = AccessLevel(varargin)
    {method} + lhs1 = char(rhs1)
    {method} + isEqual = eq(this, other)
    {method} + isEqual = ne(this, other)
@@ -105,7 +102,6 @@ abstract class matdoc.meta.super.Base {
    .. Abstract Protected ..
    {method}{abstract} # walkMeta(this)
    .. Public ..
-   {method} + this = Base(metaObj, parent)
    {method} + is_eq = eq(this, other)
    {method} + is_ne = ne(this, other)
    {method} + [B, IX] = sort(this, dim, mode)
@@ -125,8 +121,6 @@ abstract class matdoc.uml.super.WithPlantUML {
    {method} + obj = WithPlantUML()
    .. Abstract Protected ..
    {method}{abstract} # getPlantUML(this)
-   .. Public ..
-   {method} + obj = WithPlantUML()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --

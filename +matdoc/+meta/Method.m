@@ -13,6 +13,9 @@ classdef Method < matdoc.meta.super.Base & ...
         % The access level of the method
         Access;
         
+        % Flag if the method is the constructor of its DefiningClass
+        isConstructor;
+        
     end % properties (SetAccess = protected)
     
     %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
@@ -47,9 +50,6 @@ classdef Method < matdoc.meta.super.Base & ...
         
         % The class defining the method
         DefiningClass;
-        
-        % Flag if the method is the constructor of its DefiningClass
-        isConstructor;
         
     end % properties (SetAccess = protected)
     
@@ -187,17 +187,6 @@ classdef Method < matdoc.meta.super.Base & ...
             
         end % function val = get.DefiningClass(this)
         
-        %% - val = get.isConstructor()
-        function val = get.isConstructor(this)
-            % function val = get.isConstructor(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = strcmp(this.Name, this.metaObj.DefiningClass.Name);
-            
-        end % function val = get.isConstructor(this)
-        
     end % methods
     
     %% METHODS: PROTECTED
@@ -210,11 +199,30 @@ classdef Method < matdoc.meta.super.Base & ...
             % This method will make sure the sub meta classes of the
             % metaObj are also wrapped by the meta classes of this package.
             
-            % The access level of the method
+            % is this method a setter or getter function? or a function of
+            % a class package?
             if isa(this.metaObj, 'function_handle')
+                % Access
                 this.Access = matdoc.enums.AccessLevel.Public;
+                % isConstructor
+                this.isConstructor = false;
             else % if isa(this.metaObj, 'function_handle')
+                
+                % Access %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 this.Access = matdoc.enums.AccessLevel.from(this.metaObj.Access);
+                
+                % isConstructor %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                if ~isempty(this.metaObj.DefiningClass)
+                    % get the raw name of the defining class
+                    defClassName = this.metaObj.DefiningClass.Name;
+                    nameParts = strsplit(defClassName, '.');
+                    
+                    % check if the defining class name is the same as this methods
+                    % name
+                    this.isConstructor = strcmp(this.Name, nameParts{end});
+                else % if ~isempty(this.metaObj.DefiningClass)
+                    this.isConstructor = false;
+                end % if ~isempty(this.metaObj.DefiningClass)
             end % if isa(this.metaObj, 'function_handle')
             
         end % function walkMeta(this)

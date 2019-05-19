@@ -38,7 +38,6 @@ enum matdoc.enums.AccessLevel {
    {method} + varargout = colon(varargin)
    .. Public ..
    {method} + varargout = abs(varargin) < uint32
-   {method} + e = AccessLevel(varargin)
    {method} + varargout = accumarray(varargin) < uint32
    {method} + varargout = all(varargin) < uint32
    {method} + varargout = and(varargin) < uint32
@@ -208,7 +207,6 @@ class matdoc.meta.Class {
    {method} + L = addlistener(sources, properties, eventname, callback) < handle
    {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
    {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
-   {method} + this = Class(metaObj, parent)
    {method} + delete(obj) < handle
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
    {method} + HM = findobj(H, varargin) < handle
@@ -251,7 +249,6 @@ abstract class matdoc.meta.super.Base {
    {method} + L = addlistener(sources, properties, eventname, callback) < handle
    {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
    {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
-   {method} + this = Base(metaObj, parent)
    {method} + delete(obj) < handle
    {method} + is_eq = eq(this, other)
    {method} + HM = findobj(H, varargin) < handle
@@ -298,7 +295,6 @@ class matdoc.super.WithMetaObjProps {
    {method} + TF = ne(A, B) < handle
    {method} + notify(sources, eventname) < handle
    {method} + notify(sources, eventname, eventdata) < handle
-   {method} + obj = WithMetaObjProps()
    .. Sealed ..
    {method} + validity = isvalid(obj) < handle
    .. Static Hidden ..
@@ -331,7 +327,6 @@ class matdoc.uml.Class {
    {method} + L = addlistener(sources, properties, eventname, callback) < handle
    {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
    {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
-   {method} + obj = Class()
    {method} + delete(obj) < handle
    {method} + TF = eq(A, B) < handle
    {method} + HM = findobj(H, varargin) < handle
@@ -370,7 +365,6 @@ abstract class matdoc.uml.super.Base {
    {method} + L = addlistener(sources, properties, eventname, callback) < handle
    {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
    {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
-   {method} + obj = Base()
    {method} + delete(obj) < handle
    {method} + TF = eq(A, B) < handle
    {method} + HM = findobj(H, varargin) < handle
@@ -417,7 +411,6 @@ abstract class matdoc.uml.super.WithPlantUML {
    {method} + TF = ne(A, B) < handle
    {method} + notify(sources, eventname) < handle
    {method} + notify(sources, eventname, eventdata) < handle
-   {method} + obj = WithPlantUML()
    .. Sealed ..
    {method} + validity = isvalid(obj) < handle
    .. Static Hidden ..

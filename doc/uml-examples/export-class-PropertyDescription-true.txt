@@ -16,7 +16,6 @@ enum matdoc.enums.AccessLevel {
    .. Hidden ..
    {method} + varargout = colon(varargin)
    .. Public ..
-   {method} + e = AccessLevel(varargin)
    {method} + lhs1 = char(rhs1)
    {method} + isEqual = eq(this, other)
    {method} + isEqual = ne(this, other)
@@ -159,7 +158,6 @@ Help for matdoc.meta.Class/plantUML is inherited from superclass MATDOC.UML.SUPE
    {method} # val = getSuperclassListFlattend(this)
    {method} # walkMeta(this)
    .. Public ..
-   {method} + this = Class(metaObj, parent)
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
    {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
    {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
@@ -204,7 +202,6 @@ Help for matdoc.meta.super.Base/UmlRoot is inherited from superclass MATDOC.SUPE
    .. Abstract Protected ..
    {method}{abstract} # walkMeta(this)
    .. Public ..
-   {method} + this = Base(metaObj, parent)
    {method} + is_eq = eq(this, other)
    {method} + is_ne = ne(this, other)
    {method} + [B, IX] = sort(this, dim, mode)
@@ -229,8 +226,6 @@ class matdoc.super.WithMetaObjProps {
              Handle to the parent matdoc.Documentation class
              
    -- Methods --
-   {method} + obj = WithMetaObjProps()
-   .. Public ..
    {method} + obj = WithMetaObjProps()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
@@ -273,8 +268,6 @@ Help for matdoc.uml.Class/plantUML is inherited from superclass MATDOC.UML.SUPER
    {method} # umlStr = getPlantUmlInheritanceRelation(this)
    {method} # umlStr = getPlantUmlMethods(this)
    {method} # umlStr = getPlantUmlProperties(this)
-   .. Public ..
-   {method} + obj = Class()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
@@ -311,8 +304,6 @@ Help for matdoc.uml.super.Base/plantUML is inherited from superclass MATDOC.UML.
    {method} + obj = Base()
    .. Abstract Protected ..
    {method}{abstract} # getPlantUML(this) < matdoc.uml.super.WithPlantUML
-   .. Public ..
-   {method} + obj = Base()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
@@ -332,8 +323,6 @@ abstract class matdoc.uml.super.WithPlantUML {
    {method} + obj = WithPlantUML()
    .. Abstract Protected ..
    {method}{abstract} # getPlantUML(this)
-   .. Public ..
-   {method} + obj = WithPlantUML()
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
