@@ -107,15 +107,15 @@ classdef Documentation < matdoc.Super.DisplayUML
             
         end % function addObj(this, object)
         
-        %% - toFile(File_)
-        function toFile(this, File_)
-            % function toFile(this, File_)
+        %% - UmlToFile(File_)
+        function UmlToFile(this, File_)
+            % function UmlToFile(this, File_)
             %
             % Write the uml string with the current settings to the defined
             % file.
             
             if ~ischar(File_)
-                error('matdoc:UML:toFile:TypeError',...
+                error('matdoc:UML:UmlToFile:TypeError',...
                     'Parameter File_ has to be a path (string). Was of type %s instead.', class(File_));
             end % if ~ischar(File_)
             
@@ -139,11 +139,11 @@ classdef Documentation < matdoc.Super.DisplayUML
                     rethrow(ex);
                 end % try
             else % if fid > 0
-                error('matdoc:UML:toFile:IOError',...
+                error('matdoc:UML:UmlToFile:IOError',...
                     'Could not open ''%s'' for writting. Cause: %s', File_, fopen_err);
             end % if fid > 0
             
-        end % function toFile(this, File_)
+        end % function UmlToFile(this, File_)
         
         %% - clear()
         function clear(this)
