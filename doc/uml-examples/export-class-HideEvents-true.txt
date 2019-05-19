@@ -121,7 +121,7 @@ class matdoc.super.WithMetaObjProps {
    {method}{static} + E = empty(varargin)
 }
 
-matdoc.super.WithMetaObjProps --|> handle
+matdoc.super.WithMetaObjProps ..|> handle
 
 class matdoc.uml.Class {
    -- Properties --
@@ -177,7 +177,7 @@ abstract class matdoc.uml.super.WithPlantUML {
    {method}{static} + E = empty(varargin)
 }
 
-matdoc.uml.super.WithPlantUML --|> handle
+matdoc.uml.super.WithPlantUML ..|> handle
 
 class uint32 {
    -- Methods --

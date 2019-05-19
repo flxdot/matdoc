@@ -303,7 +303,7 @@ class matdoc.super.WithMetaObjProps {
    ObjectBeingDestroyed
 }
 
-matdoc.super.WithMetaObjProps --|> handle
+matdoc.super.WithMetaObjProps ..|> handle
 
 class matdoc.uml.Class {
    -- Properties --
@@ -419,7 +419,7 @@ abstract class matdoc.uml.super.WithPlantUML {
    ObjectBeingDestroyed
 }
 
-matdoc.uml.super.WithPlantUML --|> handle
+matdoc.uml.super.WithPlantUML ..|> handle
 
 class uint32 {
    -- Methods --

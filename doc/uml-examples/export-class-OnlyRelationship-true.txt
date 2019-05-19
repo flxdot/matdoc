@@ -23,7 +23,7 @@ matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
 class matdoc.super.WithMetaObjProps {
 }
 
-matdoc.super.WithMetaObjProps --|> handle
+matdoc.super.WithMetaObjProps ..|> handle
 
 class matdoc.uml.Class {
 }
@@ -39,7 +39,7 @@ matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
 abstract class matdoc.uml.super.WithPlantUML {
 }
 
-matdoc.uml.super.WithPlantUML --|> handle
+matdoc.uml.super.WithPlantUML ..|> handle
 
 class uint32 {
 }

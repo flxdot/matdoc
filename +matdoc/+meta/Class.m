@@ -176,7 +176,7 @@ classdef Class < matdoc.meta.super.Base & ...
                 end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
                 
                 % determine the relation type and direction
-                if curSuperClass.hasAbstractMembers
+                if curSuperClass.Abstract || curSuperClass.hasAbstractMembers
                     arrowBody = '..';
                 else % if curSuperClass.hasAbstractMembers
                     arrowBody = '--';
