@@ -48,17 +48,17 @@ class matdoc.meta.Class {
    {field} + isBuiltIn
    {field} + metaObj < matdoc.meta.super.Base
    {field} + MethodList
-   {field} + MethodListFlattend
+   {field} + MethodListFlattened
    {field} + Name
    {field} + NameRaw
    {field} + plantUML < matdoc.uml.super.WithPlantUML
    {field} + PropertyList
-   {field} + PropertyListFlattend
+   {field} + PropertyListFlattened
    {field} + Sealed
    {field} + SortedMethodList
    {field} + SortedPropertyList
    {field} + SuperclassList
-   {field} + SuperclassListFlattend
+   {field} + SuperclassListFlattened
    -- Methods --
    {method} + this = Class(metaObj, parent)
    .. Protected ..
@@ -70,7 +70,7 @@ class matdoc.meta.Class {
    {method} # umlStr = getPlantUmlProperties(this) < matdoc.uml.Class
    {method} # getSortedMethodList(this)
    {method} # getSortedPropertyList(this)
-   {method} # val = getSuperclassListFlattend(this)
+   {method} # val = getSuperclassListFlattened(this)
    {method} # walkMeta(this)
    .. Public ..
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
@@ -79,7 +79,7 @@ class matdoc.meta.Class {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.meta.Class ..|> matdoc.meta.super.Base
@@ -106,7 +106,7 @@ abstract class matdoc.meta.super.Base {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
@@ -122,7 +122,7 @@ class matdoc.super.WithMetaObjProps {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.super.WithMetaObjProps ..|> handle
@@ -147,7 +147,7 @@ class matdoc.uml.Class {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.uml.Class ..|> matdoc.uml.super.Base
@@ -167,7 +167,7 @@ abstract class matdoc.uml.super.Base {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
@@ -184,7 +184,7 @@ abstract class matdoc.uml.super.WithPlantUML {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.uml.super.WithPlantUML ..|> handle

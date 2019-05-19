@@ -29,7 +29,7 @@ class matdoc.Configuration {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Configuration ..|> handle
@@ -39,9 +39,9 @@ class matdoc.Documentation {
    .. Protected ..
    {field} # UmlObjects_
    .. Public ..
-   {field} + ClassListFlattend
    {field} + Configuration
-   {field} + PackageListFlattend
+   {field} + ListAllClass
+   {field} + ListAllPackages
    {field} + UmlObjects
    .. SetAccess = Protected ..
    {field} + ClassList
@@ -59,7 +59,7 @@ class matdoc.Documentation {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Documentation ..|> matdoc.uml.super.WithPlantUML
@@ -108,7 +108,7 @@ abstract class matdoc.meta.super.Base {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
@@ -124,7 +124,7 @@ class matdoc.super.WithMetaObjProps {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.super.WithMetaObjProps ..|> handle
@@ -140,7 +140,7 @@ abstract class matdoc.uml.super.WithPlantUML {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.uml.super.WithPlantUML ..|> handle

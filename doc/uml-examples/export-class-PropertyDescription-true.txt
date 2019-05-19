@@ -100,7 +100,7 @@ Help for matdoc.meta.Class/metaObj is inherited from superclass MATDOC.META.SUPE
    {field} + MethodList
              The list of methods
              
-   {field} + MethodListFlattend
+   {field} + MethodListFlattened
              A complete list of methods incl the ones inheritated from
   other classes
              
@@ -119,7 +119,7 @@ Help for matdoc.meta.Class/plantUML is inherited from superclass MATDOC.UML.SUPE
    {field} + PropertyList
              The list of properties
              
-   {field} + PropertyListFlattend
+   {field} + PropertyListFlattened
              A complete list of properties incl the ones inheritated from
   other classes
              
@@ -141,7 +141,7 @@ Help for matdoc.meta.Class/plantUML is inherited from superclass MATDOC.UML.SUPE
    {field} + SuperclassList
              The list of super classes
              
-   {field} + SuperclassListFlattend
+   {field} + SuperclassListFlattened
              A complete list of super classes incl. nested inheritated classes
              
    -- Methods --
@@ -155,7 +155,7 @@ Help for matdoc.meta.Class/plantUML is inherited from superclass MATDOC.UML.SUPE
    {method} # umlStr = getPlantUmlProperties(this) < matdoc.uml.Class
    {method} # getSortedMethodList(this)
    {method} # getSortedPropertyList(this)
-   {method} # val = getSuperclassListFlattend(this)
+   {method} # val = getSuperclassListFlattened(this)
    {method} # walkMeta(this)
    .. Public ..
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
@@ -164,7 +164,7 @@ Help for matdoc.meta.Class/plantUML is inherited from superclass MATDOC.UML.SUPE
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.meta.Class ..|> matdoc.meta.super.Base
@@ -208,7 +208,7 @@ Help for matdoc.meta.super.Base/UmlRoot is inherited from superclass MATDOC.SUPE
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
@@ -230,7 +230,7 @@ class matdoc.super.WithMetaObjProps {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.super.WithMetaObjProps ..|> handle
@@ -271,7 +271,7 @@ Help for matdoc.uml.Class/plantUML is inherited from superclass MATDOC.UML.SUPER
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.uml.Class ..|> matdoc.uml.super.Base
@@ -307,7 +307,7 @@ Help for matdoc.uml.super.Base/plantUML is inherited from superclass MATDOC.UML.
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
@@ -326,7 +326,7 @@ abstract class matdoc.uml.super.WithPlantUML {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.uml.super.WithPlantUML ..|> handle

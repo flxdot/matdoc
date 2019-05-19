@@ -50,14 +50,14 @@ classdef Class < matdoc.meta.super.Base & ...
         
         % A complete list of properties incl the ones inheritated from
         % other classes
-        PropertyListFlattend;
+        PropertyListFlattened;
         
         % A complete list of methods incl the ones inheritated from
         % other classes
-        MethodListFlattend;
+        MethodListFlattened;
         
         % A complete list of super classes incl. nested inheritated classes
-        SuperclassListFlattend;
+        SuperclassListFlattened;
         
         % The inheritation relation ships
         InheritationRelations = cell(0, 1);
@@ -124,38 +124,38 @@ classdef Class < matdoc.meta.super.Base & ...
             
         end % function this = ColumnDataDisplay()
         
-        %% - val = get.PropertyListFlattend()
-        function val = get.PropertyListFlattend(this)
-            % function val = get.PropertyListFlattend(this)
+        %% - val = get.PropertyListFlattened()
+        function val = get.PropertyListFlattened(this)
+            % function val = get.PropertyListFlattened(this)
             %
             % The getter method will return the private member of the property
             % set.
             
             val = this.PropertyList;
             
-        end % function val = get.PropertyListFlattend(this)
+        end % function val = get.PropertyListFlattened(this)
         
-        %% - val = get.MethodListFlattend()
-        function val = get.MethodListFlattend(this)
-            % function val = get.MethodListFlattend(this)
+        %% - val = get.MethodListFlattened()
+        function val = get.MethodListFlattened(this)
+            % function val = get.MethodListFlattened(this)
             %
             % The getter method will return the private member of the property
             % set.
             
             val = this.MethodList;
             
-        end % function val = get.MethodListFlattend(this)
+        end % function val = get.MethodListFlattened(this)
         
-        %% - val = get.SuperclassListFlattend()
-        function val = get.SuperclassListFlattend(this)
-            % function val = get.SuperclassListFlattend(this)
+        %% - val = get.SuperclassListFlattened()
+        function val = get.SuperclassListFlattened(this)
+            % function val = get.SuperclassListFlattened(this)
             %
             % The getter method will return the private member of the property
             % set.
             
-            val = getSuperclassListFlattend(this);
+            val = getSuperclassListFlattened(this);
             
-        end % function val = get.SuperclassListFlattend(this)
+        end % function val = get.SuperclassListFlattened(this)
         
         %% - val = get.InheritationRelations()
         function val = get.InheritationRelations(this)
@@ -428,7 +428,7 @@ classdef Class < matdoc.meta.super.Base & ...
             % reset the list
             this.SortedPropertyList = cell(0, 2);
             
-            thePropList = this.PropertyListFlattend;
+            thePropList = this.PropertyListFlattened;
             for iProp = 1:length(thePropList)
                 % get the currently processes property
                 curProp = thePropList(iProp);
@@ -474,7 +474,7 @@ classdef Class < matdoc.meta.super.Base & ...
             % reset the list
             this.SortedMethodList = cell(0, 2);
             
-            theMethodList = this.MethodListFlattend;
+            theMethodList = this.MethodListFlattened;
             for iMethod = 1:length(theMethodList)
                 % get the currently processes property
                 curMethod = theMethodList(iMethod);
@@ -507,9 +507,9 @@ classdef Class < matdoc.meta.super.Base & ...
             
         end % function getSortedMethodList(this)
         
-        %% - val = getSuperclassListFlattend(this)
-        function val = getSuperclassListFlattend(this)
-            % function val = getSuperclassListFlattend(this)
+        %% - val = getSuperclassListFlattened(this)
+        function val = getSuperclassListFlattened(this)
+            % function val = getSuperclassListFlattened(this)
             %
             % return as a list of all superclasses including the ones which
             % are inheritated
@@ -518,7 +518,7 @@ classdef Class < matdoc.meta.super.Base & ...
             for iSup = 1:length(val)
                 val = horzcat(...
                     val,...
-                    this.SuperclassList(iSup).SuperclassListFlattend...
+                    this.SuperclassList(iSup).SuperclassListFlattened...
                     );
             end % for iSup = 1:length(val)
             
@@ -527,7 +527,7 @@ classdef Class < matdoc.meta.super.Base & ...
                 val = unique(val);
             end
             
-        end % function val = getSuperclassListFlattend(this)
+        end % function val = getSuperclassListFlattened(this)
         
     end %  methods (Access = protected)
     

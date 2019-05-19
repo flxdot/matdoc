@@ -17,11 +17,11 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
         % List of all classes in the UmlObjects
         % This list also includes the super classes for each class
         % All classes of the added packages will also be part of this list
-        ClassListFlattend = matdoc.meta.Class.empty(1, 0);
+        ListAllClass = matdoc.meta.Class.empty(1, 0);
         
         % List of all packages in the UmlObjects
         % This list also includes the sub packages of package
-        PackageListFlattend = matdoc.meta.Package.empty(1, 0);
+        ListAllPackages = matdoc.meta.Package.empty(1, 0);
         
     end % properties (Dependent)
     
@@ -189,9 +189,9 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
         end % function val = get.UmlObjects(this)
         
-        %% - val = get.ClassListFlattend()
-        function val = get.ClassListFlattend(this)
-            % function val = get.ClassListFlattend(this)
+        %% - val = get.ListAllClass()
+        function val = get.ListAllClass(this)
+            % function val = get.ListAllClass(this)
             %
             % The getter method will return the private member of the property
             % set.
@@ -203,12 +203,12 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
             % get their super classes
             for iClass = 1:length(this.ClassList)
-                val = horzcat(val, this.ClassList(iClass).SuperclassListFlattend);
+                val = horzcat(val, this.ClassList(iClass).SuperclassListFlattened);
             end % for iClass = 1:length(this.ClassList)
             
             % Get classes from packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
-            flattenedPackList = this.PackageListFlattend;
+            flattenedPackList = this.ListAllPackages;
             for iPack = 1:length(flattenedPackList)
                 % get class list
                 packageClassList = flattenedPackList(iPack).ClassList;
@@ -217,7 +217,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
                 for iClass = 1:length(packageClassList)
                     val = horzcat(val,...
                         packageClassList(iClass),...
-                        packageClassList(iClass).SuperclassListFlattend...
+                        packageClassList(iClass).SuperclassListFlattened...
                         );
                 end % for iClass = 1:length(packageClassList)
             end % for iPack = 1:length(flattenedPackList)
@@ -225,11 +225,11 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             % make sure to return only distinct classes %%%%%%%%%%%%%%%%%%%
             val = unique(val);
             
-        end % function val = get.ClassListFlattend(this)
+        end % function val = get.ListAllClass(this)
         
-        %% - val = get.PackageListFlattend()
-        function val = get.PackageListFlattend(this)
-            % function val = get.PackageListFlattend(this)
+        %% - val = get.ListAllPackages()
+        function val = get.ListAllPackages(this)
+            % function val = get.ListAllPackages(this)
             %
             % The getter method will return the private member of the property
             % set.
@@ -238,13 +238,13 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
             % get their super classes
             for iClass = 1:length(this.PackageList)
-                val = horzcat(val, this.PackageList(iClass).PackageListFlattend);
+                val = horzcat(val, this.PackageList(iClass).PackageListFlattened);
             end % for iClass = 1:length(this.ClassList)
             
             % make sure to return only distinct classes
             val = unique(val);
             
-        end % function val = get.PackageListFlattend(this)
+        end % function val = get.ListAllPackages(this)
         
     end % methods
     
@@ -307,7 +307,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             % add UML String for each package %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
             % The packages will not directly be exported to UML because
-            % their classes are discovered on the ClassListFlattend
+            % their classes are discovered on the ListAllClass
             % property
             
             %for iObj = 1:length(this.PackageList)
@@ -316,8 +316,8 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             %end % for iObj = 1:length(this.PackageList)
             
             % add UML String of each class %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            for iObj = 1:length(this.ClassListFlattend)
-                curMetaClass = this.ClassListFlattend(iObj);
+            for iObj = 1:length(this.ListAllClass)
+                curMetaClass = this.ListAllClass(iObj);
                 
                 % may be the class needs to be skipped?
                 if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn

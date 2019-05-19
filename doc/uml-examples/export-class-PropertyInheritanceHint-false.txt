@@ -52,17 +52,17 @@ class matdoc.meta.Class {
    {field} + isBuiltIn
    {field} + metaObj
    {field} + MethodList
-   {field} + MethodListFlattend
+   {field} + MethodListFlattened
    {field} + Name
    {field} + NameRaw
    {field} + plantUML
    {field} + PropertyList
-   {field} + PropertyListFlattend
+   {field} + PropertyListFlattened
    {field} + Sealed
    {field} + SortedMethodList
    {field} + SortedPropertyList
    {field} + SuperclassList
-   {field} + SuperclassListFlattend
+   {field} + SuperclassListFlattened
    -- Methods --
    {method} + this = Class(metaObj, parent)
    .. Protected ..
@@ -74,7 +74,7 @@ class matdoc.meta.Class {
    {method} # umlStr = getPlantUmlProperties(this) < matdoc.uml.Class
    {method} # getSortedMethodList(this)
    {method} # getSortedPropertyList(this)
-   {method} # val = getSuperclassListFlattend(this)
+   {method} # val = getSuperclassListFlattened(this)
    {method} # walkMeta(this)
    .. Public ..
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base

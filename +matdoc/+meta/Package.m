@@ -27,7 +27,7 @@ classdef Package < matdoc.meta.super.Base & ...
     properties (Dependent, SetAccess = protected)
         
         % A complete list of packages incl the ones int sub packages
-        PackageListFlattend;
+        PackageListFlattened;
         
     end % properties (Dependent, SetAccess = protected)
     
@@ -65,16 +65,16 @@ classdef Package < matdoc.meta.super.Base & ...
             
         end % function val = get.Name(this)
         
-        %% - val = get.PackageListFlattend()
-        function val = get.PackageListFlattend(this)
-            % function val = get.PackageListFlattend(this)
+        %% - val = get.PackageListFlattened()
+        function val = get.PackageListFlattened(this)
+            % function val = get.PackageListFlattened(this)
             %
             % The getter method will return the private member of the property
             % set.
             
-            val = getPackageListFlattend(this);
+            val = getPackageListFlattened(this);
             
-        end % function val = get.PackageListFlattend(this)
+        end % function val = get.PackageListFlattened(this)
         
     end % methods
     
@@ -114,9 +114,9 @@ classdef Package < matdoc.meta.super.Base & ...
             
         end % function walkMeta(this)
         
-        %% - val = getPackageListFlattend(this)
-        function val = getPackageListFlattend(this)
-            % function val = getPackageListFlattend(this)
+        %% - val = getPackageListFlattened(this)
+        function val = getPackageListFlattened(this)
+            % function val = getPackageListFlattened(this)
             %
             % return as a list of all supbpackages including their
             % subpackages
@@ -125,7 +125,7 @@ classdef Package < matdoc.meta.super.Base & ...
             for iPack = 1:length(val)
                 val = horzcat(...
                     val,...
-                    this.PackageList(iPack).PackageListFlattend...
+                    this.PackageList(iPack).PackageListFlattened...
                     );
             end % for iSup = 1:length(val)
             
@@ -134,7 +134,7 @@ classdef Package < matdoc.meta.super.Base & ...
                 val = unique(val);
             end
             
-        end % function val = getPackageListFlattend(this)
+        end % function val = getPackageListFlattened(this)
         
     end %  methods (Access = protected)
     

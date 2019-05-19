@@ -13,6 +13,12 @@ classdef Event < matdoc.uml.super.Base
             
             umlStr = sprintf('   %s', this.Name);
             
+            % print inheritance hint?
+            if this.Configuration.PropertyInheritanceHint && ...
+                    ~strcmp(this.metaObj.DefiningClass.Name, this.Parent.Name)
+                umlStr = sprintf('%s < %s', umlStr, this.metaObj.DefiningClass.Name);
+            end % if this.Configuration.PropertyInheritanceHint
+            
         end % function umlStr = getPlantUML(this)
         
     end %  methods (Access = protected)
