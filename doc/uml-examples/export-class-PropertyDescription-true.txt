@@ -153,7 +153,7 @@ Help for matdoc.Meta.Class/plantUML is inherited from superclass MATDOC.SUPER.DI
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
@@ -196,7 +196,7 @@ Help for matdoc.Meta.Super.Meta/plantUML is inherited from superclass MATDOC.SUP
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
@@ -215,7 +215,7 @@ abstract class matdoc.Super.DisplayUML {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Super.DisplayUML --|> handle

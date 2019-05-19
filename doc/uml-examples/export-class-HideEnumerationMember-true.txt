@@ -76,7 +76,7 @@ class matdoc.Meta.Class {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
@@ -104,7 +104,7 @@ abstract class matdoc.Meta.Super.Meta {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
@@ -121,7 +121,7 @@ abstract class matdoc.Super.DisplayUML {
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Super.DisplayUML --|> handle

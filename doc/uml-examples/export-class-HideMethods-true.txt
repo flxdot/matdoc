@@ -47,7 +47,7 @@ class matdoc.Meta.Class {
    {field} + SuperclassList
    {field} + SuperclassListFlattend
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
@@ -64,7 +64,7 @@ abstract class matdoc.Meta.Super.Meta {
    {field} + metaObj
    {field} + plantUML < matdoc.Super.DisplayUML
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
@@ -74,7 +74,7 @@ abstract class matdoc.Super.DisplayUML {
    .. SetAccess = Protected ..
    {field} + plantUML
    -- Events --
-   ObjectBeingDestroyed
+   ObjectBeingDestroyed < handle
 }
 
 matdoc.Super.DisplayUML --|> handle

@@ -74,3 +74,7 @@ When it comes to displaying the produced **[plantUML](http://www.plantuml.com)**
     *Make sure you have **[GraphViz](https://graphviz.gitlab.io/)** installed!
     And by installed I mean properly installed. Remember that you'll have to set the path variable in windows!*
   - **[plantuml-viewer](https://atom.io/packages/plantuml-viewer)** for the Atom editor
+  
+## Frequently Asked Questions (F.A.Q.)
+
+See the **[F.A.Q. Section](doc/faq.md)**
