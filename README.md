@@ -28,8 +28,14 @@ theDoc = matdoc.Documentation({...
 Now let's save the UML Diagram to a txt file of these 2 classes and the 2 packages and their containing classes:
 
 ```matlab
-theDoc.toFile('uml-diagram.txt');
+theDoc.UmlToFile('uml-diagram.txt');
 ```
+
+The output can be seen here: **[uml-diagram.txt](doc/uml-examples/uml-diagram.txt)**
+
+With a a plantUML editor of your choise (see chapter below) you can now create beatifull class diagrams:
+
+![uml-diagram.png](doc/uml-examples/uml-diagram.png)
 
 ## Configuration
 

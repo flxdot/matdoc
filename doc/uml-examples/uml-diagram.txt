@@ -1,0 +1,135 @@
+@startuml
+
+abstract class handle {
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+
+class matdoc.Configuration {
+   -- Properties --
+   .. Protected ..
+   {field} # ConfigPropertyList
+   .. Public ..
+   {field} + HideEnumerationMember
+   {field} + HideEvents
+   {field} + HideMethods
+   {field} + HideProperties
+   {field} + IgnoreBuiltInClass
+   {field} + IngoreBuiltInMethodInheritance
+   {field} + IngoreBuiltInPropertyInheritance
+   {field} + MethodInheritanceHint
+   {field} + PropertyDescription
+   {field} + PropertyInheritanceHint
+   -- Methods --
+   .. Public ..
+   {method} + this = Configuration(varargin)
+   {method} + reset(this)
+   {method} + setSetting(this, key, value)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.Configuration --|> handle
+
+class matdoc.Documentation {
+   -- Properties --
+   .. Protected ..
+   {field} # UmlObjects_
+   .. Public ..
+   {field} + ClassListFlattend
+   {field} + Configuration
+   {field} + PackageListFlattend
+   {field} + UmlObjects
+   .. SetAccess = Protected ..
+   {field} + ClassList
+   {field} + PackageList
+   {field} + plantUML < matdoc.Super.DisplayUML
+   -- Methods --
+   .. Protected ..
+   {method} # addMetaObj(this, metaObj)
+   {method} # umlStr = getPlantUML(this)
+   .. Public ..
+   {method} + addObj(this, object)
+   {method} + clear(this)
+   {method} + this = Documentation(objects_, varargin)
+   {method} + UmlToFile(this, File_)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.Documentation --|> matdoc.Super.DisplayUML
+
+enum matdoc.Enums.AccessLevel {
+   -- Enumeration Values --
+   Public
+   Protected
+   Private
+   -- Methods --
+   .. Hidden ..
+   {method} + varargout = colon(varargin)
+   .. Public ..
+   {method} + e = AccessLevel(varargin)
+   {method} + lhs1 = char(rhs1)
+   {method} + isEqual = eq(this, other)
+   {method} + isEqual = ne(this, other)
+   .. Static ..
+   {method}{static} + enum = from(val)
+   {method}{static} + enum = fromNum(val)
+   {method}{static} + enum = fromStr(val)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+}
+
+matdoc.Enums.AccessLevel --|> uint32
+
+abstract class matdoc.Meta.Super.Meta {
+   -- Properties --
+   .. Abstract  SetAccess = Protected ..
+   {field}{abstract} + Name
+   .. Protected ..
+   {field} # Configuration
+   {field} # Parent
+   {field} # UmlRoot
+   .. SetAccess = Protected ..
+   {field} + metaObj
+   {field} + plantUML < matdoc.Super.DisplayUML
+   -- Methods --
+   .. Abstract Protected ..
+   {method}{abstract} # getPlantUML(this) < matdoc.Super.DisplayUML
+   {method}{abstract} # walkMeta(this)
+   .. Public ..
+   {method} + is_eq = eq(this, other)
+   {method} + this = Meta(metaObj, parent)
+   {method} + is_ne = ne(this, other)
+   {method} + [B, IX] = sort(this, dim, mode)
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
+
+abstract class matdoc.Super.DisplayUML {
+   -- Properties --
+   .. SetAccess = Protected ..
+   {field} + plantUML
+   -- Methods --
+   .. Abstract Protected ..
+   {method}{abstract} # getPlantUML(this)
+   .. Public ..
+   {method} + this = DisplayUML()
+   .. Static Hidden ..
+   {method}{static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+matdoc.Super.DisplayUML --|> handle
+
+@enduml
