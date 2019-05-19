@@ -1,4 +1,4 @@
-classdef Meta < m2plantUML.Super.DisplayUML
+classdef Meta < matdoc.Super.DisplayUML
     
     %% PROPERTIES: PUBLIC
     properties
@@ -31,7 +31,7 @@ classdef Meta < m2plantUML.Super.DisplayUML
         % The handle to the export configuration
         Configuration;
         
-        % Handle to the parent m2plantUML.UML class
+        % Handle to the parent matdoc.Documentation class
         UmlRoot;
         
     end % properties (Access = protected)
@@ -56,9 +56,9 @@ classdef Meta < m2plantUML.Super.DisplayUML
             
             % get the umlRoot %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             this.UmlRoot = this.Parent;
-            while ~isa(this.UmlRoot, 'm2plantUML.UML') && ~isempty(this.UmlRoot)
+            while ~isa(this.UmlRoot, 'matdoc.Documentation') && ~isempty(this.UmlRoot)
                 this.UmlRoot = this.UmlRoot.Parent;
-            end % while ~isa(this.UmlRoot, 'm2plantUML.UML') && ~isempty(this.UmlRoot)
+            end % while ~isa(this.UmlRoot, 'matdoc.Documentation') && ~isempty(this.UmlRoot)
             
             % Store handle to the config
             this.Configuration = this.UmlRoot.Configuration;
@@ -82,7 +82,7 @@ classdef Meta < m2plantUML.Super.DisplayUML
                     ~isa(val, 'meta.EnumeratedValue') && ...
                     ~isa(val, 'function_handle')...
                     )
-                error('m2plantUML:Meta:Super:setmetaObj:TypeError',...
+                error('matdoc:Meta:Super:setmetaObj:TypeError',...
                     'The metaObj has to be a non empty meta object. Was of type %s instead.',...
                     class(val));
             end % if ~isnumeric(val)

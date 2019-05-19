@@ -22,7 +22,7 @@ try
 catch ex
     switch ex.identifier
         case 'MATLAB:class:InvalidSuperClass'
-            error('m2plantUML:metaFromStr:InvalidSuperClass',...
+            error('matdoc:metaFromStr:InvalidSuperClass',...
                 'It looks like if one ore more super classes might not be accessible:\n%s', ex.message);
         otherwise
             rethrowx(ex);
@@ -61,7 +61,7 @@ if exist(ObjDescStr, 'file') == 2
     % get the path
     [objPath, objName, objExt] = fileparts(ObjDescStr);
     if ~strcmpi(objExt, '.m')
-        error('m2plantUML:metaFromStr:UnkownFileType',...
+        error('matdoc:metaFromStr:UnkownFileType',...
             'Fetching of meta information is only possible for matlab m-files (*.m). You tried to get information for %s file: %s',...
             obj.Ext, ObjDescStr);
     end % if ~strcmpi(objExt, '.m')
@@ -77,7 +77,7 @@ if exist(ObjDescStr, 'file') == 2
         return;
     end % if ~isempty(classObj)
     
-    error('m2plantUML:metaFromStr:FileIsNotClass',...
+    error('matdoc:metaFromStr:FileIsNotClass',...
             'Can not get meta information for file ''%s'' it seems not to be a class or it is within a package.', ObjDescStr);
     
 end % if exist(ObjDescStr, 'file') == 2
@@ -105,14 +105,14 @@ if isvalid
         end
     end % for iPath = 1:length(fullSearchPath)
     
-    error('m2plantUML:metaFromStr:ClassNotInSearchPath',...
+    error('matdoc:metaFromStr:ClassNotInSearchPath',...
         'It looks like you specified a class or package: %s\nBut I can not find anywhere in the search path. The current search path are the following directories:%s',...
         ObjDescStr, sprintf('\n - %s', searchPath{:}));
     
 end % if isvalid
 
 % nothing else was found
-error('m2plantUML:metaFromStr:InvalidObj',...
+error('matdoc:metaFromStr:InvalidObj',...
     'Can not get meta information for ''%s''. Please make sure you''ve read the documetation.', ObjDescStr);
 
 end % function objMeta = metaFromStr(ObjDescStr)

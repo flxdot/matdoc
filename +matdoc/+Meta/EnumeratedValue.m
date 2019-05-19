@@ -1,5 +1,5 @@
-classdef Event < m2plantUML.Meta.Super.Meta & ...
-        m2plantUML.Super.DisplayUMLCategory
+classdef EnumeratedValue < matdoc.Meta.Super.Meta & ...
+        matdoc.Super.DisplayUMLCategory
     
     %% PROPERTIES: PUBLIC
     properties
@@ -9,26 +9,14 @@ classdef Event < m2plantUML.Meta.Super.Meta & ...
     %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
     properties (Dependent, SetAccess = protected)
         
-        % The name of the event
+        % The name of the enumeration value
         Name;
         
-        % The description of the event
+        % The description of th enumeration value
         Description;
         
-        % The detailed description of the event
+        % The detailes description of the enumeration value
         DetailedDescription;
-        
-        % Is the event hidden?
-        Hidden;
-        
-        % The notify access level
-        NotifyAccess;
-        
-        % The listen access level
-        ListenAccess;
-        
-        % The class defining the event
-        DefiningClass;
         
     end % properties (SetAccess = protected)
     
@@ -46,12 +34,12 @@ classdef Event < m2plantUML.Meta.Super.Meta & ...
     methods
         
         %% - Constructor
-        function this = Event(metaObj, parent)
-            % function this = Event()
+        function this = EnumeratedValue(metaObj, parent)
+            % function this = EnumeratedValue()
             %
             %
             
-            this = this@m2plantUML.Meta.Super.Meta(metaObj, parent);
+            this = this@matdoc.Meta.Super.Meta(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -88,50 +76,6 @@ classdef Event < m2plantUML.Meta.Super.Meta & ...
             
         end % function val = get.DetailedDescription(this)
         
-        %% - val = get.Hidden()
-        function val = get.Hidden(this)
-            % function val = get.Hidden(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = this.metaObj.Hidden;
-            
-        end % function val = get.Hidden(this)
-        
-        %% - val = get.NotifyAccess()
-        function val = get.NotifyAccess(this)
-            % function val = get.NotifyAccess(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = this.metaObj.NotifyAccess;
-            
-        end % function val = get.NotifyAccess(this)
-        
-        %% - val = get.ListenAccess()
-        function val = get.ListenAccess(this)
-            % function val = get.ListenAccess(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = this.metaObj.ListenAccess;
-            
-        end % function val = get.ListenAccess(this)
-        
-        %% - val = get.DefiningClass()
-        function val = get.DefiningClass(this)
-            % function val = get.DefiningClass(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            val = this.Parent;
-            
-        end % function val = get.DefiningClass(this)
-        
     end % methods
     
     %% METHODS: PROTECTED
@@ -152,7 +96,7 @@ classdef Event < m2plantUML.Meta.Super.Meta & ...
             %
             % Returns the plantUML representation of this meta object.
             % Note: This method will be called by the getter of the
-            % plantUML property of the m2plantUML.Meta.Super.Meta.
+            % plantUML property of the matdoc.Meta.Super.Meta.
             
             umlStr = sprintf('   %s', this.Name);
             
@@ -176,4 +120,4 @@ classdef Event < m2plantUML.Meta.Super.Meta & ...
         
     end % methods (Static)
     
-end % classdef Event < handle
+end % classdef EnumeratedValue < handle

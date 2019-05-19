@@ -1,5 +1,5 @@
-classdef Property < m2plantUML.Meta.Super.Meta & ...
-        m2plantUML.Super.DisplayUMLCategory
+classdef Property < matdoc.Meta.Super.Meta & ...
+        matdoc.Super.DisplayUMLCategory
     
     %% PROPERTIES: PUBLIC
     properties
@@ -90,7 +90,7 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             %
             %
             
-            this = this@m2plantUML.Meta.Super.Meta(metaObj, parent);
+            this = this@matdoc.Meta.Super.Meta(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -269,19 +269,19 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             
             % GetMethod %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.GetMethod)
-                this.GetMethod = m2plantUML.Meta.Method(this.metaObj.GetMethod, this);
+                this.GetMethod = matdoc.Meta.Method(this.metaObj.GetMethod, this);
             end % if ~isempty(this.metaObj.PackageList)
             
             % SetMethod %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.SetMethod)
-                this.SetMethod = m2plantUML.Meta.Method(this.metaObj.SetMethod, this);
+                this.SetMethod = matdoc.Meta.Method(this.metaObj.SetMethod, this);
             end % if ~isempty(this.metaObj.PackageList)
             
             % The get access level
-            this.GetAccess  = m2plantUML.Enums.AccessLevel.from(this.metaObj.GetAccess);
+            this.GetAccess  = matdoc.Enums.AccessLevel.from(this.metaObj.GetAccess);
             
             % The set access level
-            this.SetAccess  = m2plantUML.Enums.AccessLevel.from(this.metaObj.SetAccess);
+            this.SetAccess  = matdoc.Enums.AccessLevel.from(this.metaObj.SetAccess);
             
         end % function walkMeta(this)
         
@@ -291,7 +291,7 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
             %
             % Returns the plantUML representation of this meta object.
             % Note: This method will be called by the getter of the
-            % plantUML property of the m2plantUML.Meta.Super.Meta.
+            % plantUML property of the matdoc.Meta.Super.Meta.
             
             % prefix
             prefix = '   {field} ';
@@ -352,16 +352,16 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
                 umlCat = '';
                 
                 % GetAccess
-                if this.GetAccess > m2plantUML.Enums.AccessLevel.Public
+                if this.GetAccess > matdoc.Enums.AccessLevel.Public
                     umlCat = sprintf('%s GetAccess = %s,',...
                         umlCat, char(this.GetAccess));
-                end % if this.GetAccess > m2plantUML.Enums.AccessLevel.Public
+                end % if this.GetAccess > matdoc.Enums.AccessLevel.Public
                 
                 % SetAccess
-                if this.SetAccess > m2plantUML.Enums.AccessLevel.Public
+                if this.SetAccess > matdoc.Enums.AccessLevel.Public
                     umlCat = sprintf('%s SetAccess = %s,',...
                         umlCat, char(this.SetAccess));
-                end % if this.SetAccess > m2plantUML.Enums.AccessLevel.Public
+                end % if this.SetAccess > matdoc.Enums.AccessLevel.Public
                 
             end % if this.GetAccess == this.SetAccess
             
@@ -391,7 +391,7 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
                 % public
                 if sameAccessLevel
                     umlCat = strrep(umlCat, ...
-                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        char(matdoc.Enums.AccessLevel.Public),...
                         ''...
                         );
                 end % if sameAccessLevel
@@ -404,7 +404,7 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
                 % public
                 if sameAccessLevel
                     umlCat = strrep(umlCat, ...
-                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        char(matdoc.Enums.AccessLevel.Public),...
                         ''...
                         );
                 end % if sameAccessLevel
@@ -417,7 +417,7 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
                 % public
                 if sameAccessLevel
                     umlCat = strrep(umlCat, ...
-                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        char(matdoc.Enums.AccessLevel.Public),...
                         ''...
                         );
                 end % if sameAccessLevel
@@ -430,7 +430,7 @@ classdef Property < m2plantUML.Meta.Super.Meta & ...
                 % public
                 if sameAccessLevel
                     umlCat = strrep(umlCat, ...
-                        char(m2plantUML.Enums.AccessLevel.Public),...
+                        char(matdoc.Enums.AccessLevel.Public),...
                         ''...
                         );
                 end % if sameAccessLevel

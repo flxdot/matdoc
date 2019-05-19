@@ -10,7 +10,7 @@ if ischar(object)
     % is the given object a valid accessible class?
     object = meta.class.fromName(object);
     if isempty(object)
-        error('m2plantUML:isBuiltIn:ClassNotFound',...
+        error('matdoc:isBuiltIn:ClassNotFound',...
             'Class ''%s'' can not be located or may not be on the matlab search path.', object);
     end % if isempty(metaObj)
 elseif ~isa(object, 'meta.class')

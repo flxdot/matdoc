@@ -1,10 +1,10 @@
-classdef UML < m2plantUML.Super.DisplayUML
+classdef Documentation < matdoc.Super.DisplayUML
     
     %% PROPERTIES: PUBLIC
     properties
         
         % Cell array of objects which will be added to the UML
-        Configuration   @m2plantUML.Configuration;
+        Configuration   @matdoc.Configuration;
         
     end % properties
     
@@ -17,11 +17,11 @@ classdef UML < m2plantUML.Super.DisplayUML
         % List of all classes in the UmlObjects
         % This list also includes the super classes for each class
         % All classes of the added packages will also be part of this list
-        ClassListFlattend = m2plantUML.Meta.Class.empty(1, 0);
+        ClassListFlattend = matdoc.Meta.Class.empty(1, 0);
         
         % List of all packages in the UmlObjects
         % This list also includes the sub packages of package
-        PackageListFlattend = m2plantUML.Meta.Package.empty(1, 0);
+        PackageListFlattend = matdoc.Meta.Package.empty(1, 0);
         
     end % properties (Dependent)
     
@@ -30,11 +30,11 @@ classdef UML < m2plantUML.Super.DisplayUML
         
         % List of all classes in the UmlObjects
         % This list only contains the classes directly added to UmlObjects
-        ClassList = m2plantUML.Meta.Class.empty(1, 0);
+        ClassList = matdoc.Meta.Class.empty(1, 0);
         
         % List of all packages in the UmlObjects
         % This list only contains the packages directly added to UmlObjects
-        PackageList = m2plantUML.Meta.Package.empty(1, 0);
+        PackageList = matdoc.Meta.Package.empty(1, 0);
         
     end % properties (SetAccess = protected)
     
@@ -55,8 +55,8 @@ classdef UML < m2plantUML.Super.DisplayUML
     methods
         
         %% - Constructor
-        function this = UML(objects_, varargin)
-            % function this = UML()
+        function this = Documentation(objects_, varargin)
+            % function this = Documentation()
             %
             % The default constructor can be used to directly create a
             % diagram based on the given objects_.
@@ -70,20 +70,20 @@ classdef UML < m2plantUML.Super.DisplayUML
             % process input
             if nargin > 0
                 % init the configuration
-                this.Configuration = m2plantUML.Configuration(varargin{:});
+                this.Configuration = matdoc.Configuration(varargin{:});
                 
                 % there is no need to call clear() here because it will be
                 % called in the setter of the UmlObjects property.
                 this.UmlObjects = objects_;
             else % if nargin > 0
                 % init the configuration
-                this.Configuration = m2plantUML.Configuration();
+                this.Configuration = matdoc.Configuration();
                 
                 % reset the class
                 clear(this);
             end % if nargin > 0
             
-        end % function this = ColumnDataDisplay()
+        end % function this = Documentation()
         
         %% - addObj(object)
         function addObj(this, object)
@@ -100,7 +100,7 @@ classdef UML < m2plantUML.Super.DisplayUML
                 % add the meta class object directly to the list
                 addMetaObj(this, object);
             elseif ischar(object)
-                addMetaObj(this, m2plantUML.metaFromStr(object));
+                addMetaObj(this, matdoc.metaFromStr(object));
             else % get the meta class of the actual passed object
                 addMetaObj(this, metaclass(val));
             end % if isa(object, 'meta.class')
@@ -115,7 +115,7 @@ classdef UML < m2plantUML.Super.DisplayUML
             % file.
             
             if ~ischar(File_)
-                error('m2plantUML:UML:toFile:TypeError',...
+                error('matdoc:UML:toFile:TypeError',...
                     'Parameter File_ has to be a path (string). Was of type %s instead.', class(File_));
             end % if ~ischar(File_)
             
@@ -139,7 +139,7 @@ classdef UML < m2plantUML.Super.DisplayUML
                     rethrow(ex);
                 end % try
             else % if fid > 0
-                error('m2plantUML:UML:toFile:IOError',...
+                error('matdoc:UML:toFile:IOError',...
                     'Could not open ''%s'' for writting. Cause: %s', File_, fopen_err);
             end % if fid > 0
             
@@ -167,7 +167,7 @@ classdef UML < m2plantUML.Super.DisplayUML
                 % convert to cell
                 val = {val};
             elseif isempty(val) || ~iscell(val)
-                error('m2plantUML:UML:setUmlObjects:TypeError',...
+                error('matdoc:UML:setUmlObjects:TypeError',...
                     'The UmlObjects has to be of type cell value.');
             end % if ~isnumeric(val)
             
@@ -256,7 +256,7 @@ classdef UML < m2plantUML.Super.DisplayUML
                 case 'meta.class'
                     % wrapt the matlab meta class with my own to allow uml
                     % export
-                    umlMetaObj = m2plantUML.Meta.Class(metaObj, this);
+                    umlMetaObj = matdoc.Meta.Class(metaObj, this);
                     
                     % add the class to the list of classes
                     if isempty(this.ClassList)
@@ -269,7 +269,7 @@ classdef UML < m2plantUML.Super.DisplayUML
                     
                     % wrap the meta.package with my own class to allow uml
                     % export
-                    umlMetaObj = m2plantUML.Meta.Package(metaObj, this);
+                    umlMetaObj = matdoc.Meta.Package(metaObj, this);
                     
                     % add the class to the list of classes
                     if isempty(this.PackageList)
@@ -290,7 +290,7 @@ classdef UML < m2plantUML.Super.DisplayUML
             %
             % Returns the plantUML representation of this meta object.
             % Note: This method will be called by the getter of the
-            % plantUML property of the m2plantUML.Meta.Super.Meta.
+            % plantUML property of the matdoc.Meta.Super.Meta.
             
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = '@startuml';

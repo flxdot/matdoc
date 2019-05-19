@@ -1,4 +1,4 @@
-classdef Class < m2plantUML.Meta.Super.Meta
+classdef Class < matdoc.Meta.Super.Meta
     
     %% PROPERTIES: PUBLIC
     properties
@@ -108,7 +108,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
             %
             %
             
-            this = this@m2plantUML.Meta.Super.Meta(metaObj, parent);
+            this = this@matdoc.Meta.Super.Meta(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -287,7 +287,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
             % The getter method will return the private member of the property
             % set.
             
-            val = m2plantUML.isBuiltIn(this.metaObj);
+            val = matdoc.isBuiltIn(this.metaObj);
             
         end % function val = get.isBuiltIn(this)
 
@@ -305,9 +305,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
             % PropertyList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.PropertyList)
-                this.PropertyList = m2plantUML.Meta.Property(this.metaObj.PropertyList(1), this);
+                this.PropertyList = matdoc.Meta.Property(this.metaObj.PropertyList(1), this);
                 for iPack = 2:length(this.metaObj.PropertyList)
-                    this.PropertyList(iPack) = m2plantUML.Meta.Property(this.metaObj.PropertyList(iPack), this);
+                    this.PropertyList(iPack) = matdoc.Meta.Property(this.metaObj.PropertyList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.PropertyList)
             end % if ~isempty(this.metaObj.PropertyList)
             
@@ -316,9 +316,9 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
             % MethodList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.MethodList)
-                this.MethodList = m2plantUML.Meta.Method(this.metaObj.MethodList(1), this);
+                this.MethodList = matdoc.Meta.Method(this.metaObj.MethodList(1), this);
                 for iPack = 2:length(this.metaObj.MethodList)
-                    this.MethodList(iPack) = m2plantUML.Meta.Method(this.metaObj.MethodList(iPack), this);
+                    this.MethodList(iPack) = matdoc.Meta.Method(this.metaObj.MethodList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.MethodList)
             end % if ~isempty(this.metaObj.MethodList)
             
@@ -327,25 +327,25 @@ classdef Class < m2plantUML.Meta.Super.Meta
             
             % EventList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.EventList)
-                this.EventList = m2plantUML.Meta.Event(this.metaObj.EventList(1), this);
+                this.EventList = matdoc.Meta.Event(this.metaObj.EventList(1), this);
                 for iPack = 2:length(this.metaObj.EventList)
-                    this.EventList(iPack) = m2plantUML.Meta.Event(this.metaObj.EventList(iPack), this);
+                    this.EventList(iPack) = matdoc.Meta.Event(this.metaObj.EventList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EventList)
             end % if ~isempty(this.metaObj.EventList)
             
             % EnumerationMemberList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.EnumerationMemberList)
-                this.EnumerationMemberList = m2plantUML.Meta.EnumeratedValue(this.metaObj.EnumerationMemberList(1), this);
+                this.EnumerationMemberList = matdoc.Meta.EnumeratedValue(this.metaObj.EnumerationMemberList(1), this);
                 for iPack = 2:length(this.metaObj.EnumerationMemberList)
-                    this.EnumerationMemberList(iPack) = m2plantUML.Meta.EnumeratedValue(this.metaObj.EnumerationMemberList(iPack), this);
+                    this.EnumerationMemberList(iPack) = matdoc.Meta.EnumeratedValue(this.metaObj.EnumerationMemberList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EnumerationMemberList)
             end % if ~isempty(this.metaObj.EnumerationMemberList)
             
             % SuperclassList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.SuperclassList)
-                this.SuperclassList = m2plantUML.Meta.Class(this.metaObj.SuperclassList(1), this);
+                this.SuperclassList = matdoc.Meta.Class(this.metaObj.SuperclassList(1), this);
                 for iPack = 2:length(this.metaObj.SuperclassList)
-                    this.SuperclassList(iPack) = m2plantUML.Meta.Class(this.metaObj.SuperclassList(iPack), this);
+                    this.SuperclassList(iPack) = matdoc.Meta.Class(this.metaObj.SuperclassList(iPack), this);
                 end % for iPack = 2:length(this.metaObj.EventList)
             end % if ~isempty(this.metaObj.EventList)
             
@@ -471,7 +471,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
             %
             % Returns the plantUML representation of this meta object.
             % Note: This method will be called by the getter of the
-            % plantUML property of the m2plantUML.Meta.Super.Meta.
+            % plantUML property of the matdoc.Meta.Super.Meta.
             
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.EnumerationMemberList)
@@ -536,7 +536,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
                     
                     % may be the class needs to be skipped?
                     if this.Configuration.IngoreBuiltInPropertyInheritance && ...
-                            m2plantUML.isBuiltIn(curMetaObj.metaObj.DefiningClass)
+                            matdoc.isBuiltIn(curMetaObj.metaObj.DefiningClass)
                         continue;
                     end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
                     
@@ -588,7 +588,7 @@ classdef Class < m2plantUML.Meta.Super.Meta
                     
                     % may be the class needs to be skipped?
                     if this.Configuration.IngoreBuiltInMethodInheritance &&...
-                            m2plantUML.isBuiltIn(curMetaObj.metaObj.DefiningClass)
+                            matdoc.isBuiltIn(curMetaObj.metaObj.DefiningClass)
                         continue;
                     end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
                     

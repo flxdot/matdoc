@@ -6,7 +6,7 @@ abstract class handle {
 }
 
 
-enum m2plantUML.Enums.AccessLevel {
+enum matdoc.Enums.AccessLevel {
    -- Enumeration Values --
    Public
    Protected
@@ -27,9 +27,9 @@ enum m2plantUML.Enums.AccessLevel {
    {method}{static} + E = empty(varargin)
 }
 
-m2plantUML.Enums.AccessLevel --|> uint32
+matdoc.Enums.AccessLevel --|> uint32
 
-class m2plantUML.Meta.Class {
+class matdoc.Meta.Class {
    -- Properties --
    .. Protected ..
    {field} # Configuration
@@ -74,18 +74,18 @@ class m2plantUML.Meta.Class {
    {method} # walkMeta(this)
    .. Public ..
    {method} + this = Class(metaObj, parent)
-   {method} + is_eq = eq(this, other) < m2plantUML.Meta.Super.Meta
-   {method} + is_ne = ne(this, other) < m2plantUML.Meta.Super.Meta
-   {method} + [B, IX] = sort(this, dim, mode) < m2plantUML.Meta.Super.Meta
+   {method} + is_eq = eq(this, other) < matdoc.Meta.Super.Meta
+   {method} + is_ne = ne(this, other) < matdoc.Meta.Super.Meta
+   {method} + [B, IX] = sort(this, dim, mode) < matdoc.Meta.Super.Meta
    .. Static Hidden ..
    {method}{static} + E = empty(varargin)
    -- Events --
    ObjectBeingDestroyed
 }
 
-m2plantUML.Meta.Class --|> m2plantUML.Meta.Super.Meta
+matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
 
-abstract class m2plantUML.Meta.Super.Meta {
+abstract class matdoc.Meta.Super.Meta {
    -- Properties --
    .. Abstract  SetAccess = Protected ..
    {field}{abstract} + Name
@@ -98,7 +98,7 @@ abstract class m2plantUML.Meta.Super.Meta {
    {field} + plantUML
    -- Methods --
    .. Abstract Protected ..
-   {method}{abstract} # getPlantUML(this) < m2plantUML.Super.DisplayUML
+   {method}{abstract} # getPlantUML(this) < matdoc.Super.DisplayUML
    {method}{abstract} # walkMeta(this)
    .. Public ..
    {method} + is_eq = eq(this, other)
@@ -111,9 +111,9 @@ abstract class m2plantUML.Meta.Super.Meta {
    ObjectBeingDestroyed
 }
 
-m2plantUML.Meta.Super.Meta --|> m2plantUML.Super.DisplayUML
+matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
 
-abstract class m2plantUML.Super.DisplayUML {
+abstract class matdoc.Super.DisplayUML {
    -- Properties --
    .. SetAccess = Protected ..
    {field} + plantUML
@@ -128,7 +128,7 @@ abstract class m2plantUML.Super.DisplayUML {
    ObjectBeingDestroyed
 }
 
-m2plantUML.Super.DisplayUML --|> handle
+matdoc.Super.DisplayUML --|> handle
 
 class uint32 {
 }

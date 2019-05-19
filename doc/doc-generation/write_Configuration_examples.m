@@ -1,18 +1,18 @@
 function write_Configuration_examples()
 
 % create the UML Object %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-theUML = m2plantUML.UML({...
-    'm2plantUML.Meta.Class',...
-    'm2plantUML.Enums.AccessLevel',...
+theDoc = matdoc.Documentation({...
+    'matdoc.Meta.Class',...
+    'matdoc.Enums.AccessLevel',...
     }...
     );
 
 % create the UML Object %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-theUMLCfg = m2plantUML.UML({...
-    'm2plantUML.Configuration',...
+theDocCfg = matdoc.Documentation({...
+    'matdoc.Configuration',...
     }...
     );
-cfgMeta = theUMLCfg.UmlObjects{1};
+cfgMeta = theDocCfg.UmlObjects{1};
 cfgProps = sort(cfgMeta.PropertyList([cfgMeta.PropertyList(:).SetAccess] == 'public'));
 specialSettings = {'IngoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelationship'};
 
@@ -20,11 +20,11 @@ specialSettings = {'IngoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelations
 fileName = 'export-class';
 exportPath = fullfile('doc', 'uml-examples');
 linkPath = fullfile('uml-examples');
-theUML.toFile(fullfile(exportPath, sprintf('%s.txt', fileName)));
+theDoc.toFile(fullfile(exportPath, sprintf('%s.txt', fileName)));
 
 % Build the Doc string
 
-DocStr = sprintf('# m2plantUML.Configuration: Examples');
+DocStr = sprintf('# matdoc.Configuration: Examples');
 DocStr = sprintf('%s\n\nThe configuration of the UML export is generally controlled by the public properties.', DocStr);
 DocStr = sprintf('%s\n\nThe following properties can be set:', DocStr);
 for iProp = 1:length(cfgProps)
@@ -35,9 +35,9 @@ for iSett = 1:length(specialSettings)
     DocStr = sprintf('%s\n - %s', DocStr, specialSettings{iSett});
 end
 DocStr = sprintf('%s\n\n## Default Behaviour', DocStr);
-DocStr = sprintf('%s\n\nThe behavior of each setting, the class diagram of `m2plantUML.Meta.Class` and `m2plantUML.Enums.AccessLevel` is used. Below you''ll the output with the default settings:', DocStr);
+DocStr = sprintf('%s\n\nThe behavior of each setting, the class diagram of `matdoc.Meta.Class` and `matdoc.Enums.AccessLevel` is used. Below you''ll the output with the default settings:', DocStr);
 DocStr = sprintf('%s\n\n```matlab', DocStr);
-DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    });\ntheUML.toFile(''\\doc\\uml-examples\\export-class.txt'');', DocStr);
+DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.Meta.Class'',...\n   ''matdoc.Enums.AccessLevel''...\n    });\ntheDoc.toFile(''\\doc\\uml-examples\\export-class.txt'');', DocStr);
 DocStr = sprintf('%s\n```', DocStr);
 DocStr = sprintf('%s\n![export-class.png](uml-examples/export-class.png)', DocStr);
 DocStr = sprintf('%s\n\nThe UML output: **[export-class.txt](uml-examples/export-class.txt)**', DocStr);
@@ -57,13 +57,13 @@ for iProp = 1:length(cfgProps)
     % Export UML %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     % reset the settings
-    theUML.Configuration.reset();
+    theDoc.Configuration.reset();
     
     % set the oppostite of the current default property
-    theUML.Configuration.(curProp.Name) = ~curProp.DefaultValue;
+    theDoc.Configuration.(curProp.Name) = ~curProp.DefaultValue;
     
     % export the uml again
-    theUML.toFile(fullfile(exportPath, umlFileTxt));
+    theDoc.toFile(fullfile(exportPath, umlFileTxt));
     
     % Write Documentation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
@@ -80,7 +80,7 @@ for iProp = 1:length(cfgProps)
     % example
     DocStr = sprintf('%s\n\n#### Example', DocStr);
     DocStr = sprintf('%s\n\n```matlab', DocStr);
-    DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheUML.toFile(''%s'');', DocStr, curPropName, bool2str(~curProp.DefaultValue), fullfile(exportPath, umlFileTxt));
+    DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.Meta.Class'',...\n   ''matdoc.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheDoc.toFile(''%s'');', DocStr, curPropName, bool2str(~curProp.DefaultValue), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
     DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
     DocStr = sprintf('%s\n\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
@@ -105,13 +105,13 @@ for iSett = 1:length(specialSettings)
     
     % Export UML %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % reset the settings
-    theUML.Configuration.reset();
+    theDoc.Configuration.reset();
     
     % set the oppostite of the current default property
-    theUML.Configuration.setSetting(curSett, true);
+    theDoc.Configuration.setSetting(curSett, true);
     
     % export the uml again
-    theUML.toFile(fullfile(exportPath, umlFile));
+    theDoc.toFile(fullfile(exportPath, umlFileTxt));
     
     % Write Documentation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
@@ -124,7 +124,7 @@ for iSett = 1:length(specialSettings)
     % example
     DocStr = sprintf('%s\n\n#### Example', DocStr);
     DocStr = sprintf('%s\n\n```matlab', DocStr);
-    DocStr = sprintf('%s\ntheUML = m2plantUML.UML({...\n   ''m2plantUML.Meta.Class'',...\n   ''m2plantUML.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheUML.toFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
+    DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.Meta.Class'',...\n   ''matdoc.Enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheDoc.toFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
     DocStr = sprintf('%s\n```', DocStr);
     DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
     DocStr = sprintf('%s\n\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);

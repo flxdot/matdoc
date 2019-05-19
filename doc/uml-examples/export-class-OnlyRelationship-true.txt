@@ -4,25 +4,25 @@ abstract class handle {
 }
 
 
-enum m2plantUML.Enums.AccessLevel {
+enum matdoc.Enums.AccessLevel {
 }
 
-m2plantUML.Enums.AccessLevel --|> uint32
+matdoc.Enums.AccessLevel --|> uint32
 
-class m2plantUML.Meta.Class {
+class matdoc.Meta.Class {
 }
 
-m2plantUML.Meta.Class --|> m2plantUML.Meta.Super.Meta
+matdoc.Meta.Class --|> matdoc.Meta.Super.Meta
 
-abstract class m2plantUML.Meta.Super.Meta {
+abstract class matdoc.Meta.Super.Meta {
 }
 
-m2plantUML.Meta.Super.Meta --|> m2plantUML.Super.DisplayUML
+matdoc.Meta.Super.Meta --|> matdoc.Super.DisplayUML
 
-abstract class m2plantUML.Super.DisplayUML {
+abstract class matdoc.Super.DisplayUML {
 }
 
-m2plantUML.Super.DisplayUML --|> handle
+matdoc.Super.DisplayUML --|> handle
 
 class uint32 {
 }

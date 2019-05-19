@@ -35,10 +35,10 @@ classdef AccessLevel < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(m2plantUML.Enums.AccessLevel.from(this)) == double(m2plantUML.Enums.AccessLevel.from(other));
+                isEqual = double(matdoc.Enums.AccessLevel.from(this)) == double(matdoc.Enums.AccessLevel.from(other));
             catch ex
                 switch ex.identifier
-                    case 'm2plantUML:Enums:AccessLevel:from:TypeError'
+                    case 'matdoc:Enums:AccessLevel:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -54,10 +54,10 @@ classdef AccessLevel < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(m2plantUML.Enums.AccessLevel.from(this)) ~= double(m2plantUML.Enums.AccessLevel.from(other));
+                isEqual = double(matdoc.Enums.AccessLevel.from(this)) ~= double(matdoc.Enums.AccessLevel.from(other));
             catch ex
                 switch ex.identifier
-                    case 'm2plantUML:Enums:AccessLevel:from:TypeError'
+                    case 'matdoc:Enums:AccessLevel:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -77,7 +77,7 @@ classdef AccessLevel < uint32
             %
             % Call to obtain AccessLevel enumeration based on either of
             % the following data types:
-            % - m2plantUML.Enums.AccessLevel
+            % - matdoc.Enums.AccessLevel
             % - string          see method: fromNum
             % - numerical       see method: fromStr
             %
@@ -91,16 +91,16 @@ classdef AccessLevel < uint32
             %
             
             % determine the type of the input
-            if isa(val, 'm2plantUML.Enums.AccessLevel')
+            if isa(val, 'matdoc.Enums.AccessLevel')
                 enum = val;
             elseif isnumeric(val)
-                enum = m2plantUML.Enums.AccessLevel.fromNum(val);
+                enum = matdoc.Enums.AccessLevel.fromNum(val);
             elseif ischar(val)
-                enum = m2plantUML.Enums.AccessLevel.fromStr(val);
+                enum = matdoc.Enums.AccessLevel.fromStr(val);
             else
-                error('m2plantUML:Enums:AccessLevel:from:TypeError',...
+                error('matdoc:Enums:AccessLevel:from:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('m2plantUML.Enums.AccessLevel'))
+                    class(val), help('matdoc.Enums.AccessLevel'))
             end
             
         end % function enum = from(val)
@@ -120,22 +120,22 @@ classdef AccessLevel < uint32
             
             % check data type
             if ~isnumeric(val)
-                error('m2plantUML:Enums:AccessLevel:fromNum:TypeError',...
+                error('matdoc:Enums:AccessLevel:fromNum:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('m2plantUML.Enums.AccessLevel.fromNum'))
+                    class(val), help('matdoc.Enums.AccessLevel.fromNum'))
             end % if ~isnumeric(val)
             
             % get the enum
             switch val
                 case 0 % Public
-                    enum  = m2plantUML.Enums.AccessLevel.Public;
+                    enum  = matdoc.Enums.AccessLevel.Public;
                 case 1 % Protected
-                    enum  = m2plantUML.Enums.AccessLevel.Protected;
+                    enum  = matdoc.Enums.AccessLevel.Protected;
                 case 2 % Private
-                    enum  = m2plantUML.Enums.AccessLevel.Private;
+                    enum  = matdoc.Enums.AccessLevel.Private;
                 otherwise % find closest match
                     % fetch all names of the LogLevel
-                    avTypes = enumeration('m2plantUML.Enums.AccessLevel');
+                    avTypes = enumeration('matdoc.Enums.AccessLevel');
                     % find the closest matching
                     avTypeValues = double(avTypes);
                     [~, idx] = min(abs(avTypeValues - val));
@@ -161,23 +161,23 @@ classdef AccessLevel < uint32
             
             % check data type
             if ~ischar(val)
-                error('m2plantUML:Enums:AccessLevel:fromStr:TypeError',...
+                error('matdoc:Enums:AccessLevel:fromStr:TypeError',...
                     'Can not build enum from {}. Please have a look at the doc:\n\n%s',...
-                    class(val), help('m2plantUML.Enums.AccessLevel'));
+                    class(val), help('matdoc.Enums.AccessLevel'));
             end % if ~isnumeric(val)
             
             % get the enum
             switch lower(val)
                 case {'public', 'none'} % Public
-                    enum  = m2plantUML.Enums.AccessLevel.Public;
+                    enum  = matdoc.Enums.AccessLevel.Public;
                 case 'protected' % Protected
-                    enum  = m2plantUML.Enums.AccessLevel.Protected;
+                    enum  = matdoc.Enums.AccessLevel.Protected;
                 case 'private' % Private
-                    enum  = m2plantUML.Enums.AccessLevel.Private;
+                    enum  = matdoc.Enums.AccessLevel.Private;
                 otherwise % find closest match
-                    error('m2plantUML:Enums:AccessLevel:fromStr:ValueError',...
+                    error('matdoc:Enums:AccessLevel:fromStr:ValueError',...
                     'Can not find exact enum value for %s. Please have a look at the doc:\n\n%s',...
-                    val, help('m2plantUML.Enums.AccessLevel.fromStr'));
+                    val, help('matdoc.Enums.AccessLevel.fromStr'));
             end % switch val
             
         end % function enum = fromStr(val)

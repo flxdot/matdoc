@@ -1,5 +1,5 @@
 classdef Configuration < handle
-   
+    
     %% PROPERTIES: PUBLIC
     properties
         
@@ -24,13 +24,13 @@ classdef Configuration < handle
         % If set the UML won't contain any information about properties
         HideProperties = false;
         
-        % Flag: true or false 
+        % Flag: true or false
         % Default: false
         % If set the uml export will not contain refrences to built-in
         % classes
         IgnoreBuiltInClass = false;
         
-        % Flag: true or false 
+        % Flag: true or false
         % Default: true
         % If set the uml export will not contain methods inheritated from
         % built-in classes
@@ -38,7 +38,7 @@ classdef Configuration < handle
         
         % Flag: true or false
         % Default: true
-        % If set the uml export will not contain properties inheritated 
+        % If set the uml export will not contain properties inheritated
         % from built-in classes
         IngoreBuiltInPropertyInheritance = true;
         
@@ -69,7 +69,7 @@ classdef Configuration < handle
     
     %% PROPERTIES: ACCESS = PROTECTED
     properties (Access = protected)
-         
+        
         % List of meta.properties of public all properties
         % This is mainly used to build some maintance free code, rather
         % than making things espacially fast.
@@ -79,7 +79,7 @@ classdef Configuration < handle
     
     %% PROPERTIES: CONSTANT
     properties (Constant)
-         
+        
     end % properties (Constant)
     
     %% METHODS: PUBLIC
@@ -96,7 +96,7 @@ classdef Configuration < handle
             
             % Process the input %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if mod(length(varargin), 2) == 1
-                warning('m2plantUML:Configuration:InputInvalid',...
+                warning('matdoc:Configuration:InputInvalid',...
                     'It seems like there is something wrong here. Usually the number of inputs should be even. But it was odd. I'' just ignore the last input.');
                 varargin = varargin(1:end-1);
             end % if mod(length(varargin), 2) == 1
@@ -146,7 +146,7 @@ classdef Configuration < handle
                         this.HideEvents = true;
                         this.HideEnumerationMember = true;
                     otherwise
-                        error('m2plantUML:Configuration:setSetting:SettingNotFound',...
+                        error('matdoc:Configuration:setSetting:SettingNotFound',...
                             'Can not set settings ''%s'' because it don'' know that. You better check the documentation again!', key);
                 end % switch lower(key)
             end % if value
@@ -188,106 +188,106 @@ classdef Configuration < handle
         end % function reset(this)
         
         %% - set.IgnoreBuiltInClass(val)
-function set.IgnoreBuiltInClass(this, val)
-	% function set.IgnoreBuiltInClass(this, val)
-	%
-	% The setter method will make sure that only proper values are
-	% set.
-	
-	% check data type
-	if isempty(val) || (~islogical(val) && ~isnumeric(val))
-		error('m2plantUML:Configuration:setIgnoreBuiltInClass:TypeError',...
-			'The IgnoreBuiltInClass has to be a bool value.');
-	end % if (~islogical(val) && ~isnumeric(val))
-	
-	this.IgnoreBuiltInClass = logical(val(1));
-	
-end % function set.IgnoreBuiltInClass(this, val)
-
-%% - set.IngoreBuiltInMethodInheritance(val)
-function set.IngoreBuiltInMethodInheritance(this, val)
-	% function set.IngoreBuiltInMethodInheritance(this, val)
-	%
-	% The setter method will make sure that only proper values are
-	% set.
-	
-	% check data type
-	if isempty(val) || (~islogical(val) && ~isnumeric(val))
-		error('m2plantUML:Configuration:setIngoreBuiltInMethodInheritance:TypeError',...
-			'The IngoreBuiltInMethodInheritance has to be a bool value.');
-	end % if (~islogical(val) && ~isnumeric(val))
-	
-	this.IngoreBuiltInMethodInheritance = logical(val(1));
-	
-end % function set.IngoreBuiltInMethodInheritance(this, val)
-
-%% - set.IngoreBuiltInPropertyInheritance(val)
-function set.IngoreBuiltInPropertyInheritance(this, val)
-	% function set.IngoreBuiltInPropertyInheritance(this, val)
-	%
-	% The setter method will make sure that only proper values are
-	% set.
-	
-	% check data type
-	if isempty(val) || (~islogical(val) && ~isnumeric(val))
-		error('m2plantUML:Configuration:setIngoreBuiltInPropertyInheritance:TypeError',...
-			'The IngoreBuiltInPropertyInheritance has to be a bool value.');
-	end % if (~islogical(val) && ~isnumeric(val))
-	
-	this.IngoreBuiltInPropertyInheritance = logical(val(1));
-	
-end % function set.IngoreBuiltInPropertyInheritance(this, val)
-
-%% - set.PropertyDescription(val)
-function set.PropertyDescription(this, val)
-	% function set.PropertyDescription(this, val)
-	%
-	% The setter method will make sure that only proper values are
-	% set.
-	
-	% check data type
-	if isempty(val) || (~islogical(val) && ~isnumeric(val))
-		error('m2plantUML:Configuration:setPropertyDescription:TypeError',...
-			'The PropertyDescription has to be a bool value.');
-	end % if (~islogical(val) && ~isnumeric(val))
-	
-	this.PropertyDescription = logical(val(1));
-	
-end % function set.PropertyDescription(this, val)
-
-%% - set.PropertyInheritanceHint(val)
-function set.PropertyInheritanceHint(this, val)
-	% function set.PropertyInheritanceHint(this, val)
-	%
-	% The setter method will make sure that only proper values are
-	% set.
-	
-	% check data type
-	if isempty(val) || (~islogical(val) && ~isnumeric(val))
-		error('m2plantUML:Configuration:setPropertyInheritanceHint:TypeError',...
-			'The PropertyInheritanceHint has to be a bool value.');
-	end % if (~islogical(val) && ~isnumeric(val))
-	
-	this.PropertyInheritanceHint = logical(val(1));
-	
-end % function set.PropertyInheritanceHint(this, val)
-
-%% - set.MethodInheritanceHint(val)
-function set.MethodInheritanceHint(this, val)
-	% function set.MethodInheritanceHint(this, val)
-	%
-	% The setter method will make sure that only proper values are
-	% set.
-	
-	% check data type
-	if isempty(val) || (~islogical(val) && ~isnumeric(val))
-		error('m2plantUML:Configuration:setMethodInheritanceHint:TypeError',...
-			'The MethodInheritanceHint has to be a bool value.');
-	end % if (~islogical(val) && ~isnumeric(val))
-	
-	this.MethodInheritanceHint = logical(val(1));
-	
-end % function set.MethodInheritanceHint(this, val)
+        function set.IgnoreBuiltInClass(this, val)
+            % function set.IgnoreBuiltInClass(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setIgnoreBuiltInClass:TypeError',...
+                    'The IgnoreBuiltInClass has to be a bool value.');
+            end % if (~islogical(val) && ~isnumeric(val))
+            
+            this.IgnoreBuiltInClass = logical(val(1));
+            
+        end % function set.IgnoreBuiltInClass(this, val)
+        
+        %% - set.IngoreBuiltInMethodInheritance(val)
+        function set.IngoreBuiltInMethodInheritance(this, val)
+            % function set.IngoreBuiltInMethodInheritance(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setIngoreBuiltInMethodInheritance:TypeError',...
+                    'The IngoreBuiltInMethodInheritance has to be a bool value.');
+            end % if (~islogical(val) && ~isnumeric(val))
+            
+            this.IngoreBuiltInMethodInheritance = logical(val(1));
+            
+        end % function set.IngoreBuiltInMethodInheritance(this, val)
+        
+        %% - set.IngoreBuiltInPropertyInheritance(val)
+        function set.IngoreBuiltInPropertyInheritance(this, val)
+            % function set.IngoreBuiltInPropertyInheritance(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setIngoreBuiltInPropertyInheritance:TypeError',...
+                    'The IngoreBuiltInPropertyInheritance has to be a bool value.');
+            end % if (~islogical(val) && ~isnumeric(val))
+            
+            this.IngoreBuiltInPropertyInheritance = logical(val(1));
+            
+        end % function set.IngoreBuiltInPropertyInheritance(this, val)
+        
+        %% - set.PropertyDescription(val)
+        function set.PropertyDescription(this, val)
+            % function set.PropertyDescription(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setPropertyDescription:TypeError',...
+                    'The PropertyDescription has to be a bool value.');
+            end % if (~islogical(val) && ~isnumeric(val))
+            
+            this.PropertyDescription = logical(val(1));
+            
+        end % function set.PropertyDescription(this, val)
+        
+        %% - set.PropertyInheritanceHint(val)
+        function set.PropertyInheritanceHint(this, val)
+            % function set.PropertyInheritanceHint(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setPropertyInheritanceHint:TypeError',...
+                    'The PropertyInheritanceHint has to be a bool value.');
+            end % if (~islogical(val) && ~isnumeric(val))
+            
+            this.PropertyInheritanceHint = logical(val(1));
+            
+        end % function set.PropertyInheritanceHint(this, val)
+        
+        %% - set.MethodInheritanceHint(val)
+        function set.MethodInheritanceHint(this, val)
+            % function set.MethodInheritanceHint(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setMethodInheritanceHint:TypeError',...
+                    'The MethodInheritanceHint has to be a bool value.');
+            end % if (~islogical(val) && ~isnumeric(val))
+            
+            this.MethodInheritanceHint = logical(val(1));
+            
+        end % function set.MethodInheritanceHint(this, val)
         
     end % methods
     
