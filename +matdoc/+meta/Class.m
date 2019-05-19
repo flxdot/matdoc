@@ -1,4 +1,4 @@
-classdef Class < matdoc.meta.super.Base & ...
+classdef Class < matdoc.meta.super.Container & ...
         matdoc.uml.Class
     
     %% PROPERTIES: PUBLIC
@@ -116,7 +116,7 @@ classdef Class < matdoc.meta.super.Base & ...
             %
             %
             
-            this = this@matdoc.meta.super.Base(metaObj, parent);
+            this = this@matdoc.meta.super.Container(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -318,6 +318,9 @@ classdef Class < matdoc.meta.super.Base & ...
             %
             % This method will make sure the sub meta classes of the
             % metaObj are also wrapped by the meta classes of this package.
+            
+            % call super class method
+            walkMeta@matdoc.meta.super.Container(this);
             
             % PropertyList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.PropertyList)

@@ -12,7 +12,7 @@ matdoc.enums.AccessLevel --|> uint32
 class matdoc.meta.Class {
 }
 
-matdoc.meta.Class ..|> matdoc.meta.super.Base
+matdoc.meta.Class ..|> matdoc.meta.super.Container
 matdoc.meta.Class --|> matdoc.uml.Class
 
 abstract class matdoc.meta.super.Base {
@@ -20,10 +20,27 @@ abstract class matdoc.meta.super.Base {
 
 matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
 
+abstract class matdoc.meta.super.Container {
+}
+
+matdoc.meta.super.Container ..|> matdoc.meta.super.Base
+matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
+matdoc.meta.super.Container ..|> matdoc.super.WithAlias
+
+abstract class matdoc.super.WithAlias {
+}
+
+matdoc.super.WithAlias ..|> handle
+
 class matdoc.super.WithMetaObjProps {
 }
 
 matdoc.super.WithMetaObjProps ..|> handle
+
+abstract class matdoc.super.WithNameRaw {
+}
+
+matdoc.super.WithNameRaw ..|> handle
 
 class matdoc.uml.Class {
 }

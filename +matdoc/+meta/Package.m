@@ -1,4 +1,4 @@
-classdef Package < matdoc.meta.super.Base & ...
+classdef Package < matdoc.meta.super.Container & ...
         matdoc.uml.Package
    
     %% PROPERTIES: PUBLIC
@@ -46,11 +46,11 @@ classdef Package < matdoc.meta.super.Base & ...
         
         %% - Constructor
         function this = Package(metaObj, parent)
-            % function this = Package(metaObj)
+            % function this = Package(metaObj, parent)
             %
             %
             
-            this = this@matdoc.meta.super.Base(metaObj, parent);
+            this = this@matdoc.meta.super.Container(metaObj, parent);
             
         end % function this = ColumnDataDisplay()
         
@@ -87,6 +87,9 @@ classdef Package < matdoc.meta.super.Base & ...
             %
             % This method will make sure the sub meta classes of the
             % metaObj are also wrapped by the meta classes of this package.
+            
+            % call super class method
+            walkMeta@matdoc.meta.super.Container(this);
             
             % PackageList %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if ~isempty(this.metaObj.PackageList)

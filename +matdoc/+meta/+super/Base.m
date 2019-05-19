@@ -1,6 +1,4 @@
-classdef Base < matdoc.super.WithMetaObjProps & ...
-        matdoc.super.WithNameRaw & ...
-        matdoc.super.WithAlias
+classdef Base < matdoc.super.WithMetaObjProps
     
     %% PROPERTIES: PUBLIC
     properties
@@ -54,7 +52,11 @@ classdef Base < matdoc.super.WithMetaObjProps & ...
             end % while ~isa(this.UmlRoot, 'matdoc.Documentation') && ~isempty(this.UmlRoot)
             
             % Store handle to the config
-            this.Configuration = this.UmlRoot.Configuration;
+            if isa(this.UmlRoot, 'matdoc.Documentation')
+                this.Configuration = this.UmlRoot.Configuration;
+            else
+                this.Configuration = matdoc.Configuration();
+            end % if isa(this.UmlRoot, 'matdoc.Documentation')
             
         end % function this = ColumnDataDisplay()
         
@@ -65,14 +67,22 @@ classdef Base < matdoc.super.WithMetaObjProps & ...
             % The setter method will make sure that only proper values are
             % set.
             
+            % check data types
+            isPackage = isa(val, 'meta.package');
+            isClass = isa(val, 'meta.class');
+            isProperty = isa(val, 'meta.property');
+            isMethod = isa(val, 'meta.method');
+            isEvent = isa(val, 'meta.event');
+            isEnumeratedValue = isa(val, 'meta.EnumeratedValue');
+            
             % check data type
             if isempty(val) || (...
-                    ~isa(val, 'meta.package') && ...
-                    ~isa(val, 'meta.class') && ...
-                    ~isa(val, 'meta.property') && ...
-                    ~isa(val, 'meta.method') && ...
-                    ~isa(val, 'meta.event') && ...
-                    ~isa(val, 'meta.EnumeratedValue') && ...
+                    ~isPackage && ...
+                    ~isClass && ...
+                    ~isProperty && ...
+                    ~isMethod && ...
+                    ~isEvent && ...
+                    ~isEnumeratedValue && ...
                     ~isa(val, 'function_handle')...
                     )
                 error('matdoc:Base:Super:setmetaObj:TypeError',...
@@ -82,10 +92,6 @@ classdef Base < matdoc.super.WithMetaObjProps & ...
             
             % store the property
             this.metaObj = val;
-            
-            % set some other properties
-            setNameRaw(this);
-            setAlias(this);
             
             % make sure to wrap the sub meta classes
             walkMeta(this);
@@ -196,27 +202,6 @@ classdef Base < matdoc.super.WithMetaObjProps & ...
     
     %% METHODS: PROTECTED
     methods (Access = protected)
-       
-        %% - setNameRaw()
-        function setNameRaw(this)
-            % function setNameRaw()(this)
-            %
-            % The getter method will return the private member of the property
-            % set.
-            
-            if isprop(this, 'metaObj') && isa(this.metaObj, 'function_handle')
-                nameParts = strsplit(func2str(this.metaObj), '>');
-                if length(nameParts) == 2 && exist(nameParts{1}, 'file') == 2
-                    [~,ClassName,~] = fileparts(nameParts{1});
-                    nameParts{2} = strrep(nameParts{2}, ClassName, '');
-                    nameParts{2} = strrep(nameParts{2}, '.', '');
-                end % if length(nameParts) == 2 && exist(nameParts{1}, 'file') == 2
-            else % if isprop(this, 'metaObj') && isa(this.metaObj, 'function_handle')
-                nameParts = strsplit(this.metaObj.Name, '.');
-            end % if isprop(this, 'metaObj') && isa(this.metaObj, 'function_handle')
-            this.NameRaw = nameParts{end};
-            
-        end % function setNameRaw(this)
         
     end % methods (Access = protected)
     

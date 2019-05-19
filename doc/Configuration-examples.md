@@ -5,6 +5,7 @@ The configuration of the UML export is generally controlled by the public proper
 The following properties can be set:
  - HideEnumerationMember
  - HideEvents
+ - HideInheritance
  - HideMethods
  - HideProperties
  - IgnoreBuiltInClass
@@ -82,6 +83,31 @@ theDoc.UmlToFile('doc\uml-examples\export-class-HideEvents-true.txt');
 ![export-class-HideEvents-true.png](uml-examples/export-class-HideEvents-true.png)
 
 The UML output: **[export-class-HideEvents-true.txt](uml-examples/export-class-HideEvents-true.txt)**
+
+### HideInheritance
+
+Flag: true or false
+ Default: false
+ If set the UML won't contain any information about inheritances
+ If you specify inheritances your self, they will still be
+ displayed!
+
+*Default: **false***
+
+#### Example
+
+```matlab
+theDoc = matdoc.Documentation({...
+   'matdoc.meta.Class',...
+   'matdoc.enums.AccessLevel'...
+    },...
+    'HideInheritance', true...
+    );
+theDoc.UmlToFile('doc\uml-examples\export-class-HideInheritance-true.txt');
+```
+![export-class-HideInheritance-true.png](uml-examples/export-class-HideInheritance-true.png)
+
+The UML output: **[export-class-HideInheritance-true.txt](uml-examples/export-class-HideInheritance-true.txt)**
 
 ### HideMethods
 

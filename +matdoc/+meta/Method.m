@@ -225,12 +225,18 @@ classdef Method < matdoc.meta.super.Base & ...
                 % isConstructor %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                 if ~isempty(this.metaObj.DefiningClass)
                     % get the raw name of the defining class
+                    % Note this is about 250x faster than string split
                     defClassName = this.metaObj.DefiningClass.Name;
-                    nameParts = strsplit(defClassName, '.');
+                    sepPos = strfind(defClassName, '.');
+                    if any(sepPos)
+                        rawClassName = defClassName(sepPos(end)+1:end);
+                    else % if any(sepPos)
+                        rawClassName = defClassName;
+                    end % if any(sepPos)
                     
                     % check if the defining class name is the same as this methods
                     % name
-                    this.isConstructor = strcmp(this.Name, nameParts{end});
+                    this.isConstructor = strcmp(this.Name, rawClassName);
                 else % if ~isempty(this.metaObj.DefiningClass)
                     this.isConstructor = false;
                 end % if ~isempty(this.metaObj.DefiningClass)

@@ -45,11 +45,17 @@ classdef WithAlias < handle
             HashedStr = matdoc.tools.string2hash(StrToHash);
             
             % get the raw class name
-            ClassNameParts = strsplit(class(this), '.');
+            theClassName = class(this);
+            sepPos = strfind(theClassName, '.');
+            if any(sepPos)
+                rawClassName = theClassName(sepPos(end)+1:end);
+            else % if any(sepPos)
+                rawClassName = theClassName;
+            end % if any(sepPos)
             
             % build the Alias
             this.Alias = sprintf('%s%s%s',...
-                ClassNameParts{end},...
+                rawClassName,...
                 this.NameRaw,...
                 HashedStr(1:8)...
                 );

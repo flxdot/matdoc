@@ -163,16 +163,28 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = '@startuml';
             
-            % add some plantUML settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % get PlantUML string of each Class
+            for iClass = 1:length(this.ClassListFlattened)
+                % get the handle to the currently processed class
+                curClass = this.ClassListFlattened(iClass);
+                
+                umlStr = sprintf('%s\n\n%s',...
+                    umlStr,...
+                    curClass.getPlantUML()...
+                    );
+                
+            end % for iClass = 1:length(this.ClassListFlattened)
             
-            % namespaceSeparator
-            umlStr = sprintf('%s\n\n%s', umlStr, 'set namespaceSeparator none');
-            
-            % add ClassHierarchy %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            umlStr = sprintf('%s\n\n%s',...
-                umlStr,...
-                strtrim(this.ClassHierarchy.getPlantUML())...
-                );
+%             % add some plantUML settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             
+%             % namespaceSeparator
+%             umlStr = sprintf('%s\n\n%s', umlStr, 'set namespaceSeparator none');
+%             
+%             % add ClassHierarchy %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             umlStr = sprintf('%s\n\n%s',...
+%                 umlStr,...
+%                 strtrim(this.ClassHierarchy.getPlantUML())...
+%                 );
             
             % add UML String for the relations %%%%%%%%%%%%%%%%%%%%%%%%%%%%
             

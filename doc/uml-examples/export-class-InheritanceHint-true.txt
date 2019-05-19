@@ -20,23 +20,26 @@ enum matdoc.enums.AccessLevel {
    {method} + isEqual = eq(this, other)
    {method} + isEqual = ne(this, other)
    .. Static ..
-   {method}{static} + enum = from(val)
-   {method}{static} + enum = fromNum(val)
-   {method}{static} + enum = fromStr(val)
+   {method} {static} + enum = from(val)
+   {method} {static} + enum = fromNum(val)
+   {method} {static} + enum = fromStr(val)
    .. Static Hidden ..
-   {method}{static} + E = empty(varargin)
+   {method} {static} + E = empty(varargin)
 }
 
 matdoc.enums.AccessLevel --|> uint32
 
 class matdoc.meta.Class {
    -- Properties --
+   .. Constant ..
+   {field} {static} + IDENT < matdoc.uml.super.Base
    .. Protected ..
    {field} # Configuration < matdoc.super.WithMetaObjProps
    {field} # Parent < matdoc.super.WithMetaObjProps
    {field} # UmlRoot < matdoc.super.WithMetaObjProps
    .. SetAccess = Protected ..
    {field} + Abstract
+   {field} + Alias < matdoc.super.WithAlias
    {field} + ConstructOnLoad
    {field} + Constructor
    {field} + ContainingPackage
@@ -54,8 +57,7 @@ class matdoc.meta.Class {
    {field} + MethodList
    {field} + MethodListFlattened
    {field} + Name
-   {field} + NameRaw
-   {field} + plantUML < matdoc.uml.super.WithPlantUML
+   {field} + NameRaw < matdoc.super.WithNameRaw
    {field} + PropertyList
    {field} + PropertyListFlattened
    {field} + Sealed
@@ -66,33 +68,35 @@ class matdoc.meta.Class {
    -- Methods --
    {method} + this = Class(metaObj, parent)
    .. Protected ..
-   {method} # umlStr = getPlantUML(this) < matdoc.uml.Class
-   {method} # umlStr = getPlantUmlEnumerationValues(this) < matdoc.uml.Class
-   {method} # umlStr = getPlantUmlEvents(this) < matdoc.uml.Class
-   {method} # umlStr = getPlantUmlInheritanceRelation(this) < matdoc.uml.Class
-   {method} # umlStr = getPlantUmlMethods(this) < matdoc.uml.Class
-   {method} # umlStr = getPlantUmlProperties(this) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlEnumerationValues(this, ident_) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlEvents(this, ident_) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlInheritanceRelation(this, ident_) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlMethods(this, ident_) < matdoc.uml.Class
+   {method} # umlStr = getPlantUmlProperties(this, ident_) < matdoc.uml.Class
    {method} # getSortedMethodList(this)
    {method} # getSortedPropertyList(this)
    {method} # val = getSuperclassListFlattened(this)
+   {method} # setAlias(this) < matdoc.super.WithAlias
+   {method} # setNameRaw(this) < matdoc.super.WithNameRaw
    {method} # walkMeta(this)
    .. Public ..
    {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
+   {method} + umlStr = getPlantUML(this, ident_) < matdoc.uml.Class
    {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
    {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
    .. Static Hidden ..
-   {method}{static} + E = empty(varargin)
+   {method} {static} + E = empty(varargin)
    -- Events --
    ObjectBeingDestroyed < handle
 }
 
-matdoc.meta.Class ..|> matdoc.meta.super.Base
+matdoc.meta.Class ..|> matdoc.meta.super.Container
 matdoc.meta.Class --|> matdoc.uml.Class
 
 abstract class matdoc.meta.super.Base {
    -- Properties --
    .. Abstract  SetAccess = Protected ..
-   {field}{abstract} + Name
+   {field} {abstract} + Name
    .. Protected ..
    {field} # Configuration < matdoc.super.WithMetaObjProps
    {field} # Parent < matdoc.super.WithMetaObjProps
@@ -102,18 +106,69 @@ abstract class matdoc.meta.super.Base {
    -- Methods --
    {method} + this = Base(metaObj, parent)
    .. Abstract Protected ..
-   {method}{abstract} # walkMeta(this)
+   {method} {abstract} # walkMeta(this)
    .. Public ..
    {method} + is_eq = eq(this, other)
    {method} + is_ne = ne(this, other)
    {method} + [B, IX] = sort(this, dim, mode)
    .. Static Hidden ..
-   {method}{static} + E = empty(varargin)
+   {method} {static} + E = empty(varargin)
    -- Events --
    ObjectBeingDestroyed < handle
 }
 
 matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+
+abstract class matdoc.meta.super.Container {
+   -- Properties --
+   .. Abstract  SetAccess = Protected ..
+   {field} {abstract} + Name < matdoc.meta.super.Base
+   .. Protected ..
+   {field} # Configuration < matdoc.super.WithMetaObjProps
+   {field} # Parent < matdoc.super.WithMetaObjProps
+   {field} # UmlRoot < matdoc.super.WithMetaObjProps
+   .. SetAccess = Protected ..
+   {field} + Alias < matdoc.super.WithAlias
+   {field} + metaObj < matdoc.meta.super.Base
+   {field} + NameRaw < matdoc.super.WithNameRaw
+   -- Methods --
+   {method} + this = Container(metaObj, parent)
+   .. Protected ..
+   {method} # setAlias(this) < matdoc.super.WithAlias
+   {method} # setNameRaw(this) < matdoc.super.WithNameRaw
+   {method} # walkMeta(this)
+   .. Public ..
+   {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
+   {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
+   {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
+   .. Static Hidden ..
+   {method} {static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed < handle
+}
+
+matdoc.meta.super.Container ..|> matdoc.meta.super.Base
+matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
+matdoc.meta.super.Container ..|> matdoc.super.WithAlias
+
+abstract class matdoc.super.WithAlias {
+   -- Properties --
+   .. Abstract  SetAccess = Protected ..
+   {field} {abstract} + Name
+   {field} {abstract} + NameRaw
+   .. SetAccess = Protected ..
+   {field} + Alias
+   -- Methods --
+   {method} + obj = WithAlias()
+   .. Protected ..
+   {method} # setAlias(this)
+   .. Static Hidden ..
+   {method} {static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed < handle
+}
+
+matdoc.super.WithAlias ..|> handle
 
 class matdoc.super.WithMetaObjProps {
    -- Properties --
@@ -124,32 +179,51 @@ class matdoc.super.WithMetaObjProps {
    -- Methods --
    {method} + obj = WithMetaObjProps()
    .. Static Hidden ..
-   {method}{static} + E = empty(varargin)
+   {method} {static} + E = empty(varargin)
    -- Events --
    ObjectBeingDestroyed < handle
 }
 
 matdoc.super.WithMetaObjProps ..|> handle
 
+abstract class matdoc.super.WithNameRaw {
+   -- Properties --
+   .. Abstract  SetAccess = Protected ..
+   {field} {abstract} + Name
+   .. SetAccess = Protected ..
+   {field} + NameRaw
+   -- Methods --
+   {method} + obj = WithNameRaw()
+   .. Protected ..
+   {method} # setNameRaw(this)
+   .. Static Hidden ..
+   {method} {static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed < handle
+}
+
+matdoc.super.WithNameRaw ..|> handle
+
 class matdoc.uml.Class {
    -- Properties --
+   .. Constant ..
+   {field} {static} + IDENT < matdoc.uml.super.Base
    .. Protected ..
    {field} # Configuration < matdoc.super.WithMetaObjProps
    {field} # Parent < matdoc.super.WithMetaObjProps
    {field} # UmlRoot < matdoc.super.WithMetaObjProps
-   .. SetAccess = Protected ..
-   {field} + plantUML < matdoc.uml.super.WithPlantUML
    -- Methods --
    {method} + obj = Class()
    .. Protected ..
-   {method} # umlStr = getPlantUML(this)
-   {method} # umlStr = getPlantUmlEnumerationValues(this)
-   {method} # umlStr = getPlantUmlEvents(this)
-   {method} # umlStr = getPlantUmlInheritanceRelation(this)
-   {method} # umlStr = getPlantUmlMethods(this)
-   {method} # umlStr = getPlantUmlProperties(this)
+   {method} # umlStr = getPlantUmlEnumerationValues(this, ident_)
+   {method} # umlStr = getPlantUmlEvents(this, ident_)
+   {method} # umlStr = getPlantUmlInheritanceRelation(this, ident_)
+   {method} # umlStr = getPlantUmlMethods(this, ident_)
+   {method} # umlStr = getPlantUmlProperties(this, ident_)
+   .. Public ..
+   {method} + umlStr = getPlantUML(this, ident_)
    .. Static Hidden ..
-   {method}{static} + E = empty(varargin)
+   {method} {static} + E = empty(varargin)
    -- Events --
    ObjectBeingDestroyed < handle
 }
@@ -158,18 +232,18 @@ matdoc.uml.Class ..|> matdoc.uml.super.Base
 
 abstract class matdoc.uml.super.Base {
    -- Properties --
+   .. Constant ..
+   {field} {static} + IDENT
    .. Protected ..
    {field} # Configuration < matdoc.super.WithMetaObjProps
    {field} # Parent < matdoc.super.WithMetaObjProps
    {field} # UmlRoot < matdoc.super.WithMetaObjProps
-   .. SetAccess = Protected ..
-   {field} + plantUML < matdoc.uml.super.WithPlantUML
    -- Methods --
    {method} + obj = Base()
-   .. Abstract Protected ..
-   {method}{abstract} # getPlantUML(this) < matdoc.uml.super.WithPlantUML
+   .. Abstract ..
+   {method} {abstract} + umlStr = getPlantUML(this, ident_) < matdoc.uml.super.WithPlantUML
    .. Static Hidden ..
-   {method}{static} + E = empty(varargin)
+   {method} {static} + E = empty(varargin)
    -- Events --
    ObjectBeingDestroyed < handle
 }
@@ -178,15 +252,12 @@ matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
 matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
 
 abstract class matdoc.uml.super.WithPlantUML {
-   -- Properties --
-   .. SetAccess = Protected ..
-   {field} + plantUML
    -- Methods --
    {method} + obj = WithPlantUML()
-   .. Abstract Protected ..
-   {method}{abstract} # getPlantUML(this)
+   .. Abstract ..
+   {method} {abstract} + umlStr = getPlantUML(this, ident_)
    .. Static Hidden ..
-   {method}{static} + E = empty(varargin)
+   {method} {static} + E = empty(varargin)
    -- Events --
    ObjectBeingDestroyed < handle
 }

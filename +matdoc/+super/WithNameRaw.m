@@ -27,8 +27,13 @@ classdef WithNameRaw < handle
             % The getter method will return the private member of the property
             % set.
             
-            nameParts = strsplit(this.Name, '.');
-            this.NameRaw = nameParts{end};
+            % this is ~250x faster than str split
+            sepPos = strfind(this.Name, '.');
+            if any(sepPos)
+                this.NameRaw = this.Name(sepPos(end)+1:end);
+            else % if any(sepPos)
+                this.NameRaw = this.Name;
+            end % if any(sepPos)
             
         end % function setNameRaw(this)
         
