@@ -161,7 +161,7 @@ classdef Class < matdoc.uml.super.Base
                     
                     % may be the class needs to be skipped?
                     if this.Configuration.IngoreBuiltInPropertyInheritance && ...
-                            matdoc.isBuiltIn(curMetaObj.metaObj.DefiningClass)
+                            matdoc.tools.isBuiltIn(curMetaObj.metaObj.DefiningClass)
                         continue;
                     end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
                     
@@ -230,7 +230,7 @@ classdef Class < matdoc.uml.super.Base
                     % may be the class needs to be skipped?
                     if curMetaObj.isConstructor || ...
                             (this.Configuration.IngoreBuiltInMethodInheritance &&...
-                            matdoc.isBuiltIn(curMetaObj.metaObj.DefiningClass))
+                            matdoc.tools.isBuiltIn(curMetaObj.metaObj.DefiningClass))
                         continue;
                     end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
                     

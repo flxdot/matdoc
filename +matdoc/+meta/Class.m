@@ -303,7 +303,7 @@ classdef Class < matdoc.meta.super.Container & ...
             % The getter method will return the private member of the property
             % set.
             
-            val = matdoc.isBuiltIn(this.metaObj);
+            val = matdoc.tools.isBuiltIn(this.metaObj);
             
         end % function val = get.isBuiltIn(this)
 

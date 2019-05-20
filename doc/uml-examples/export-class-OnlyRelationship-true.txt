@@ -1,39 +1,69 @@
 @startuml
 
+set namespaceSeparator none
+
 abstract class handle {
 }
 
-enum matdoc.enums.AccessLevel {
-}
-
-class matdoc.meta.Class {
-}
-
-abstract class matdoc.meta.super.Base {
-}
-
-abstract class matdoc.meta.super.Container {
-}
-
-abstract class matdoc.super.WithAlias {
-}
-
-class matdoc.super.WithMetaObjProps {
-}
-
-abstract class matdoc.super.WithNameRaw {
-}
-
-class matdoc.uml.Class {
-}
-
-abstract class matdoc.uml.super.Base {
-}
-
-abstract class matdoc.uml.super.WithPlantUML {
-}
-
 class uint32 {
+}
+
+package matdoc {
+
+   package matdoc.enums {
+   
+      enum matdoc.enums.AccessLevel {
+      }
+   
+   }
+
+   package matdoc.meta {
+   
+      class matdoc.meta.Class {
+      }
+   
+      package matdoc.meta.super {
+      
+         abstract class matdoc.meta.super.Base {
+         }
+      
+         abstract class matdoc.meta.super.Container {
+         }
+      
+      }
+   
+   }
+
+   package matdoc.super {
+   
+      abstract class matdoc.super.WithAlias {
+      }
+   
+      class matdoc.super.WithMetaObjProps {
+      }
+   
+      abstract class matdoc.super.WithNameRaw {
+      }
+   
+   }
+
+   package matdoc.uml {
+   
+      class matdoc.uml.Class {
+      }
+   
+      package matdoc.uml.super {
+      
+         abstract class matdoc.uml.super.Base {
+         }
+      
+         abstract class matdoc.uml.super.WithPlantUML {
+         }
+      
+      }
+   
+   }
+
 }
 
 
@@ -51,6 +81,5 @@ matdoc.uml.Class ..|> matdoc.uml.super.Base
 matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
 matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
 matdoc.uml.super.WithPlantUML ..|> handle
-
 
 @enduml

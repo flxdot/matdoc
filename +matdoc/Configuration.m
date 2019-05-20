@@ -67,6 +67,15 @@ classdef Configuration < handle
         % properties at the end of the line
         PropertyInheritanceHint = true;
         
+        % Flag: true or fals
+        % Default: false
+        % If set the UML export will be done class wise instead of nesting
+        % classes into their packages. This can address issues when the
+        % classe diagram looks funky or classes are actually completly
+        % missing form diagram. This is mainly caused by naming conflicts
+        % when classes and packages have the same name.
+        SafeUmlExport = false;
+        
     end % properties
     
     %% PROPERTIES: SETACCESS = PROTECTED

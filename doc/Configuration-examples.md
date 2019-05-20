@@ -14,6 +14,7 @@ The following properties can be set:
  - MethodInheritanceHint
  - PropertyDescription
  - PropertyInheritanceHint
+ - SafeUmlExport
 
 There are also some special settings which can be used as a short cut and only in combination with a value of `true`:
  - IngoreBuiltInInheritance
@@ -298,6 +299,33 @@ theDoc.UmlToFile('doc\uml-examples\export-class-PropertyInheritanceHint-false.tx
 ![export-class-PropertyInheritanceHint-false.png](uml-examples/export-class-PropertyInheritanceHint-false.png)
 
 The UML output: **[export-class-PropertyInheritanceHint-false.txt](uml-examples/export-class-PropertyInheritanceHint-false.txt)**
+
+### SafeUmlExport
+
+Flag: true or fals
+ Default: false
+ If set the UML export will be done class wise instead of nesting
+ classes into their packages. This can address issues when the
+ classe diagram looks funky or classes are actually completly
+ missing form diagram. This is mainly caused by naming conflicts
+ when classes and packages have the same name.
+
+*Default: **false***
+
+#### Example
+
+```matlab
+theDoc = matdoc.Documentation({...
+   'matdoc.meta.Class',...
+   'matdoc.enums.AccessLevel'...
+    },...
+    'SafeUmlExport', true...
+    );
+theDoc.UmlToFile('doc\uml-examples\export-class-SafeUmlExport-true.txt');
+```
+![export-class-SafeUmlExport-true.png](uml-examples/export-class-SafeUmlExport-true.png)
+
+The UML output: **[export-class-SafeUmlExport-true.txt](uml-examples/export-class-SafeUmlExport-true.txt)**
 
 ## Special Settings
 

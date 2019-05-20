@@ -107,7 +107,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
                 % add the meta class object directly to the list
                 addMetaObj(this, object);
             elseif ischar(object)
-                addMetaObj(this, matdoc.metaFromStr(object));
+                addMetaObj(this, matdoc.tools.metaFromStr(object));
             else % get the meta class of the actual passed object
                 addMetaObj(this, metaclass(val));
             end % if isa(object, 'meta.class')
@@ -163,56 +163,11 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             % uml string start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = '@startuml';
             
-            % get PlantUML string of each Class
-            for iClass = 1:length(this.ClassListFlattened)
-                % get the handle to the currently processed class
-                curClass = this.ClassListFlattened(iClass);
-                
-                % do the built-in classes need to be skipped?
-                if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
-                    continue;
-                end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
-                
-                umlStr = sprintf('%s\n\n%s',...
-                    umlStr,...
-                    curClass.getPlantUML()...
-                    );
-                
-            end % for iClass = 1:length(this.ClassListFlattened)
-            
-            % get inheritance relation ships %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            if ~this.Configuration.HideInheritance
-                for iClass = 1:length(this.ClassListFlattened)
-                    if iClass == 1
-                        umlStr = sprintf('%s\n', umlStr);
-                    end % if iClass == 1
-                    
-                    % get the handle to the currently processed class
-                    curClass = this.ClassListFlattened(iClass);
-                    
-                    % do the built-in classes need to be skipped?
-                    if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
-                        continue;
-                    end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
-                    
-                    umlStr = sprintf('%s\n%s',...
-                        umlStr,...
-                        curClass.getPlantUmlInheritanceRelation()...
-                        );
-                    
-                end % for iClass = 1:length(this.ClassListFlattened)
-            end % if ~this.Configuration.HideInheritance
-            
-%             % add some plantUML settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%             
-%             % namespaceSeparator
-%             umlStr = sprintf('%s\n\n%s', umlStr, 'set namespaceSeparator none');
-%             
-%             % add ClassHierarchy %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%             umlStr = sprintf('%s\n\n%s',...
-%                 umlStr,...
-%                 strtrim(this.ClassHierarchy.getPlantUML())...
-%                 );
+            % add the plantUML string representing the classes %%%%%%%%%%%%
+            umlStr = sprintf('%s\n\n%s',...
+                umlStr,...
+                getClassUml(this)...
+                );
             
             % add UML String for the relations %%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
@@ -281,7 +236,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             % function addMetaObj(this, metaObj)
             %
             % Call to add meta.class objects to the list of uml objects
-            % (UmlObjects). 
+            % (UmlObjects).
             % This method is called by addObj()
             %
             
@@ -335,7 +290,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             % function getClassListFlattened(this)
             %
             % Sets the ClassListFlattened property by checking every added
-            % class for its super classes and every added package (and 
+            % class for its super classes and every added package (and
             % their subpackages) for their containing classes.
             
             % Get classes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -369,6 +324,79 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
         end % function val = getClassListFlattened(this)
         
+        %% - umlStr = getClassUml()
+        function umlStr = getClassUml(this)
+            % function umlStr = getClassUml(this)
+            %
+            % Returns the UML pseudo code to display a required classes. If
+            % the SaveUmlExport flag is set, the export will be done flat
+            % for each class. If not it will be a hierarchical export with
+            % classes nested in their packages.
+            
+            umlStr = '';
+            
+            % Get the uml code for the classes %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if this.Configuration.SafeUmlExport
+                
+                % get PlantUML string of each Class
+                for iClass = 1:length(this.ClassListFlattened)
+                    % get the handle to the currently processed class
+                    curClass = this.ClassListFlattened(iClass);
+                    
+                    % do the built-in classes need to be skipped?
+                    if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                        continue;
+                    end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                    
+                    umlStr = sprintf('%s\n\n%s',...
+                        umlStr,...
+                        curClass.getPlantUML()...
+                        );
+                    
+                end % for iClass = 1:length(this.ClassListFlattened)
+            else % if this.Confiuration.SafeUmlExport
+                
+                % namespaceSeparator
+                umlStr = sprintf('%s\n\n%s', umlStr, 'set namespaceSeparator none');
+                
+                % add ClassHierarchy
+                umlStr = sprintf('%s\n\n%s',...
+                    umlStr,...
+                    strtrim(this.ClassHierarchy.getPlantUML())...
+                    );
+                
+            end % if this.Confiuration.SafeUmlExport
+            
+            % get inheritance relation ships %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if ~this.Configuration.HideInheritance
+                
+                for iClass = 1:length(this.ClassListFlattened)
+                    if iClass == 1
+                        umlStr = sprintf('%s\n', umlStr);
+                    end % if iClass == 1
+                    
+                    % get the handle to the currently processed class
+                    curClass = this.ClassListFlattened(iClass);
+                    
+                    % do the built-in classes need to be skipped?
+                    if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                        continue;
+                    end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                    
+                    umlStr = sprintf('%s\n%s',...
+                        umlStr,...
+                        curClass.getPlantUmlInheritanceRelation()...
+                        );
+                    
+                end % for iClass = 1:length(this.ClassListFlattened)
+                
+            end % if ~this.Configuration.HideInheritance
+            
+            % cleaup the string %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            umlStr = strtrim(umlStr);
+            
+        end % function umlStr = getClassUml(this)
+        
         %% - getPackageListFlattened()
         function getPackageListFlattened(this)
             % function getPackageListFlattened(this)
@@ -391,7 +419,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
         %% - discoverClassHierarchy(this)
         function discoverClassHierarchy(this)
             % function discoverClassHierarchy(this)
-            % 
+            %
             % This function will find out how the class hierarchy is.
             % Therefore it will check every class for the package it is
             % contained recursivlely. If the class is not contained in a
