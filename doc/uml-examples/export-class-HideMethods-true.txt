@@ -16,9 +16,11 @@ package matdoc {
    
       enum matdoc.enums.AccessLevel {
          -- Enumeration Values --
+         None
          Public
          Protected
          Private
+         Custom
       }
    
    }
@@ -49,6 +51,7 @@ package matdoc {
          {field} + InferiorClasses
          {field} + InheritationRelations
          {field} + isBuiltIn
+         {field} + isUnitTest
          {field} + metaObj < matdoc.meta.super.Base
          {field} + MethodList
          {field} + MethodListFlattened
@@ -102,6 +105,16 @@ package matdoc {
    }
 
    package matdoc.super {
+   
+      class matdoc.super.Base {
+         -- Properties --
+         .. Protected ..
+         {field} # Configuration < matdoc.super.WithMetaObjProps
+         {field} # Parent < matdoc.super.WithMetaObjProps
+         {field} # UmlRoot < matdoc.super.WithMetaObjProps
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
    
       abstract class matdoc.super.WithAlias {
          -- Properties --
@@ -179,10 +192,11 @@ package matdoc {
 matdoc.enums.AccessLevel --|> uint32
 matdoc.meta.Class ..|> matdoc.meta.super.Container
 matdoc.meta.Class --|> matdoc.uml.Class
-matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.meta.super.Base --|> matdoc.super.Base
 matdoc.meta.super.Container ..|> matdoc.meta.super.Base
 matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
 matdoc.meta.super.Container ..|> matdoc.super.WithAlias
+matdoc.super.Base --|> matdoc.super.WithMetaObjProps
 matdoc.super.WithAlias ..|> handle
 matdoc.super.WithMetaObjProps ..|> handle
 matdoc.super.WithNameRaw ..|> handle

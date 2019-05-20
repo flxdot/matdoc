@@ -41,13 +41,20 @@ classdef Configuration < handle
         % Default: true
         % If set the uml export will not contain methods inheritated from
         % built-in classes
-        IngoreBuiltInMethodInheritance = true;
+        IgnoreBuiltInMethodInheritance = true;
         
         % Flag: true or false
         % Default: true
         % If set the uml export will not contain properties inheritated
         % from built-in classes
-        IngoreBuiltInPropertyInheritance = true;
+        IgnoreBuiltInPropertyInheritance = true;
+        
+        % Flag: true or false
+        % Default: true
+        % If set the export will not contain any classes which are from the
+        % matlab unittesting framework or inheritated from the unit testing
+        % frame work
+        IgnoreTests = true;
         
         % Flag: true or false
         % Default: true
@@ -150,9 +157,9 @@ classdef Configuration < handle
             % check some special cases
             if value
                 switch lower(key)
-                    case 'ingorebuiltininheritance'
-                        this.IngoreBuiltInMethodInheritance = value;
-                        this.IngoreBuiltInPropertyInheritance = value;
+                    case 'ignorebuiltininheritance'
+                        this.IgnoreBuiltInMethodInheritance = value;
+                        this.IgnoreBuiltInPropertyInheritance = value;
                     case 'inheritancehint'
                         this.PropertyInheritanceHint = value;
                         this.MethodInheritanceHint = value;
@@ -163,7 +170,7 @@ classdef Configuration < handle
                         this.HideEnumerationMember = true;
                     otherwise
                         error('matdoc:Configuration:setSetting:SettingNotFound',...
-                            'Can not set settings ''%s'' because it don'' know that. You better check the documentation again!', key);
+                            'Can not set settings ''%s'' because i don''t know that. You better check the documentation again!', key);
                 end % switch lower(key)
             end % if value
             
@@ -220,39 +227,39 @@ classdef Configuration < handle
             
         end % function set.IgnoreBuiltInClass(this, val)
         
-        %% - set.IngoreBuiltInMethodInheritance(val)
-        function set.IngoreBuiltInMethodInheritance(this, val)
-            % function set.IngoreBuiltInMethodInheritance(this, val)
+        %% - set.IgnoreBuiltInMethodInheritance(val)
+        function set.IgnoreBuiltInMethodInheritance(this, val)
+            % function set.IgnoreBuiltInMethodInheritance(this, val)
             %
             % The setter method will make sure that only proper values are
             % set.
             
             % check data type
             if isempty(val) || (~islogical(val) && ~isnumeric(val))
-                error('matdoc:Configuration:setIngoreBuiltInMethodInheritance:TypeError',...
-                    'The IngoreBuiltInMethodInheritance has to be a bool value.');
+                error('matdoc:Configuration:setIgnoreBuiltInMethodInheritance:TypeError',...
+                    'The IgnoreBuiltInMethodInheritance has to be a bool value.');
             end % if (~islogical(val) && ~isnumeric(val))
             
-            this.IngoreBuiltInMethodInheritance = logical(val(1));
+            this.IgnoreBuiltInMethodInheritance = logical(val(1));
             
-        end % function set.IngoreBuiltInMethodInheritance(this, val)
+        end % function set.IgnoreBuiltInMethodInheritance(this, val)
         
-        %% - set.IngoreBuiltInPropertyInheritance(val)
-        function set.IngoreBuiltInPropertyInheritance(this, val)
-            % function set.IngoreBuiltInPropertyInheritance(this, val)
+        %% - set.IgnoreBuiltInPropertyInheritance(val)
+        function set.IgnoreBuiltInPropertyInheritance(this, val)
+            % function set.IgnoreBuiltInPropertyInheritance(this, val)
             %
             % The setter method will make sure that only proper values are
             % set.
             
             % check data type
             if isempty(val) || (~islogical(val) && ~isnumeric(val))
-                error('matdoc:Configuration:setIngoreBuiltInPropertyInheritance:TypeError',...
-                    'The IngoreBuiltInPropertyInheritance has to be a bool value.');
+                error('matdoc:Configuration:setIgnoreBuiltInPropertyInheritance:TypeError',...
+                    'The IgnoreBuiltInPropertyInheritance has to be a bool value.');
             end % if (~islogical(val) && ~isnumeric(val))
             
-            this.IngoreBuiltInPropertyInheritance = logical(val(1));
+            this.IgnoreBuiltInPropertyInheritance = logical(val(1));
             
-        end % function set.IngoreBuiltInPropertyInheritance(this, val)
+        end % function set.IgnoreBuiltInPropertyInheritance(this, val)
         
         %% - set.PropertyDescription(val)
         function set.PropertyDescription(this, val)

@@ -14,7 +14,7 @@ theDocCfg = matdoc.Documentation({...
     );
 cfgMeta = theDocCfg.UmlObjects{1};
 cfgProps = sort(cfgMeta.PropertyList([cfgMeta.PropertyList(:).SetAccess] == 'public'));
-specialSettings = {'IngoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelationship'};
+specialSettings = {'IgnoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelationship'};
 
 % export default diagram
 fileName = 'export-class';
@@ -90,7 +90,7 @@ end % for iProp = 1:length(CfgProps)
 % Generate a section for each special setting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 DocStr = sprintf('%s\n\n## Special Settings', DocStr);
 specialDescription = {...
-    'IngoreBuiltInMethodInheritance and IngoreBuiltInPropertyInheritance combined.',... IngoreBuiltInInheritance
+    'IgnoreBuiltInMethodInheritance and IgnoreBuiltInPropertyInheritance combined.',... IgnoreBuiltInInheritance
     'MethodInheritanceHint and PropertyInheritanceHint combined.',... InheritanceHint
     'Hiddes all methods, properties, events and enumeration members to let the user focus on the relation between the classes. This can be helfull when the Diagram is very large or fairly complicated.',... OnlyRelationship
     };

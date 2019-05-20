@@ -2,9 +2,11 @@ classdef AccessLevel < uint32
     % AccessLevel Defines the type of mold
     %
     %   Supported types are
+    %    - None
     %    - Public
     %    - Protected
     %    - Private
+    %    - Custom
     %
     %   If you want to obtain this enum based on a value please check the
     %   docs of following static methods:
@@ -16,12 +18,16 @@ classdef AccessLevel < uint32
     %% ENUMERATION
     enumeration
         
+        % None
+        None      (0)
         % Public
-        Public    (0)
+        Public    (1)
         % Protected
-        Protected (1)
+        Protected (2)
         % Private
-        Private   (2)
+        Private   (3)
+        % Custom
+        Custom    (4)
         
     end % enumeration
     
@@ -38,7 +44,7 @@ classdef AccessLevel < uint32
                 isEqual = double(matdoc.enums.AccessLevel.from(this)) == double(matdoc.enums.AccessLevel.from(other));
             catch ex
                 switch ex.identifier
-                    case 'matdoc:Enums:AccessLevel:from:TypeError'
+                    case 'matdoc:enums:AccessLevel:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -57,7 +63,7 @@ classdef AccessLevel < uint32
                 isEqual = double(matdoc.enums.AccessLevel.from(this)) ~= double(matdoc.enums.AccessLevel.from(other));
             catch ex
                 switch ex.identifier
-                    case 'matdoc:Enums:AccessLevel:from:TypeError'
+                    case 'matdoc:enums:AccessLevel:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -85,9 +91,11 @@ classdef AccessLevel < uint32
             % 
             %  Enum      | Numeric | String
             % ===========|=========|========================
-            %  Public    |    0    | 'Public'
-            %  Protected |    1    | 'Protected'
-            %  Private   |    2    | 'Private'
+            %  None      |    0    | 'None'
+            %  Public    |    1    | 'Public'
+            %  Protected |    2    | 'Protected'
+            %  Private   |    3    | 'Private'
+            %  Custom    |    4    | any other string
             %
             
             % determine the type of the input
@@ -97,8 +105,10 @@ classdef AccessLevel < uint32
                 enum = matdoc.enums.AccessLevel.fromNum(val);
             elseif ischar(val)
                 enum = matdoc.enums.AccessLevel.fromStr(val);
+            elseif iscell(val)
+                enum = matdoc.enums.AccessLevel.Custom;
             else
-                error('matdoc:Enums:AccessLevel:from:TypeError',...
+                error('matdoc:enums:AccessLevel:from:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
                     class(val), help('matdoc.enums.AccessLevel'))
             end
@@ -114,25 +124,31 @@ classdef AccessLevel < uint32
             %
             %  Enum      | Numeric
             % ===========|=========
-            %  Public    |    0
-            %  Protected |    1
-            %  Private   |    2
+            %  None      |    0
+            %  Public    |    1
+            %  Protected |    2
+            %  Private   |    3
+            %  Custom    |    4
             
             % check data type
             if ~isnumeric(val)
-                error('matdoc:Enums:AccessLevel:fromNum:TypeError',...
+                error('matdoc:enums:AccessLevel:fromNum:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
                     class(val), help('matdoc.enums.AccessLevel.fromNum'))
             end % if ~isnumeric(val)
             
             % get the enum
             switch val
-                case 0 % Public
+                case 0 % None
+                    enum  = matdoc.enums.AccessLevel.None;
+                case 1 % Public
                     enum  = matdoc.enums.AccessLevel.Public;
-                case 1 % Protected
+                case 2 % Protected
                     enum  = matdoc.enums.AccessLevel.Protected;
-                case 2 % Private
+                case 3 % Private
                     enum  = matdoc.enums.AccessLevel.Private;
+                case 4 % Custom
+                    enum  = matdoc.enums.AccessLevel.Custom;
                 otherwise % find closest match
                     % fetch all names of the LogLevel
                     avTypes = enumeration('matdoc.enums.AccessLevel');
@@ -155,29 +171,31 @@ classdef AccessLevel < uint32
             % 
             %  Enum      | String
             % ===========|=========================
+            %  None      | 'None'
             %  Public    | 'Public'
             %  Protected | 'Protected'
             %  Private   | 'Private'
+            %  Custom    | any other string
             
             % check data type
             if ~ischar(val)
-                error('matdoc:Enums:AccessLevel:fromStr:TypeError',...
+                error('matdoc:enums:AccessLevel:fromStr:TypeError',...
                     'Can not build enum from {}. Please have a look at the doc:\n\n%s',...
                     class(val), help('matdoc.enums.AccessLevel'));
             end % if ~isnumeric(val)
             
             % get the enum
             switch lower(val)
-                case {'public', 'none'} % Public
+                case 'none' % None
+                    enum  = matdoc.enums.AccessLevel.None;
+                case 'public' % Public
                     enum  = matdoc.enums.AccessLevel.Public;
                 case 'protected' % Protected
                     enum  = matdoc.enums.AccessLevel.Protected;
                 case 'private' % Private
                     enum  = matdoc.enums.AccessLevel.Private;
-                otherwise % find closest match
-                    error('matdoc:Enums:AccessLevel:fromStr:ValueError',...
-                    'Can not find exact enum value for %s. Please have a look at the doc:\n\n%s',...
-                    val, help('matdoc.enums.AccessLevel.fromStr'));
+                otherwise % Custom
+                    enum  = matdoc.enums.AccessLevel.Custom;
             end % switch val
             
         end % function enum = fromStr(val)

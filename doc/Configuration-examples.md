@@ -9,15 +9,16 @@ The following properties can be set:
  - HideMethods
  - HideProperties
  - IgnoreBuiltInClass
- - IngoreBuiltInMethodInheritance
- - IngoreBuiltInPropertyInheritance
+ - IgnoreBuiltInMethodInheritance
+ - IgnoreBuiltInPropertyInheritance
+ - IgnoreTests
  - MethodInheritanceHint
  - PropertyDescription
  - PropertyInheritanceHint
  - SafeUmlExport
 
 There are also some special settings which can be used as a short cut and only in combination with a value of `true`:
- - IngoreBuiltInInheritance
+ - IgnoreBuiltInInheritance
  - InheritanceHint
  - OnlyRelationship
 
@@ -180,7 +181,7 @@ theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreBuiltInClass-true.txt');
 
 The UML output: **[export-class-IgnoreBuiltInClass-true.txt](uml-examples/export-class-IgnoreBuiltInClass-true.txt)**
 
-### IngoreBuiltInMethodInheritance
+### IgnoreBuiltInMethodInheritance
 
 Flag: true or false
  Default: true
@@ -196,15 +197,15 @@ theDoc = matdoc.Documentation({...
    'matdoc.meta.Class',...
    'matdoc.enums.AccessLevel'...
     },...
-    'IngoreBuiltInMethodInheritance', false...
+    'IgnoreBuiltInMethodInheritance', false...
     );
-theDoc.UmlToFile('doc\uml-examples\export-class-IngoreBuiltInMethodInheritance-false.txt');
+theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreBuiltInMethodInheritance-false.txt');
 ```
-![export-class-IngoreBuiltInMethodInheritance-false.png](uml-examples/export-class-IngoreBuiltInMethodInheritance-false.png)
+![export-class-IgnoreBuiltInMethodInheritance-false.png](uml-examples/export-class-IgnoreBuiltInMethodInheritance-false.png)
 
-The UML output: **[export-class-IngoreBuiltInMethodInheritance-false.txt](uml-examples/export-class-IngoreBuiltInMethodInheritance-false.txt)**
+The UML output: **[export-class-IgnoreBuiltInMethodInheritance-false.txt](uml-examples/export-class-IgnoreBuiltInMethodInheritance-false.txt)**
 
-### IngoreBuiltInPropertyInheritance
+### IgnoreBuiltInPropertyInheritance
 
 Flag: true or false
  Default: true
@@ -220,13 +221,38 @@ theDoc = matdoc.Documentation({...
    'matdoc.meta.Class',...
    'matdoc.enums.AccessLevel'...
     },...
-    'IngoreBuiltInPropertyInheritance', false...
+    'IgnoreBuiltInPropertyInheritance', false...
     );
-theDoc.UmlToFile('doc\uml-examples\export-class-IngoreBuiltInPropertyInheritance-false.txt');
+theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreBuiltInPropertyInheritance-false.txt');
 ```
-![export-class-IngoreBuiltInPropertyInheritance-false.png](uml-examples/export-class-IngoreBuiltInPropertyInheritance-false.png)
+![export-class-IgnoreBuiltInPropertyInheritance-false.png](uml-examples/export-class-IgnoreBuiltInPropertyInheritance-false.png)
 
-The UML output: **[export-class-IngoreBuiltInPropertyInheritance-false.txt](uml-examples/export-class-IngoreBuiltInPropertyInheritance-false.txt)**
+The UML output: **[export-class-IgnoreBuiltInPropertyInheritance-false.txt](uml-examples/export-class-IgnoreBuiltInPropertyInheritance-false.txt)**
+
+### IgnoreTests
+
+Flag: true or false
+ Default: true
+ If set the export will not contain any classes which are from the
+ matlab unittesting framework or inheritated from the unit testing
+ frame work
+
+*Default: **true***
+
+#### Example
+
+```matlab
+theDoc = matdoc.Documentation({...
+   'matdoc.meta.Class',...
+   'matdoc.enums.AccessLevel'...
+    },...
+    'IgnoreTests', false...
+    );
+theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreTests-false.txt');
+```
+![export-class-IgnoreTests-false.png](uml-examples/export-class-IgnoreTests-false.png)
+
+The UML output: **[export-class-IgnoreTests-false.txt](uml-examples/export-class-IgnoreTests-false.txt)**
 
 ### MethodInheritanceHint
 
@@ -329,9 +355,9 @@ The UML output: **[export-class-SafeUmlExport-true.txt](uml-examples/export-clas
 
 ## Special Settings
 
-### IngoreBuiltInInheritance
+### IgnoreBuiltInInheritance
 
-IngoreBuiltInMethodInheritance and IngoreBuiltInPropertyInheritance combined.
+IgnoreBuiltInMethodInheritance and IgnoreBuiltInPropertyInheritance combined.
 
 #### Example
 
@@ -340,13 +366,13 @@ theDoc = matdoc.Documentation({...
    'matdoc.meta.Class',...
    'matdoc.enums.AccessLevel'...
     },...
-    'IngoreBuiltInInheritance', true...
+    'IgnoreBuiltInInheritance', true...
     );
-theDoc.UmlToFile('doc\uml-examples\export-class-IngoreBuiltInInheritance-true.txt');
+theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreBuiltInInheritance-true.txt');
 ```
-![export-class-IngoreBuiltInInheritance-true.png](uml-examples/export-class-IngoreBuiltInInheritance-true.png)
+![export-class-IgnoreBuiltInInheritance-true.png](uml-examples/export-class-IgnoreBuiltInInheritance-true.png)
 
-The UML output: **[export-class-IngoreBuiltInInheritance-true.txt](uml-examples/export-class-IngoreBuiltInInheritance-true.txt)**
+The UML output: **[export-class-IgnoreBuiltInInheritance-true.txt](uml-examples/export-class-IgnoreBuiltInInheritance-true.txt)**
 
 ### InheritanceHint
 

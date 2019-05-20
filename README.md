@@ -22,6 +22,7 @@ theDoc = matdoc.Documentation({...
    'matdoc.Documentation',... another class we want to document
    'matdoc.enums',... a package we want to document
    'matdoc.meta.super',... jet another package we want to document
+   'matdoc.tests.testTools',... and some unittest class to end it
     });
 ```
 
