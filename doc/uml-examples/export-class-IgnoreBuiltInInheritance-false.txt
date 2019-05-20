@@ -1,0 +1,719 @@
+@startuml
+
+set namespaceSeparator none
+
+abstract class handle {
+   -- Methods --
+   .. Public ..
+   {method} + L = addlistener(sources, eventname, callback)
+   {method} + L = addlistener(sources, properties, eventname, callback)
+   {method} + L = addlistener(sources, propertyname, eventname, callback)
+   {method} + L = addlistener(sources, propertynames, eventname, callback)
+   {method} + delete(obj)
+   {method} + TF = eq(A, B)
+   {method} + HM = findobj(H, varargin)
+   {method} + prop = findprop(object, propname)
+   {method} + TF = ge(A, B)
+   {method} + TF = gt(A, B)
+   {method} + TF = le(A, B)
+   {method} + TF = lt(A, B)
+   {method} + TF = ne(A, B)
+   {method} + notify(sources, eventname)
+   {method} + notify(sources, eventname, eventdata)
+   .. Sealed ..
+   {method} + validity = isvalid(obj)
+   .. Static Hidden ..
+   {method} {static} + E = empty(varargin)
+   -- Events --
+   ObjectBeingDestroyed
+}
+
+class uint32 {
+   -- Methods --
+   {method} + varargout = uint32(varargin)
+   .. Public ..
+   {method} + varargout = abs(varargin)
+   {method} + varargout = accumarray(varargin)
+   {method} + varargout = all(varargin)
+   {method} + varargout = and(varargin)
+   {method} + varargout = any(varargin)
+   {method} + varargout = bitand(varargin)
+   {method} + varargout = bitcmp(varargin)
+   {method} + varargout = bitget(varargin)
+   {method} + varargout = bitor(varargin)
+   {method} + varargout = bitset(varargin)
+   {method} + varargout = bitshift(varargin)
+   {method} + varargout = bitxor(varargin)
+   {method} + varargout = bsxfun(varargin)
+   {method} + varargout = cat(varargin)
+   {method} + varargout = ceil(varargin)
+   {method} + varargout = cell(varargin)
+   {method} + varargout = char(varargin)
+   {method} + varargout = colon(varargin)
+   {method} + varargout = complex(varargin)
+   {method} + varargout = conj(varargin)
+   {method} + varargout = ctranspose(varargin)
+   {method} + varargout = cumprod(varargin)
+   {method} + varargout = cumsum(varargin)
+   {method} + varargout = diag(varargin)
+   {method} + varargout = diff(varargin)
+   {method} + varargout = double(varargin)
+   {method} + varargout = end(varargin)
+   {method} + varargout = eq(varargin)
+   {method} + varargout = find(varargin)
+   {method} + varargout = fix(varargin)
+   {method} + varargout = floor(varargin)
+   {method} + varargout = full(varargin)
+   {method} + varargout = function_handle(varargin)
+   {method} + varargout = ge(varargin)
+   {method} + varargout = gt(varargin)
+   {method} + varargout = horzcat(varargin)
+   {method} + varargout = imag(varargin)
+   {method} + varargout = int16(varargin)
+   {method} + varargout = int32(varargin)
+   {method} + varargout = int64(varargin)
+   {method} + varargout = int8(varargin)
+   {method} + varargout = isempty(varargin)
+   {method} + varargout = isequal(varargin)
+   {method} + varargout = isequaln(varargin)
+   {method} + varargout = isequalwithequalnans(varargin)
+   {method} + varargout = isfinite(varargin)
+   {method} + varargout = isfloat(varargin)
+   {method} + varargout = isinf(varargin)
+   {method} + varargout = isinteger(varargin)
+   {method} + varargout = islogical(varargin)
+   {method} + varargout = isnan(varargin)
+   {method} + varargout = isnumeric(varargin)
+   {method} + varargout = isreal(varargin)
+   {method} + varargout = isscalar(varargin)
+   {method} + varargout = issorted(varargin)
+   {method} + varargout = issparse(varargin)
+   {method} + varargout = isvector(varargin)
+   {method} + varargout = ldivide(varargin)
+   {method} + varargout = le(varargin)
+   {method} + varargout = length(varargin)
+   {method} + varargout = linsolve(varargin)
+   {method} + varargout = logical(varargin)
+   {method} + varargout = lt(varargin)
+   {method} + varargout = max(varargin)
+   {method} + varargout = min(varargin)
+   {method} + varargout = minus(varargin)
+   {method} + varargout = mldivide(varargin)
+   {method} + varargout = mod(varargin)
+   {method} + varargout = mpower(varargin)
+   {method} + varargout = mrdivide(varargin)
+   {method} + varargout = mtimes(varargin)
+   {method} + varargout = ndims(varargin)
+   {method} + varargout = ne(varargin)
+   {method} + varargout = nnz(varargin)
+   {method} + varargout = nonzeros(varargin)
+   {method} + varargout = not(varargin)
+   {method} + varargout = numel(varargin)
+   {method} + varargout = nzmax(varargin)
+   {method} + varargout = or(varargin)
+   {method} + varargout = permute(varargin)
+   {method} + varargout = plot(varargin)
+   {method} + varargout = plus(varargin)
+   {method} + varargout = power(varargin)
+   {method} + varargout = prod(varargin)
+   {method} + varargout = rdivide(varargin)
+   {method} + varargout = real(varargin)
+   {method} + varargout = rem(varargin)
+   {method} + varargout = reshape(varargin)
+   {method} + varargout = round(varargin)
+   {method} + varargout = sign(varargin)
+   {method} + varargout = single(varargin)
+   {method} + varargout = size(varargin)
+   {method} + varargout = sort(varargin)
+   {method} + varargout = sortrowsc(varargin)
+   {method} + varargout = subsasgn(varargin)
+   {method} + varargout = subsindex(varargin)
+   {method} + varargout = subsref(varargin)
+   {method} + varargout = sum(varargin)
+   {method} + varargout = times(varargin)
+   {method} + varargout = transpose(varargin)
+   {method} + varargout = tril(varargin)
+   {method} + varargout = triu(varargin)
+   {method} + varargout = uint16(varargin)
+   {method} + varargout = uint64(varargin)
+   {method} + varargout = uint8(varargin)
+   {method} + varargout = uminus(varargin)
+   {method} + varargout = uplus(varargin)
+   {method} + varargout = vertcat(varargin)
+   {method} + varargout = xor(varargin)
+   .. Static Hidden ..
+   {method} {static} + E = empty(varargin)
+}
+
+package matdoc {
+
+   package matdoc.enums {
+   
+      enum matdoc.enums.AccessLevel {
+         -- Enumeration Values --
+         None
+         Public
+         Protected
+         Private
+         Custom
+         -- Methods --
+         {method} + e = AccessLevel(varargin)
+         .. Hidden ..
+         {method} + varargout = colon(varargin)
+         .. Public ..
+         {method} + varargout = abs(varargin) < uint32
+         {method} + varargout = accumarray(varargin) < uint32
+         {method} + varargout = all(varargin) < uint32
+         {method} + varargout = and(varargin) < uint32
+         {method} + varargout = any(varargin) < uint32
+         {method} + varargout = bitand(varargin) < uint32
+         {method} + varargout = bitcmp(varargin) < uint32
+         {method} + varargout = bitget(varargin) < uint32
+         {method} + varargout = bitor(varargin) < uint32
+         {method} + varargout = bitset(varargin) < uint32
+         {method} + varargout = bitshift(varargin) < uint32
+         {method} + varargout = bitxor(varargin) < uint32
+         {method} + varargout = bsxfun(varargin) < uint32
+         {method} + varargout = cat(varargin) < uint32
+         {method} + varargout = ceil(varargin) < uint32
+         {method} + varargout = cell(varargin) < uint32
+         {method} + lhs1 = char(rhs1)
+         {method} + varargout = complex(varargin) < uint32
+         {method} + varargout = conj(varargin) < uint32
+         {method} + varargout = ctranspose(varargin) < uint32
+         {method} + varargout = cumprod(varargin) < uint32
+         {method} + varargout = cumsum(varargin) < uint32
+         {method} + varargout = diag(varargin) < uint32
+         {method} + varargout = diff(varargin) < uint32
+         {method} + varargout = double(varargin) < uint32
+         {method} + varargout = end(varargin) < uint32
+         {method} + isEqual = eq(this, other)
+         {method} + varargout = find(varargin) < uint32
+         {method} + varargout = fix(varargin) < uint32
+         {method} + varargout = floor(varargin) < uint32
+         {method} + varargout = full(varargin) < uint32
+         {method} + varargout = function_handle(varargin) < uint32
+         {method} + varargout = ge(varargin) < uint32
+         {method} + varargout = gt(varargin) < uint32
+         {method} + varargout = horzcat(varargin) < uint32
+         {method} + varargout = imag(varargin) < uint32
+         {method} + varargout = int16(varargin) < uint32
+         {method} + varargout = int32(varargin) < uint32
+         {method} + varargout = int64(varargin) < uint32
+         {method} + varargout = int8(varargin) < uint32
+         {method} + varargout = isempty(varargin) < uint32
+         {method} + varargout = isequal(varargin) < uint32
+         {method} + varargout = isequaln(varargin) < uint32
+         {method} + varargout = isequalwithequalnans(varargin) < uint32
+         {method} + varargout = isfinite(varargin) < uint32
+         {method} + varargout = isfloat(varargin) < uint32
+         {method} + varargout = isinf(varargin) < uint32
+         {method} + varargout = isinteger(varargin) < uint32
+         {method} + varargout = islogical(varargin) < uint32
+         {method} + varargout = isnan(varargin) < uint32
+         {method} + varargout = isnumeric(varargin) < uint32
+         {method} + varargout = isreal(varargin) < uint32
+         {method} + varargout = isscalar(varargin) < uint32
+         {method} + varargout = issorted(varargin) < uint32
+         {method} + varargout = issparse(varargin) < uint32
+         {method} + varargout = isvector(varargin) < uint32
+         {method} + varargout = ldivide(varargin) < uint32
+         {method} + varargout = le(varargin) < uint32
+         {method} + varargout = length(varargin) < uint32
+         {method} + varargout = linsolve(varargin) < uint32
+         {method} + varargout = logical(varargin) < uint32
+         {method} + varargout = lt(varargin) < uint32
+         {method} + varargout = max(varargin) < uint32
+         {method} + varargout = min(varargin) < uint32
+         {method} + varargout = minus(varargin) < uint32
+         {method} + varargout = mldivide(varargin) < uint32
+         {method} + varargout = mod(varargin) < uint32
+         {method} + varargout = mpower(varargin) < uint32
+         {method} + varargout = mrdivide(varargin) < uint32
+         {method} + varargout = mtimes(varargin) < uint32
+         {method} + varargout = ndims(varargin) < uint32
+         {method} + isEqual = ne(this, other)
+         {method} + varargout = nnz(varargin) < uint32
+         {method} + varargout = nonzeros(varargin) < uint32
+         {method} + varargout = not(varargin) < uint32
+         {method} + varargout = numel(varargin) < uint32
+         {method} + varargout = nzmax(varargin) < uint32
+         {method} + varargout = or(varargin) < uint32
+         {method} + varargout = permute(varargin) < uint32
+         {method} + varargout = plot(varargin) < uint32
+         {method} + varargout = plus(varargin) < uint32
+         {method} + varargout = power(varargin) < uint32
+         {method} + varargout = prod(varargin) < uint32
+         {method} + varargout = rdivide(varargin) < uint32
+         {method} + varargout = real(varargin) < uint32
+         {method} + varargout = rem(varargin) < uint32
+         {method} + varargout = reshape(varargin) < uint32
+         {method} + varargout = round(varargin) < uint32
+         {method} + varargout = sign(varargin) < uint32
+         {method} + varargout = single(varargin) < uint32
+         {method} + varargout = size(varargin) < uint32
+         {method} + varargout = sort(varargin) < uint32
+         {method} + varargout = sortrowsc(varargin) < uint32
+         {method} + varargout = subsasgn(varargin) < uint32
+         {method} + varargout = subsindex(varargin) < uint32
+         {method} + varargout = subsref(varargin) < uint32
+         {method} + varargout = sum(varargin) < uint32
+         {method} + varargout = times(varargin) < uint32
+         {method} + varargout = transpose(varargin) < uint32
+         {method} + varargout = tril(varargin) < uint32
+         {method} + varargout = triu(varargin) < uint32
+         {method} + varargout = uint16(varargin) < uint32
+         {method} + varargout = uint64(varargin) < uint32
+         {method} + varargout = uint8(varargin) < uint32
+         {method} + varargout = uminus(varargin) < uint32
+         {method} + varargout = uplus(varargin) < uint32
+         {method} + varargout = vertcat(varargin) < uint32
+         {method} + varargout = xor(varargin) < uint32
+         .. Static ..
+         {method} {static} + enum = from(val)
+         {method} {static} + enum = fromNum(val)
+         {method} {static} + enum = fromStr(val)
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+      }
+   
+   }
+
+   package matdoc.meta {
+   
+      class matdoc.meta.Class {
+         -- Properties --
+         .. Constant ..
+         {field} {static} + IDENT < matdoc.uml.super.Base
+         .. Protected ..
+         {field} # Configuration < matdoc.super.WithMetaObjProps
+         {field} # Parent < matdoc.super.WithMetaObjProps
+         {field} # UmlRoot < matdoc.super.WithMetaObjProps
+         .. SetAccess = Protected ..
+         {field} + Abstract
+         {field} + Alias < matdoc.super.WithAlias
+         {field} + ConstructOnLoad
+         {field} + Constructor
+         {field} + ContainingPackage
+         {field} + Description
+         {field} + DetailedDescription
+         {field} + EnumerationMemberList
+         {field} + EventList
+         {field} + HandleCompatible
+         {field} + hasAbstractMembers
+         {field} + Hidden
+         {field} + InferiorClasses
+         {field} + InheritationRelations
+         {field} + isBuiltIn
+         {field} + isUnitTest
+         {field} + metaObj < matdoc.meta.super.Base
+         {field} + MethodList
+         {field} + MethodListFlattened
+         {field} + Name
+         {field} + NameRaw < matdoc.super.WithNameRaw
+         {field} + PropertyList
+         {field} + PropertyListFlattened
+         {field} + Sealed
+         {field} + SortedMethodList
+         {field} + SortedPropertyList
+         {field} + SuperclassList
+         {field} + SuperclassListFlattened
+         -- Methods --
+         {method} + this = Class(metaObj, parent)
+         .. Protected ..
+         {method} # umlStr = getPlantUmlEnumerationValues(this, ident_) < matdoc.uml.Class
+         {method} # umlStr = getPlantUmlEvents(this, ident_) < matdoc.uml.Class
+         {method} # umlStr = getPlantUmlMethods(this, ident_) < matdoc.uml.Class
+         {method} # umlStr = getPlantUmlProperties(this, ident_) < matdoc.uml.Class
+         {method} # getSortedMethodList(this)
+         {method} # getSortedPropertyList(this)
+         {method} # val = getSuperclassListFlattened(this)
+         {method} # setAlias(this) < matdoc.super.WithAlias
+         {method} # setNameRaw(this) < matdoc.super.WithNameRaw
+         {method} # walkMeta(this)
+         .. Public ..
+         {method} + L = addlistener(sources, eventname, callback) < handle
+         {method} + L = addlistener(sources, properties, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+         {method} + delete(obj) < handle
+         {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
+         {method} + HM = findobj(H, varargin) < handle
+         {method} + prop = findprop(object, propname) < handle
+         {method} + TF = ge(A, B) < handle
+         {method} + umlStr = getPlantUML(this, ident_) < matdoc.uml.Class
+         {method} + umlStr = getPlantUmlInheritanceRelation(this, ident_) < matdoc.uml.Class
+         {method} + TF = gt(A, B) < handle
+         {method} + TF = le(A, B) < handle
+         {method} + TF = lt(A, B) < handle
+         {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
+         {method} + notify(sources, eventname) < handle
+         {method} + notify(sources, eventname, eventdata) < handle
+         {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
+         .. Sealed ..
+         {method} + validity = isvalid(obj) < handle
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
+   
+      package matdoc.meta.super {
+      
+         abstract class matdoc.meta.super.Base {
+            -- Properties --
+            .. Abstract  SetAccess = Protected ..
+            {field} {abstract} + Name
+            .. Protected ..
+            {field} # Configuration < matdoc.super.WithMetaObjProps
+            {field} # Parent < matdoc.super.WithMetaObjProps
+            {field} # UmlRoot < matdoc.super.WithMetaObjProps
+            .. SetAccess = Protected ..
+            {field} + metaObj
+            -- Methods --
+            {method} + this = Base(metaObj, parent)
+            .. Abstract Protected ..
+            {method} {abstract} # walkMeta(this)
+            .. Public ..
+            {method} + L = addlistener(sources, eventname, callback) < handle
+            {method} + L = addlistener(sources, properties, eventname, callback) < handle
+            {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+            {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+            {method} + delete(obj) < handle
+            {method} + is_eq = eq(this, other)
+            {method} + HM = findobj(H, varargin) < handle
+            {method} + prop = findprop(object, propname) < handle
+            {method} + TF = ge(A, B) < handle
+            {method} + TF = gt(A, B) < handle
+            {method} + TF = le(A, B) < handle
+            {method} + TF = lt(A, B) < handle
+            {method} + is_ne = ne(this, other)
+            {method} + notify(sources, eventname) < handle
+            {method} + notify(sources, eventname, eventdata) < handle
+            {method} + [B, IX] = sort(this, dim, mode)
+            .. Sealed ..
+            {method} + validity = isvalid(obj) < handle
+            .. Static Hidden ..
+            {method} {static} + E = empty(varargin)
+            -- Events --
+            ObjectBeingDestroyed < handle
+         }
+      
+         abstract class matdoc.meta.super.Container {
+            -- Properties --
+            .. Abstract  SetAccess = Protected ..
+            {field} {abstract} + Name < matdoc.meta.super.Base
+            .. Protected ..
+            {field} # Configuration < matdoc.super.WithMetaObjProps
+            {field} # Parent < matdoc.super.WithMetaObjProps
+            {field} # UmlRoot < matdoc.super.WithMetaObjProps
+            .. SetAccess = Protected ..
+            {field} + Alias < matdoc.super.WithAlias
+            {field} + metaObj < matdoc.meta.super.Base
+            {field} + NameRaw < matdoc.super.WithNameRaw
+            -- Methods --
+            {method} + this = Container(metaObj, parent)
+            .. Protected ..
+            {method} # setAlias(this) < matdoc.super.WithAlias
+            {method} # setNameRaw(this) < matdoc.super.WithNameRaw
+            {method} # walkMeta(this)
+            .. Public ..
+            {method} + L = addlistener(sources, eventname, callback) < handle
+            {method} + L = addlistener(sources, properties, eventname, callback) < handle
+            {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+            {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+            {method} + delete(obj) < handle
+            {method} + is_eq = eq(this, other) < matdoc.meta.super.Base
+            {method} + HM = findobj(H, varargin) < handle
+            {method} + prop = findprop(object, propname) < handle
+            {method} + TF = ge(A, B) < handle
+            {method} + TF = gt(A, B) < handle
+            {method} + TF = le(A, B) < handle
+            {method} + TF = lt(A, B) < handle
+            {method} + is_ne = ne(this, other) < matdoc.meta.super.Base
+            {method} + notify(sources, eventname) < handle
+            {method} + notify(sources, eventname, eventdata) < handle
+            {method} + [B, IX] = sort(this, dim, mode) < matdoc.meta.super.Base
+            .. Sealed ..
+            {method} + validity = isvalid(obj) < handle
+            .. Static Hidden ..
+            {method} {static} + E = empty(varargin)
+            -- Events --
+            ObjectBeingDestroyed < handle
+         }
+      
+      }
+   
+   }
+
+   package matdoc.super {
+   
+      class matdoc.super.Base {
+         -- Properties --
+         .. Protected ..
+         {field} # Configuration < matdoc.super.WithMetaObjProps
+         {field} # Parent < matdoc.super.WithMetaObjProps
+         {field} # UmlRoot < matdoc.super.WithMetaObjProps
+         -- Methods --
+         {method} + this = Base(parent)
+         .. Public ..
+         {method} + L = addlistener(sources, eventname, callback) < handle
+         {method} + L = addlistener(sources, properties, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+         {method} + delete(obj) < handle
+         {method} + TF = eq(A, B) < handle
+         {method} + HM = findobj(H, varargin) < handle
+         {method} + prop = findprop(object, propname) < handle
+         {method} + TF = ge(A, B) < handle
+         {method} + TF = gt(A, B) < handle
+         {method} + TF = le(A, B) < handle
+         {method} + TF = lt(A, B) < handle
+         {method} + TF = ne(A, B) < handle
+         {method} + notify(sources, eventname) < handle
+         {method} + notify(sources, eventname, eventdata) < handle
+         .. Sealed ..
+         {method} + validity = isvalid(obj) < handle
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
+   
+      abstract class matdoc.super.WithAlias {
+         -- Properties --
+         .. Abstract  SetAccess = Protected ..
+         {field} {abstract} + Name
+         {field} {abstract} + NameRaw
+         .. SetAccess = Protected ..
+         {field} + Alias
+         -- Methods --
+         {method} + obj = WithAlias()
+         .. Protected ..
+         {method} # setAlias(this)
+         .. Public ..
+         {method} + L = addlistener(sources, eventname, callback) < handle
+         {method} + L = addlistener(sources, properties, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+         {method} + delete(obj) < handle
+         {method} + TF = eq(A, B) < handle
+         {method} + HM = findobj(H, varargin) < handle
+         {method} + prop = findprop(object, propname) < handle
+         {method} + TF = ge(A, B) < handle
+         {method} + TF = gt(A, B) < handle
+         {method} + TF = le(A, B) < handle
+         {method} + TF = lt(A, B) < handle
+         {method} + TF = ne(A, B) < handle
+         {method} + notify(sources, eventname) < handle
+         {method} + notify(sources, eventname, eventdata) < handle
+         .. Sealed ..
+         {method} + validity = isvalid(obj) < handle
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
+   
+      class matdoc.super.WithMetaObjProps {
+         -- Properties --
+         .. Protected ..
+         {field} # Configuration
+         {field} # Parent
+         {field} # UmlRoot
+         -- Methods --
+         {method} + obj = WithMetaObjProps()
+         .. Public ..
+         {method} + L = addlistener(sources, eventname, callback) < handle
+         {method} + L = addlistener(sources, properties, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+         {method} + delete(obj) < handle
+         {method} + TF = eq(A, B) < handle
+         {method} + HM = findobj(H, varargin) < handle
+         {method} + prop = findprop(object, propname) < handle
+         {method} + TF = ge(A, B) < handle
+         {method} + TF = gt(A, B) < handle
+         {method} + TF = le(A, B) < handle
+         {method} + TF = lt(A, B) < handle
+         {method} + TF = ne(A, B) < handle
+         {method} + notify(sources, eventname) < handle
+         {method} + notify(sources, eventname, eventdata) < handle
+         .. Sealed ..
+         {method} + validity = isvalid(obj) < handle
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
+   
+      abstract class matdoc.super.WithNameRaw {
+         -- Properties --
+         .. Abstract  SetAccess = Protected ..
+         {field} {abstract} + Name
+         .. SetAccess = Protected ..
+         {field} + NameRaw
+         -- Methods --
+         {method} + obj = WithNameRaw()
+         .. Protected ..
+         {method} # setNameRaw(this)
+         .. Public ..
+         {method} + L = addlistener(sources, eventname, callback) < handle
+         {method} + L = addlistener(sources, properties, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+         {method} + delete(obj) < handle
+         {method} + TF = eq(A, B) < handle
+         {method} + HM = findobj(H, varargin) < handle
+         {method} + prop = findprop(object, propname) < handle
+         {method} + TF = ge(A, B) < handle
+         {method} + TF = gt(A, B) < handle
+         {method} + TF = le(A, B) < handle
+         {method} + TF = lt(A, B) < handle
+         {method} + TF = ne(A, B) < handle
+         {method} + notify(sources, eventname) < handle
+         {method} + notify(sources, eventname, eventdata) < handle
+         .. Sealed ..
+         {method} + validity = isvalid(obj) < handle
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
+   
+   }
+
+   package matdoc.uml {
+   
+      class matdoc.uml.Class {
+         -- Properties --
+         .. Constant ..
+         {field} {static} + IDENT < matdoc.uml.super.Base
+         .. Protected ..
+         {field} # Configuration < matdoc.super.WithMetaObjProps
+         {field} # Parent < matdoc.super.WithMetaObjProps
+         {field} # UmlRoot < matdoc.super.WithMetaObjProps
+         -- Methods --
+         {method} + obj = Class()
+         .. Protected ..
+         {method} # umlStr = getPlantUmlEnumerationValues(this, ident_)
+         {method} # umlStr = getPlantUmlEvents(this, ident_)
+         {method} # umlStr = getPlantUmlMethods(this, ident_)
+         {method} # umlStr = getPlantUmlProperties(this, ident_)
+         .. Public ..
+         {method} + L = addlistener(sources, eventname, callback) < handle
+         {method} + L = addlistener(sources, properties, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+         {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+         {method} + delete(obj) < handle
+         {method} + TF = eq(A, B) < handle
+         {method} + HM = findobj(H, varargin) < handle
+         {method} + prop = findprop(object, propname) < handle
+         {method} + TF = ge(A, B) < handle
+         {method} + umlStr = getPlantUML(this, ident_)
+         {method} + umlStr = getPlantUmlInheritanceRelation(this, ident_)
+         {method} + TF = gt(A, B) < handle
+         {method} + TF = le(A, B) < handle
+         {method} + TF = lt(A, B) < handle
+         {method} + TF = ne(A, B) < handle
+         {method} + notify(sources, eventname) < handle
+         {method} + notify(sources, eventname, eventdata) < handle
+         .. Sealed ..
+         {method} + validity = isvalid(obj) < handle
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
+   
+      package matdoc.uml.super {
+      
+         abstract class matdoc.uml.super.Base {
+            -- Properties --
+            .. Constant ..
+            {field} {static} + IDENT
+            .. Protected ..
+            {field} # Configuration < matdoc.super.WithMetaObjProps
+            {field} # Parent < matdoc.super.WithMetaObjProps
+            {field} # UmlRoot < matdoc.super.WithMetaObjProps
+            -- Methods --
+            {method} + obj = Base()
+            .. Abstract ..
+            {method} {abstract} + umlStr = getPlantUML(this, ident_) < matdoc.uml.super.WithPlantUML
+            .. Public ..
+            {method} + L = addlistener(sources, eventname, callback) < handle
+            {method} + L = addlistener(sources, properties, eventname, callback) < handle
+            {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+            {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+            {method} + delete(obj) < handle
+            {method} + TF = eq(A, B) < handle
+            {method} + HM = findobj(H, varargin) < handle
+            {method} + prop = findprop(object, propname) < handle
+            {method} + TF = ge(A, B) < handle
+            {method} + TF = gt(A, B) < handle
+            {method} + TF = le(A, B) < handle
+            {method} + TF = lt(A, B) < handle
+            {method} + TF = ne(A, B) < handle
+            {method} + notify(sources, eventname) < handle
+            {method} + notify(sources, eventname, eventdata) < handle
+            .. Sealed ..
+            {method} + validity = isvalid(obj) < handle
+            .. Static Hidden ..
+            {method} {static} + E = empty(varargin)
+            -- Events --
+            ObjectBeingDestroyed < handle
+         }
+      
+         abstract class matdoc.uml.super.WithPlantUML {
+            -- Methods --
+            {method} + obj = WithPlantUML()
+            .. Abstract ..
+            {method} {abstract} + umlStr = getPlantUML(this, ident_)
+            .. Public ..
+            {method} + L = addlistener(sources, eventname, callback) < handle
+            {method} + L = addlistener(sources, properties, eventname, callback) < handle
+            {method} + L = addlistener(sources, propertyname, eventname, callback) < handle
+            {method} + L = addlistener(sources, propertynames, eventname, callback) < handle
+            {method} + delete(obj) < handle
+            {method} + TF = eq(A, B) < handle
+            {method} + HM = findobj(H, varargin) < handle
+            {method} + prop = findprop(object, propname) < handle
+            {method} + TF = ge(A, B) < handle
+            {method} + TF = gt(A, B) < handle
+            {method} + TF = le(A, B) < handle
+            {method} + TF = lt(A, B) < handle
+            {method} + TF = ne(A, B) < handle
+            {method} + notify(sources, eventname) < handle
+            {method} + notify(sources, eventname, eventdata) < handle
+            .. Sealed ..
+            {method} + validity = isvalid(obj) < handle
+            .. Static Hidden ..
+            {method} {static} + E = empty(varargin)
+            -- Events --
+            ObjectBeingDestroyed < handle
+         }
+      
+      }
+   
+   }
+
+}
+
+
+matdoc.enums.AccessLevel --|> uint32
+matdoc.meta.Class ..|> matdoc.meta.super.Container
+matdoc.meta.Class --|> matdoc.uml.Class
+matdoc.meta.super.Base --|> matdoc.super.Base
+matdoc.meta.super.Container ..|> matdoc.meta.super.Base
+matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
+matdoc.meta.super.Container ..|> matdoc.super.WithAlias
+matdoc.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.super.WithAlias ..|> handle
+matdoc.super.WithMetaObjProps ..|> handle
+matdoc.super.WithNameRaw ..|> handle
+matdoc.uml.Class ..|> matdoc.uml.super.Base
+matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
+matdoc.uml.super.WithPlantUML ..|> handle
+
+@enduml

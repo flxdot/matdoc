@@ -103,7 +103,11 @@ classdef Type < handle
             % Body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
             % Create Instance of class %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            theType = matdoc.uml.relation.Type();
+            theType = matdoc.uml.relation.Type(...
+                [],... LeftTip_
+                [],... RightTip_
+                []... Body_
+                );
             
         end % function theType = fromStr(string)
         

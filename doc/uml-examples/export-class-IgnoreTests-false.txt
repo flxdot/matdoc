@@ -228,6 +228,158 @@ package matdoc {
    
    }
 
+   package matdoc.tests {
+   
+      class matdoc.tests.testTools {
+         -- Properties --
+         .. matlab.unittest.TestRunner ..
+         {field} + SharedTestFixtures_ < matlab.unittest.internal.RunnableTestContent
+         {field} + TestFixturesFromApplyFixture_ < matlab.unittest.internal.RunnableTestContent
+         {field} + TestResult_ < matlab.unittest.internal.RunnableTestContent
+         -- Methods --
+         {method} + obj = testTools()
+         .. Protected ..
+         {method} # newCopy = copyElement(original) < matlab.unittest.internal.RunnableTestContent
+         .. Public ..
+         {method} + C = cat(varargin)
+         {method} + delete(teardownable) < matlab.unittest.internal.Teardownable
+         {method} + C = horzcat(varargin)
+         {method} + test_faststrsplit(testCase)
+         {method} + test_isBuiltIn(testCase)
+         {method} + test_isClassOrPackage(testCase)
+         {method} + test_isUmlRelation(testCase)
+         {method} + C = vertcat(varargin)
+         .. Sealed ..
+         {method} + addTeardown(teardownable, fcn, varargin) < matlab.unittest.internal.Teardownable
+         {method} + fixture = applyFixture(testCase, fixture) < matlab.unittest.internal.RunnableTestContent
+         {method} + assertClass(assertable, actual, expectedClass, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertEmpty(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertEqual(assertable, actual, expected, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertError(assertable, actual, errorClassOrID, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertFail(assertable, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertFalse(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertGreaterThan(assertable, actual, floor, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertGreaterThanOrEqual(assertable, actual, floor, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertInstanceOf(assertable, actual, expectedBaseClass, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertLength(assertable, actual, expectedLength, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertLessThan(assertable, actual, ceiling, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertLessThanOrEqual(assertable, actual, ceiling, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertMatches(assertable, actual, expression, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertNotEmpty(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertNotEqual(assertable, actual, notExpected, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertNotSameHandle(assertable, actual, notExpectedHandle, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertNumElements(assertable, actual, expectedElementCount, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertReturnsTrue(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertSameHandle(assertable, actual, expectedHandle, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertSize(assertable, actual, expectedSize, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertSubstring(assertable, actual, substring, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertThat(assertable, actual, constraint, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertTrue(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + varargout = assertWarning(assertable, actual, warningID, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + varargout = assertWarningFree(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assumeClass(assumable, actual, expectedClass, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeEmpty(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeEqual(assumable, actual, expected, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeError(assumable, actual, errorClassOrID, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeFail(assumable, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeFalse(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeGreaterThan(assumable, actual, floor, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeGreaterThanOrEqual(assumable, actual, floor, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeInstanceOf(assumable, actual, expectedBaseClass, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeLength(assumable, actual, expectedLength, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeLessThan(assumable, actual, ceiling, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeLessThanOrEqual(assumable, actual, ceiling, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeMatches(assumable, actual, expression, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeNotEmpty(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeNotEqual(assumable, actual, notExpected, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeNotSameHandle(assumable, actual, notExpectedHandle, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeNumElements(assumable, actual, expectedElementCount, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeReturnsTrue(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeSameHandle(assumable, actual, expectedHandle, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeSize(assumable, actual, expectedSize, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeSubstring(assumable, actual, substring, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeThat(assumable, actual, constraint, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeTrue(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + varargout = assumeWarning(assumable, actual, warningID, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + varargout = assumeWarningFree(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + lhs1 = copy(rhs1) < matlab.mixin.Copyable
+         {method} + fatalAssertClass(fatalAssertable, actual, expectedClass, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertEmpty(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertEqual(fatalAssertable, actual, expected, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertError(fatalAssertable, actual, errorClassOrID, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertFail(fatalAssertable, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertFalse(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertGreaterThan(fatalAssertable, actual, floor, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertGreaterThanOrEqual(fatalAssertable, actual, floor, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertInstanceOf(fatalAssertable, actual, expectedBaseClass, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertLength(fatalAssertable, actual, expectedLength, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertLessThan(fatalAssertable, actual, ceiling, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertLessThanOrEqual(fatalAssertable, actual, ceiling, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertMatches(fatalAssertable, actual, expression, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertNotEmpty(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertNotEqual(fatalAssertable, actual, notExpected, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertNotSameHandle(fatalAssertable, actual, notExpectedHandle, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertNumElements(fatalAssertable, actual, expectedElementCount, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertReturnsTrue(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertSameHandle(fatalAssertable, actual, expectedHandle, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertSize(fatalAssertable, actual, expectedSize, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertSubstring(fatalAssertable, actual, substring, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertThat(fatalAssertable, actual, constraint, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertTrue(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + varargout = fatalAssertWarning(fatalAssertable, actual, warningID, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + varargout = fatalAssertWarningFree(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fixtures = getSharedTestFixtures(testCase, fixtureClassName) < matlab.unittest.internal.RunnableTestContent
+         {method} + result = run(testCase, varargin) < matlab.unittest.internal.RunnableTestContent
+         {method} + verifyClass(verifiable, actual, expectedClass, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyEmpty(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyEqual(verifiable, actual, expected, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyError(verifiable, actual, errorClassOrID, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyFail(verifiable, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyFalse(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyGreaterThan(verifiable, actual, floor, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyGreaterThanOrEqual(verifiable, actual, floor, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyInstanceOf(verifiable, actual, expectedBaseClass, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyLength(verifiable, actual, expectedLength, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyLessThan(verifiable, actual, ceiling, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyLessThanOrEqual(verifiable, actual, ceiling, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyMatches(verifiable, actual, expression, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyNotEmpty(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyNotEqual(verifiable, actual, notExpected, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyNotSameHandle(verifiable, actual, notExpectedHandle, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyNumElements(verifiable, actual, expectedElementCount, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyReturnsTrue(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifySameHandle(verifiable, actual, expectedHandle, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifySize(verifiable, actual, expectedSize, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifySubstring(verifiable, actual, substring, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyThat(verifiable, actual, constraint, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyTrue(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + varargout = verifyWarning(verifiable, actual, warningID, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + varargout = verifyWarningFree(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         .. Sealed Hidden ..
+         {method} + lh = addAssertionFailedListener(assertable, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + lh = addAssertionPassedListener(assertable, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + lh = addAssumptionFailedListener(assumable, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + lh = addAssumptionPassedListener(assumable, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + lh = addErroredListener(content, callback) < matlab.unittest.internal.TestContent
+         {method} + lh = addFatalAssertionFailedListener(fatalAssertable, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + lh = addFatalAssertionPassedListener(fatalAssertable, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + lh = addVerificationFailedListener(verifiable, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + lh = addVerificationPassedListener(verifiable, varargin) < matlab.unittest.qualifications.Verifiable
+         .. Sealed matlab.unittest.TestRunner ..
+         {method} + runAllTeardownThroughProcedure_(teardownable, procedure) < matlab.unittest.internal.Teardownable
+         {method} + runTeardown(~, fcn, varargin) < matlab.unittest.internal.Teardownable
+         .. Sealed matlab.unittest.internal.TestContentDelegateSubstitutor ..
+         {method} + transferTeardownDelegate_(supplierTeardownable, acceptorTeardownable) < matlab.unittest.internal.Teardownable
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         {method} {static} + teardownable = loadobj(teardownable) < matlab.unittest.internal.Teardownable
+         -- Events --
+         Errored < matlab.unittest.internal.TestContent
+         ObjectBeingDestroyed < handle
+      }
+   
+   }
+
    package matdoc.uml {
    
       class matdoc.uml.Class {
@@ -291,6 +443,158 @@ package matdoc {
 
 }
 
+package matlab {
+
+   package matlab.unittest {
+   
+      class matlab.unittest.TestCase {
+         -- Properties --
+         .. matlab.unittest.TestRunner ..
+         {field} + SharedTestFixtures_ < matlab.unittest.internal.RunnableTestContent
+         {field} + TestFixturesFromApplyFixture_ < matlab.unittest.internal.RunnableTestContent
+         {field} + TestResult_ < matlab.unittest.internal.RunnableTestContent
+         -- Methods --
+         {method} + lhs1 = TestCase()
+         .. Protected ..
+         {method} # newCopy = copyElement(original) < matlab.unittest.internal.RunnableTestContent
+         .. Public ..
+         {method} + C = cat(varargin)
+         {method} + delete(teardownable) < matlab.unittest.internal.Teardownable
+         {method} + C = horzcat(varargin)
+         {method} + C = vertcat(varargin)
+         .. Sealed ..
+         {method} + addTeardown(teardownable, fcn, varargin) < matlab.unittest.internal.Teardownable
+         {method} + fixture = applyFixture(testCase, fixture) < matlab.unittest.internal.RunnableTestContent
+         {method} + assertClass(assertable, actual, expectedClass, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertEmpty(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertEqual(assertable, actual, expected, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertError(assertable, actual, errorClassOrID, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertFail(assertable, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertFalse(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertGreaterThan(assertable, actual, floor, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertGreaterThanOrEqual(assertable, actual, floor, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertInstanceOf(assertable, actual, expectedBaseClass, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertLength(assertable, actual, expectedLength, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertLessThan(assertable, actual, ceiling, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertLessThanOrEqual(assertable, actual, ceiling, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertMatches(assertable, actual, expression, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertNotEmpty(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertNotEqual(assertable, actual, notExpected, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertNotSameHandle(assertable, actual, notExpectedHandle, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertNumElements(assertable, actual, expectedElementCount, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertReturnsTrue(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertSameHandle(assertable, actual, expectedHandle, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertSize(assertable, actual, expectedSize, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertSubstring(assertable, actual, substring, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertThat(assertable, actual, constraint, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assertTrue(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + varargout = assertWarning(assertable, actual, warningID, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + varargout = assertWarningFree(assertable, actual, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + assumeClass(assumable, actual, expectedClass, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeEmpty(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeEqual(assumable, actual, expected, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeError(assumable, actual, errorClassOrID, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeFail(assumable, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeFalse(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeGreaterThan(assumable, actual, floor, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeGreaterThanOrEqual(assumable, actual, floor, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeInstanceOf(assumable, actual, expectedBaseClass, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeLength(assumable, actual, expectedLength, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeLessThan(assumable, actual, ceiling, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeLessThanOrEqual(assumable, actual, ceiling, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeMatches(assumable, actual, expression, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeNotEmpty(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeNotEqual(assumable, actual, notExpected, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeNotSameHandle(assumable, actual, notExpectedHandle, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeNumElements(assumable, actual, expectedElementCount, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeReturnsTrue(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeSameHandle(assumable, actual, expectedHandle, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeSize(assumable, actual, expectedSize, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeSubstring(assumable, actual, substring, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeThat(assumable, actual, constraint, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + assumeTrue(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + varargout = assumeWarning(assumable, actual, warningID, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + varargout = assumeWarningFree(assumable, actual, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + lhs1 = copy(rhs1) < matlab.mixin.Copyable
+         {method} + fatalAssertClass(fatalAssertable, actual, expectedClass, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertEmpty(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertEqual(fatalAssertable, actual, expected, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertError(fatalAssertable, actual, errorClassOrID, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertFail(fatalAssertable, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertFalse(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertGreaterThan(fatalAssertable, actual, floor, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertGreaterThanOrEqual(fatalAssertable, actual, floor, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertInstanceOf(fatalAssertable, actual, expectedBaseClass, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertLength(fatalAssertable, actual, expectedLength, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertLessThan(fatalAssertable, actual, ceiling, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertLessThanOrEqual(fatalAssertable, actual, ceiling, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertMatches(fatalAssertable, actual, expression, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertNotEmpty(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertNotEqual(fatalAssertable, actual, notExpected, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertNotSameHandle(fatalAssertable, actual, notExpectedHandle, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertNumElements(fatalAssertable, actual, expectedElementCount, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertReturnsTrue(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertSameHandle(fatalAssertable, actual, expectedHandle, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertSize(fatalAssertable, actual, expectedSize, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertSubstring(fatalAssertable, actual, substring, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertThat(fatalAssertable, actual, constraint, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fatalAssertTrue(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + varargout = fatalAssertWarning(fatalAssertable, actual, warningID, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + varargout = fatalAssertWarningFree(fatalAssertable, actual, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + fixtures = getSharedTestFixtures(testCase, fixtureClassName) < matlab.unittest.internal.RunnableTestContent
+         {method} + result = run(testCase, varargin) < matlab.unittest.internal.RunnableTestContent
+         {method} + verifyClass(verifiable, actual, expectedClass, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyEmpty(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyEqual(verifiable, actual, expected, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyError(verifiable, actual, errorClassOrID, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyFail(verifiable, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyFalse(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyGreaterThan(verifiable, actual, floor, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyGreaterThanOrEqual(verifiable, actual, floor, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyInstanceOf(verifiable, actual, expectedBaseClass, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyLength(verifiable, actual, expectedLength, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyLessThan(verifiable, actual, ceiling, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyLessThanOrEqual(verifiable, actual, ceiling, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyMatches(verifiable, actual, expression, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyNotEmpty(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyNotEqual(verifiable, actual, notExpected, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyNotSameHandle(verifiable, actual, notExpectedHandle, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyNumElements(verifiable, actual, expectedElementCount, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyReturnsTrue(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifySameHandle(verifiable, actual, expectedHandle, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifySize(verifiable, actual, expectedSize, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifySubstring(verifiable, actual, substring, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyThat(verifiable, actual, constraint, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + verifyTrue(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + varargout = verifyWarning(verifiable, actual, warningID, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + varargout = verifyWarningFree(verifiable, actual, varargin) < matlab.unittest.qualifications.Verifiable
+         .. Sealed Hidden ..
+         {method} + lh = addAssertionFailedListener(assertable, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + lh = addAssertionPassedListener(assertable, varargin) < matlab.unittest.qualifications.Assertable
+         {method} + lh = addAssumptionFailedListener(assumable, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + lh = addAssumptionPassedListener(assumable, varargin) < matlab.unittest.qualifications.Assumable
+         {method} + lh = addErroredListener(content, callback) < matlab.unittest.internal.TestContent
+         {method} + lh = addFatalAssertionFailedListener(fatalAssertable, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + lh = addFatalAssertionPassedListener(fatalAssertable, varargin) < matlab.unittest.qualifications.FatalAssertable
+         {method} + lh = addVerificationFailedListener(verifiable, varargin) < matlab.unittest.qualifications.Verifiable
+         {method} + lh = addVerificationPassedListener(verifiable, varargin) < matlab.unittest.qualifications.Verifiable
+         .. Sealed matlab.unittest.TestRunner ..
+         {method} + runAllTeardownThroughProcedure_(teardownable, procedure) < matlab.unittest.internal.Teardownable
+         {method} + runTeardown(~, fcn, varargin) < matlab.unittest.internal.Teardownable
+         .. Sealed matlab.unittest.internal.TestContentDelegateSubstitutor ..
+         {method} + transferTeardownDelegate_(supplierTeardownable, acceptorTeardownable) < matlab.unittest.internal.Teardownable
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         {method} {static} + teardownable = loadobj(teardownable) < matlab.unittest.internal.Teardownable
+         -- Events --
+         Errored < matlab.unittest.internal.TestContent
+         ObjectBeingDestroyed < handle
+      }
+   
+   }
+
+}
+
 
 matdoc.enums.AccessLevel --|> uint32
 matdoc.meta.Class ..|> matdoc.meta.super.Container
@@ -303,9 +607,11 @@ matdoc.super.Base --|> matdoc.super.WithMetaObjProps
 matdoc.super.WithAlias ..|> handle
 matdoc.super.WithMetaObjProps ..|> handle
 matdoc.super.WithNameRaw ..|> handle
+matdoc.tests.testTools --|> matlab.unittest.TestCase
 matdoc.uml.Class ..|> matdoc.uml.super.Base
 matdoc.uml.super.Base --|> matdoc.super.WithMetaObjProps
 matdoc.uml.super.Base ..|> matdoc.uml.super.WithPlantUML
 matdoc.uml.super.WithPlantUML ..|> handle
+matlab.unittest.TestCase --|> matlab.unittest.internal.RunnableTestContent
 
 @enduml

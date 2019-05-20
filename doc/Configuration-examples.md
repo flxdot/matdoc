@@ -9,18 +9,16 @@ The following properties can be set:
  - HideMethods
  - HideProperties
  - IgnoreBuiltInClass
+ - IgnoreBuiltInInheritance
  - IgnoreBuiltInMethodInheritance
  - IgnoreBuiltInPropertyInheritance
  - IgnoreTests
+ - InheritanceHint
  - MethodInheritanceHint
+ - OnlyRelationship
  - PropertyDescription
  - PropertyInheritanceHint
  - SafeUmlExport
-
-There are also some special settings which can be used as a short cut and only in combination with a value of `true`:
- - IgnoreBuiltInInheritance
- - InheritanceHint
- - OnlyRelationship
 
 ## Default Behaviour
 
@@ -30,6 +28,7 @@ The behavior of each setting, the class diagram of `matdoc.meta.Class` and `matd
 theDoc = matdoc.Documentation({...
    'matdoc.meta.Class',...
    'matdoc.enums.AccessLevel'...
+    'matdoc.tests.testTools',...
     });
 theDoc.UmlToFile('\doc\uml-examples\export-class.txt');
 ```
@@ -181,6 +180,28 @@ theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreBuiltInClass-true.txt');
 
 The UML output: **[export-class-IgnoreBuiltInClass-true.txt](uml-examples/export-class-IgnoreBuiltInClass-true.txt)**
 
+### IgnoreBuiltInInheritance
+
+IgnoreBuiltInMethodInheritance and
+ IgnoreBuiltInPropertyInheritance combined.
+
+*Default: **true***
+
+#### Example
+
+```matlab
+theDoc = matdoc.Documentation({...
+   'matdoc.meta.Class',...
+   'matdoc.enums.AccessLevel'...
+    },...
+    'IgnoreBuiltInInheritance', false...
+    );
+theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreBuiltInInheritance-false.txt');
+```
+![export-class-IgnoreBuiltInInheritance-false.png](uml-examples/export-class-IgnoreBuiltInInheritance-false.png)
+
+The UML output: **[export-class-IgnoreBuiltInInheritance-false.txt](uml-examples/export-class-IgnoreBuiltInInheritance-false.txt)**
+
 ### IgnoreBuiltInMethodInheritance
 
 Flag: true or false
@@ -254,6 +275,27 @@ theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreTests-false.txt');
 
 The UML output: **[export-class-IgnoreTests-false.txt](uml-examples/export-class-IgnoreTests-false.txt)**
 
+### InheritanceHint
+
+MethodInheritanceHint and PropertyInheritanceHint combined.
+
+*Default: **true***
+
+#### Example
+
+```matlab
+theDoc = matdoc.Documentation({...
+   'matdoc.meta.Class',...
+   'matdoc.enums.AccessLevel'...
+    },...
+    'InheritanceHint', false...
+    );
+theDoc.UmlToFile('doc\uml-examples\export-class-InheritanceHint-false.txt');
+```
+![export-class-InheritanceHint-false.png](uml-examples/export-class-InheritanceHint-false.png)
+
+The UML output: **[export-class-InheritanceHint-false.txt](uml-examples/export-class-InheritanceHint-false.txt)**
+
 ### MethodInheritanceHint
 
 Flag: true or false
@@ -277,6 +319,30 @@ theDoc.UmlToFile('doc\uml-examples\export-class-MethodInheritanceHint-false.txt'
 ![export-class-MethodInheritanceHint-false.png](uml-examples/export-class-MethodInheritanceHint-false.png)
 
 The UML output: **[export-class-MethodInheritanceHint-false.txt](uml-examples/export-class-MethodInheritanceHint-false.txt)**
+
+### OnlyRelationship
+
+Hiddes all methods, properties, events and enumeration members
+ to let the user focus on the relation between the classes. This
+ can be helfull when the Diagram is very large or fairly
+ complicated.
+
+*Default: **false***
+
+#### Example
+
+```matlab
+theDoc = matdoc.Documentation({...
+   'matdoc.meta.Class',...
+   'matdoc.enums.AccessLevel'...
+    },...
+    'OnlyRelationship', true...
+    );
+theDoc.UmlToFile('doc\uml-examples\export-class-OnlyRelationship-true.txt');
+```
+![export-class-OnlyRelationship-true.png](uml-examples/export-class-OnlyRelationship-true.png)
+
+The UML output: **[export-class-OnlyRelationship-true.txt](uml-examples/export-class-OnlyRelationship-true.txt)**
 
 ### PropertyDescription
 
@@ -352,62 +418,3 @@ theDoc.UmlToFile('doc\uml-examples\export-class-SafeUmlExport-true.txt');
 ![export-class-SafeUmlExport-true.png](uml-examples/export-class-SafeUmlExport-true.png)
 
 The UML output: **[export-class-SafeUmlExport-true.txt](uml-examples/export-class-SafeUmlExport-true.txt)**
-
-## Special Settings
-
-### IgnoreBuiltInInheritance
-
-IgnoreBuiltInMethodInheritance and IgnoreBuiltInPropertyInheritance combined.
-
-#### Example
-
-```matlab
-theDoc = matdoc.Documentation({...
-   'matdoc.meta.Class',...
-   'matdoc.enums.AccessLevel'...
-    },...
-    'IgnoreBuiltInInheritance', true...
-    );
-theDoc.UmlToFile('doc\uml-examples\export-class-IgnoreBuiltInInheritance-true.txt');
-```
-![export-class-IgnoreBuiltInInheritance-true.png](uml-examples/export-class-IgnoreBuiltInInheritance-true.png)
-
-The UML output: **[export-class-IgnoreBuiltInInheritance-true.txt](uml-examples/export-class-IgnoreBuiltInInheritance-true.txt)**
-
-### InheritanceHint
-
-MethodInheritanceHint and PropertyInheritanceHint combined.
-
-#### Example
-
-```matlab
-theDoc = matdoc.Documentation({...
-   'matdoc.meta.Class',...
-   'matdoc.enums.AccessLevel'...
-    },...
-    'InheritanceHint', true...
-    );
-theDoc.UmlToFile('doc\uml-examples\export-class-InheritanceHint-true.txt');
-```
-![export-class-InheritanceHint-true.png](uml-examples/export-class-InheritanceHint-true.png)
-
-The UML output: **[export-class-InheritanceHint-true.txt](uml-examples/export-class-InheritanceHint-true.txt)**
-
-### OnlyRelationship
-
-Hiddes all methods, properties, events and enumeration members to let the user focus on the relation between the classes. This can be helfull when the Diagram is very large or fairly complicated.
-
-#### Example
-
-```matlab
-theDoc = matdoc.Documentation({...
-   'matdoc.meta.Class',...
-   'matdoc.enums.AccessLevel'...
-    },...
-    'OnlyRelationship', true...
-    );
-theDoc.UmlToFile('doc\uml-examples\export-class-OnlyRelationship-true.txt');
-```
-![export-class-OnlyRelationship-true.png](uml-examples/export-class-OnlyRelationship-true.png)
-
-The UML output: **[export-class-OnlyRelationship-true.txt](uml-examples/export-class-OnlyRelationship-true.txt)**

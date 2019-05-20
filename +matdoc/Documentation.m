@@ -76,18 +76,22 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
             % process input
             if nargin > 0
+                
                 % init the configuration
                 this.Configuration = matdoc.Configuration(varargin{:});
                 
                 % there is no need to call clear() here because it will be
                 % called in the setter of the UmlObjects property.
                 this.UmlObjects = objects_;
+                
             else % if nargin > 0
+                
                 % init the configuration
                 this.Configuration = matdoc.Configuration();
                 
                 % reset the class
                 clear(this);
+                
             end % if nargin > 0
             
         end % function this = Documentation()

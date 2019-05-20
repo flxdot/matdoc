@@ -4,6 +4,7 @@ function write_Configuration_examples()
 theDoc = matdoc.Documentation({...
     'matdoc.meta.Class',...
     'matdoc.enums.AccessLevel',...
+    'matdoc.tests.testTools',...
     }...
     );
 
@@ -14,7 +15,7 @@ theDocCfg = matdoc.Documentation({...
     );
 cfgMeta = theDocCfg.UmlObjects{1};
 cfgProps = sort(cfgMeta.PropertyList([cfgMeta.PropertyList(:).SetAccess] == 'public'));
-specialSettings = {'IgnoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelationship'};
+% specialSettings = {'IgnoreBuiltInInheritance', 'InheritanceHint', 'OnlyRelationship'};
 
 % export default diagram
 fileName = 'export-class';
@@ -30,14 +31,14 @@ DocStr = sprintf('%s\n\nThe following properties can be set:', DocStr);
 for iProp = 1:length(cfgProps)
     DocStr = sprintf('%s\n - %s', DocStr, cfgProps(iProp).Name);
 end
-DocStr = sprintf('%s\n\nThere are also some special settings which can be used as a short cut and only in combination with a value of `true`:', DocStr);
-for iSett = 1:length(specialSettings)
-    DocStr = sprintf('%s\n - %s', DocStr, specialSettings{iSett});
-end
+% DocStr = sprintf('%s\n\nThere are also some special settings which can be used as a short cut and only in combination with a value of `true`:', DocStr);
+% for iSett = 1:length(specialSettings)
+%     DocStr = sprintf('%s\n - %s', DocStr, specialSettings{iSett});
+% end
 DocStr = sprintf('%s\n\n## Default Behaviour', DocStr);
 DocStr = sprintf('%s\n\nThe behavior of each setting, the class diagram of `matdoc.meta.Class` and `matdoc.enums.AccessLevel` is used. Below you''ll the output with the default settings:', DocStr);
 DocStr = sprintf('%s\n\n```matlab', DocStr);
-DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.meta.Class'',...\n   ''matdoc.enums.AccessLevel''...\n    });\ntheDoc.UmlToFile(''\\doc\\uml-examples\\export-class.txt'');', DocStr);
+DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.meta.Class'',...\n   ''matdoc.enums.AccessLevel''...\n    ''matdoc.tests.testTools'',...\n    });\ntheDoc.UmlToFile(''\\doc\\uml-examples\\export-class.txt'');', DocStr);
 DocStr = sprintf('%s\n```', DocStr);
 DocStr = sprintf('%s\n![export-class.png](uml-examples/export-class.png)', DocStr);
 DocStr = sprintf('%s\n\nThe UML output: **[export-class.txt](uml-examples/export-class.txt)**', DocStr);
@@ -87,49 +88,49 @@ for iProp = 1:length(cfgProps)
     
 end % for iProp = 1:length(CfgProps)
 
-% Generate a section for each special setting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-DocStr = sprintf('%s\n\n## Special Settings', DocStr);
-specialDescription = {...
-    'IgnoreBuiltInMethodInheritance and IgnoreBuiltInPropertyInheritance combined.',... IgnoreBuiltInInheritance
-    'MethodInheritanceHint and PropertyInheritanceHint combined.',... InheritanceHint
-    'Hiddes all methods, properties, events and enumeration members to let the user focus on the relation between the classes. This can be helfull when the Diagram is very large or fairly complicated.',... OnlyRelationship
-    };
-for iSett = 1:length(specialSettings)
-    % get the name of the current setting
-    curSett = specialSettings{iSett};
-    
-    % build name of the files to export
-    umlFile = sprintf('%s-%s-true', fileName, curSett);
-    umlFileTxt = sprintf('%s.txt', umlFile);
-    umlFilePng = sprintf('%s.png', umlFile);
-    
-    % Export UML %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % reset the settings
-    theDoc.Configuration.reset();
-    
-    % set the oppostite of the current default property
-    theDoc.Configuration.setSetting(curSett, true);
-    
-    % export the uml again
-    theDoc.UmlToFile(fullfile(exportPath, umlFileTxt));
-    
-    % Write Documentation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
-    % headline
-    DocStr = sprintf('%s\n\n### %s', DocStr, curSett);
-    
-    % desciption
-    DocStr = sprintf('%s\n\n%s', DocStr, specialDescription{iSett});
-    
-    % example
-    DocStr = sprintf('%s\n\n#### Example', DocStr);
-    DocStr = sprintf('%s\n\n```matlab', DocStr);
-    DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.meta.Class'',...\n   ''matdoc.enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheDoc.UmlToFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
-    DocStr = sprintf('%s\n```', DocStr);
-    DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
-    DocStr = sprintf('%s\n\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
-    
-end % for iSett = 1:length(specialSettings)
+% % Generate a section for each special setting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DocStr = sprintf('%s\n\n## Special Settings', DocStr);
+% specialDescription = {...
+%     'IgnoreBuiltInMethodInheritance and IgnoreBuiltInPropertyInheritance combined.',... IgnoreBuiltInInheritance
+%     'MethodInheritanceHint and PropertyInheritanceHint combined.',... InheritanceHint
+%     'Hiddes all methods, properties, events and enumeration members to let the user focus on the relation between the classes. This can be helfull when the Diagram is very large or fairly complicated.',... OnlyRelationship
+%     };
+% for iSett = 1:length(specialSettings)
+%     % get the name of the current setting
+%     curSett = specialSettings{iSett};
+%     
+%     % build name of the files to export
+%     umlFile = sprintf('%s-%s-true', fileName, curSett);
+%     umlFileTxt = sprintf('%s.txt', umlFile);
+%     umlFilePng = sprintf('%s.png', umlFile);
+%     
+%     % Export UML %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     % reset the settings
+%     theDoc.Configuration.reset();
+%     
+%     % set the oppostite of the current default property
+%     theDoc.Configuration.setSetting(curSett, true);
+%     
+%     % export the uml again
+%     theDoc.UmlToFile(fullfile(exportPath, umlFileTxt));
+%     
+%     % Write Documentation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     
+%     % headline
+%     DocStr = sprintf('%s\n\n### %s', DocStr, curSett);
+%     
+%     % desciption
+%     DocStr = sprintf('%s\n\n%s', DocStr, specialDescription{iSett});
+%     
+%     % example
+%     DocStr = sprintf('%s\n\n#### Example', DocStr);
+%     DocStr = sprintf('%s\n\n```matlab', DocStr);
+%     DocStr = sprintf('%s\ntheDoc = matdoc.Documentation({...\n   ''matdoc.meta.Class'',...\n   ''matdoc.enums.AccessLevel''...\n    },...\n    ''%s'', %s...\n    );\ntheDoc.UmlToFile(''%s'');', DocStr, curSett, bool2str(true), fullfile(exportPath, umlFileTxt));
+%     DocStr = sprintf('%s\n```', DocStr);
+%     DocStr = sprintf('%s\n![%s](uml-examples/%s)', DocStr, umlFilePng, umlFilePng);
+%     DocStr = sprintf('%s\n\nThe UML output: **[%s](uml-examples/%s)**', DocStr, umlFileTxt, umlFileTxt);
+%     
+% end % for iSett = 1:length(specialSettings)
 
 % Write the Configuration-examples.md %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [fid, fopen_err] = fopen(fullfile(pwd, 'doc', 'Configuration-examples.md'), 'w');

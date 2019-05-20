@@ -25,10 +25,13 @@ package matdoc {
       {field} + HideMethods
       {field} + HideProperties
       {field} + IgnoreBuiltInClass
+      {field} + IgnoreBuiltInInheritance
       {field} + IgnoreBuiltInMethodInheritance
       {field} + IgnoreBuiltInPropertyInheritance
       {field} + IgnoreTests
+      {field} + InheritanceHint
       {field} + MethodInheritanceHint
+      {field} + OnlyRelationship
       {field} + PropertyDescription
       {field} + PropertyInheritanceHint
       {field} + SafeUmlExport
