@@ -1,4 +1,4 @@
-classdef Base < matdoc.super.WithMetaObjProps
+classdef Base < matdoc.super.Base
     
     %% PROPERTIES: PUBLIC
     properties
@@ -41,22 +41,10 @@ classdef Base < matdoc.super.WithMetaObjProps
             %
             %
             
+            this = this@matdoc.super.Base(parent);
+            
             % store the property
-            this.Parent = parent;
             this.metaObj = metaObj;
-            
-            % get the umlRoot %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            this.UmlRoot = this.Parent;
-            while ~isa(this.UmlRoot, 'matdoc.Documentation') && ~isempty(this.UmlRoot)
-                this.UmlRoot = this.UmlRoot.Parent;
-            end % while ~isa(this.UmlRoot, 'matdoc.Documentation') && ~isempty(this.UmlRoot)
-            
-            % Store handle to the config
-            if isa(this.UmlRoot, 'matdoc.Documentation')
-                this.Configuration = this.UmlRoot.Configuration;
-            else
-                this.Configuration = matdoc.Configuration();
-            end % if isa(this.UmlRoot, 'matdoc.Documentation')
             
         end % function this = ColumnDataDisplay()
         

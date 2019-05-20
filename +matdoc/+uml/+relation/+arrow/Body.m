@@ -1,12 +1,9 @@
-classdef AccessLevel < uint32
-    % AccessLevel Defines the type of mold
+classdef Body < uint32
+    % Body Defines the type of mold
     %
     %   Supported types are
-    %    - None
-    %    - Public
-    %    - Protected
-    %    - Private
-    %    - Custom
+    %    - Solid
+    %    - Dashed
     %
     %   If you want to obtain this enum based on a value please check the
     %   docs of following static methods:
@@ -18,21 +15,33 @@ classdef AccessLevel < uint32
     %% ENUMERATION
     enumeration
         
-        % None
-        None      (0)
-        % Public
-        Public    (1)
-        % Protected
-        Protected (2)
-        % Private
-        Private   (3)
-        % Custom
-        Custom    (4)
+        % Solid
+        Solid  (0)
+        % Dashed
+        Dashed (1)
         
     end % enumeration
     
     %% METHODS: PUBLIC
     methods
+        
+        %% - umlStr = getPlantUML()
+        function umlStr = getPlantUML(this)
+            % function umlStr = getPlantUML(this)
+            %
+            % Returns the plantUML representation of this meta object.
+            % Note: This method will be called by the getter of the
+            % plantUML property of the matdoc.uml.super.Base.
+            
+            % build the UML string %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            switch this
+                case matdoc.uml.relation.arrow.Body.Dashed
+                    umlStr = '..';
+                otherwise
+                    umlStr = '--';
+            end % switch val
+            
+        end % function umlStr = getPlantUML(this)
         
         %% - isEqual = eq(this, other)
         function isEqual = eq(this, other)
@@ -41,10 +50,10 @@ classdef AccessLevel < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(matdoc.enums.AccessLevel.from(this)) == double(matdoc.enums.AccessLevel.from(other));
+                isEqual = double(matdoc.uml.relation.arrow.Body.from(this)) == double(matdoc.uml.relation.arrow.Body.from(other));
             catch ex
                 switch ex.identifier
-                    case 'matdoc:enums:AccessLevel:from:TypeError'
+                    case 'matdoc:uml:relation:arrow:Body:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -60,10 +69,10 @@ classdef AccessLevel < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(matdoc.enums.AccessLevel.from(this)) ~= double(matdoc.enums.AccessLevel.from(other));
+                isEqual = double(matdoc.uml.relation.arrow.Body.from(this)) ~= double(matdoc.uml.relation.arrow.Body.from(other));
             catch ex
                 switch ex.identifier
-                    case 'matdoc:enums:AccessLevel:from:TypeError'
+                    case 'matdoc:uml:relation:arrow:Body:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -81,36 +90,31 @@ classdef AccessLevel < uint32
         function enum = from(val)
             % function enum = from(val)
             %
-            % Call to obtain AccessLevel enumeration based on either of
+            % Call to obtain Body enumeration based on either of
             % the following data types:
-            % - matdoc.enums.AccessLevel
+            % - matdoc.uml.relation.Body
             % - string          see method: fromNum
             % - numerical       see method: fromStr
             %
             % Following input will yield:
             % 
-            %  Enum      | Numeric | String
-            % ===========|=========|========================
-            %  None      |    0    | 'None'
-            %  Public    |    1    | 'Public'
-            %  Protected |    2    | 'Protected'
-            %  Private   |    3    | 'Private'
-            %  Custom    |    4    | any other string
+            %  Enum   | Numeric | String
+            % ========|=========|========================
+            %  Solid  |    0    | 'Solid', '-', '--'
+            %  Dashed |    1    | 'Dashed', '.', '..'
             %
             
             % determine the type of the input
-            if isa(val, 'matdoc.enums.AccessLevel')
+            if isa(val, 'matdoc.uml.relation.arrow.Body')
                 enum = val;
             elseif isnumeric(val)
-                enum = matdoc.enums.AccessLevel.fromNum(val);
+                enum = matdoc.uml.relation.arrow.Body.fromNum(val);
             elseif ischar(val)
-                enum = matdoc.enums.AccessLevel.fromStr(val);
-            elseif iscell(val)
-                enum = matdoc.enums.AccessLevel.Custom;
+                enum = matdoc.uml.relation.arrow.Body.fromStr(val);
             else
-                error('matdoc:enums:AccessLevel:from:TypeError',...
+                error('matdoc:uml:relation:arrow:Body:from:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.enums.AccessLevel'))
+                    class(val), help('matdoc.uml.relation.Body'))
             end
             
         end % function enum = from(val)
@@ -119,39 +123,30 @@ classdef AccessLevel < uint32
         function enum = fromNum(val)
             % function enum = fromNum(val)
             %
-            % Call to obtain AccessLevel enumeration based on the given
+            % Call to obtain Body enumeration based on the given
             % numeric value.
             %
-            %  Enum      | Numeric
-            % ===========|=========
-            %  None      |    0
-            %  Public    |    1
-            %  Protected |    2
-            %  Private   |    3
-            %  Custom    |    4
+            %  Enum   | Numeric
+            % ========|=========
+            %  Solid  |    0
+            %  Dashed |    1
             
             % check data type
             if ~isnumeric(val)
-                error('matdoc:enums:AccessLevel:fromNum:TypeError',...
+                error('matdoc:uml:relation:arrow:Body:fromNum:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.enums.AccessLevel.fromNum'))
+                    class(val), help('matdoc.uml.relation.arrow.Body.fromNum'))
             end % if ~isnumeric(val)
             
             % get the enum
             switch val
-                case 0 % None
-                    enum  = matdoc.enums.AccessLevel.None;
-                case 1 % Public
-                    enum  = matdoc.enums.AccessLevel.Public;
-                case 2 % Protected
-                    enum  = matdoc.enums.AccessLevel.Protected;
-                case 3 % Private
-                    enum  = matdoc.enums.AccessLevel.Private;
-                case 4 % Custom
-                    enum  = matdoc.enums.AccessLevel.Custom;
+                case 0 % Solid
+                    enum  = matdoc.uml.relation.arrow.Body.Solid;
+                case 1 % Dashed
+                    enum  = matdoc.uml.relation.arrow.Body.Dashed;
                 otherwise % find closest match
                     % fetch all names of the LogLevel
-                    avTypes = enumeration('matdoc.enums.AccessLevel');
+                    avTypes = enumeration('matdoc.uml.relation.Body');
                     % find the closest matching
                     avTypeValues = double(avTypes);
                     [~, idx] = min(abs(avTypeValues - val));
@@ -164,42 +159,37 @@ classdef AccessLevel < uint32
         function enum = fromStr(val)
             % function enum = fromStr(val)
             %
-            % Call to obtain AccessLevel enumeration based on the given
+            % Call to obtain Body enumeration based on the given
             % numeric value.
             %
             % Input is evaluated case insensitive
             % 
-            %  Enum      | String
-            % ===========|=========================
-            %  None      | 'None'
-            %  Public    | 'Public'
-            %  Protected | 'Protected'
-            %  Private   | 'Private'
-            %  Custom    | any other string
+            %  Enum   | String
+            % ========|=========================
+            %  Solid  | 'Solid', '-', '--'
+            %  Dashed | 'Dashed', '.', '..'
             
             % check data type
             if ~ischar(val)
-                error('matdoc:enums:AccessLevel:fromStr:TypeError',...
+                error('matdoc:uml:relation:arrow:Body:fromStr:TypeError',...
                     'Can not build enum from {}. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.enums.AccessLevel'));
+                    class(val), help('matdoc.uml.relation.Body'));
             end % if ~isnumeric(val)
             
             % get the enum
             switch lower(val)
-                case 'none' % None
-                    enum  = matdoc.enums.AccessLevel.None;
-                case 'public' % Public
-                    enum  = matdoc.enums.AccessLevel.Public;
-                case 'protected' % Protected
-                    enum  = matdoc.enums.AccessLevel.Protected;
-                case 'private' % Private
-                    enum  = matdoc.enums.AccessLevel.Private;
-                otherwise % Custom
-                    enum  = matdoc.enums.AccessLevel.Custom;
+                case {'solid', '-', '--'} % Solid
+                    enum  = matdoc.uml.relation.arrow.Body.Solid;
+                case {'dashed', '.', '..'} % Dashed
+                    enum  = matdoc.uml.relation.arrow.Body.Dashed;
+                otherwise % find closest match
+                    error('matdoc:uml:relation:arrow:Body:fromStr:ValueError',...
+                    'Can not find exact enum value for %s. Please have a look at the doc:\n\n%s',...
+                    val, help('matdoc.uml.relation.arrow.Body.fromStr'));
             end % switch val
             
         end % function enum = fromStr(val)
         
     end % methods (Static)
     
-end % classdef AccessLevel < uint32
+end % classdef Body < uint32

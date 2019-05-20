@@ -18,9 +18,11 @@ package matdoc {
    
       enum matdoc.enums.AccessLevel {
          -- Enumeration Values --
+         None
          Public
          Protected
          Private
+         Custom
          -- Methods --
          {method} + e = AccessLevel(varargin)
          .. Hidden ..
@@ -106,6 +108,15 @@ package matdoc {
    }
 
    package matdoc.super {
+   
+      class matdoc.super.Base {
+         -- Methods --
+         {method} + this = Base(parent)
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
    
       abstract class matdoc.super.WithAlias {
          -- Methods --
@@ -193,10 +204,11 @@ package matdoc {
 matdoc.enums.AccessLevel --|> uint32
 matdoc.meta.Class ..|> matdoc.meta.super.Container
 matdoc.meta.Class --|> matdoc.uml.Class
-matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.meta.super.Base --|> matdoc.super.Base
 matdoc.meta.super.Container ..|> matdoc.meta.super.Base
 matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
 matdoc.meta.super.Container ..|> matdoc.super.WithAlias
+matdoc.super.Base --|> matdoc.super.WithMetaObjProps
 matdoc.super.WithAlias ..|> handle
 matdoc.super.WithMetaObjProps ..|> handle
 matdoc.super.WithNameRaw ..|> handle

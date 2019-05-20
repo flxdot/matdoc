@@ -43,6 +43,10 @@ classdef Class < matdoc.meta.super.Container & ...
         % Flag if any of the defined properties or methods are abstract
         hasAbstractMembers = false;
         
+        % Flag if the class is within matlabs unit testing framework or is
+        % inheritated from it
+        isUnitTest = false;
+        
     end % properties (SetAccess = protected)
     
     %% PROPERTIES: DEPENDENT, SETACCESS = PROTECTED
@@ -167,7 +171,8 @@ classdef Class < matdoc.meta.super.Container & ...
                 curSuperClass = this.SuperclassList(iSup);
                 
                 % may be the class needs to be skipped?
-                if this.Configuration.IgnoreBuiltInClass && curSuperClass.isBuiltIn
+                if (this.Configuration.IgnoreBuiltInClass && curSuperClass.isBuiltIn) || ...
+                        (this.Configuration.IgnoreTests && curSuperClass.isUnitTest)
                     continue;
                 end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
                 
@@ -400,6 +405,25 @@ classdef Class < matdoc.meta.super.Container & ...
                 end % if strcmp(this.Name, this.MethodList(iMeth).Name)
             end % for iMeth = 1:length(this.MethodList)
             
+            % isUnitTest %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            unitTestInheritance = false;
+            for idx = 1:length(this.metaObj.SuperclassList)
+                curSuperClass = this.metaObj.SuperclassList(idx);
+                try
+                    if strncmp(curSuperClass.ContainingPackage.Name, 'matlab.unittest', 15)
+                        unitTestInheritance = true;
+                        break;
+                    end % if strcmp(curSuperClass.ContainingPackage.Name, 'matlab.unittest')
+                end % try
+            end % for idx = 1:length(metaObj.SuperclassList)
+            try
+                isFromUnitTest = strncmp(this.metaObj.ContainingPackage.Name, 'matlab.unittest', 15);
+            catch
+                isFromUnitTest = false;
+            end
+            this.isUnitTest = unitTestInheritance || isFromUnitTest;
+            
         end % function walkMeta(this)
         
         %% - getSortedPropertyList()
@@ -503,6 +527,12 @@ classdef Class < matdoc.meta.super.Container & ...
             
             val = this.SuperclassList;
             for iSup = 1:length(val)
+                
+                % is the current super class wanted?
+                if this.Configuration.IgnoreTests && this.SuperclassList(iSup).isUnitTest
+                    continue;
+                end % if this.Configuration.IgnoreTests && this.SuperclassList(iSup).isUnitTest
+                
                 val = horzcat(...
                     val,...
                     this.SuperclassList(iSup).SuperclassListFlattened...

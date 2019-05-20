@@ -76,18 +76,22 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
             % process input
             if nargin > 0
+                
                 % init the configuration
                 this.Configuration = matdoc.Configuration(varargin{:});
                 
                 % there is no need to call clear() here because it will be
                 % called in the setter of the UmlObjects property.
                 this.UmlObjects = objects_;
+                
             else % if nargin > 0
+                
                 % init the configuration
                 this.Configuration = matdoc.Configuration();
                 
                 % reset the class
                 clear(this);
+                
             end % if nargin > 0
             
         end % function this = Documentation()
@@ -242,7 +246,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             
             % wrap the meta class with my own classes
             switch class(metaObj)
-                case 'meta.class'
+                case {'meta.class', 'matlab.unittest.meta.class'}
                     % wrapt the matlab meta class with my own to allow uml
                     % export
                     umlMetaObj = matdoc.meta.Class(metaObj, this);
@@ -344,7 +348,8 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
                     curClass = this.ClassListFlattened(iClass);
                     
                     % do the built-in classes need to be skipped?
-                    if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                    if (this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn) || ...
+                        (this.Configuration.IgnoreTests && curClass.isUnitTest)
                         continue;
                     end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
                     
@@ -379,7 +384,8 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
                     curClass = this.ClassListFlattened(iClass);
                     
                     % do the built-in classes need to be skipped?
-                    if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                    if (this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn) || ...
+                        (this.Configuration.IgnoreTests && curClass.isUnitTest)
                         continue;
                     end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
                     
@@ -427,7 +433,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             % StandaloneClassList.
             
             % reset the properties
-            this.ClassHierarchy = matdoc.tools.CustomPackage('');
+            this.ClassHierarchy = matdoc.tools.CustomPackage(this, '');
             
             % check each class
             for iClass = 1:length(this.ClassListFlattened)

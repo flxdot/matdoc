@@ -1,12 +1,11 @@
-classdef AccessLevel < uint32
-    % AccessLevel Defines the type of mold
+classdef Direction < uint32
+    % Direction Defines the type of mold
     %
     %   Supported types are
     %    - None
-    %    - Public
-    %    - Protected
-    %    - Private
-    %    - Custom
+    %    - From
+    %    - To
+    %    - Bidirectional
     %
     %   If you want to obtain this enum based on a value please check the
     %   docs of following static methods:
@@ -19,15 +18,13 @@ classdef AccessLevel < uint32
     enumeration
         
         % None
-        None      (0)
-        % Public
-        Public    (1)
-        % Protected
-        Protected (2)
-        % Private
-        Private   (3)
-        % Custom
-        Custom    (4)
+        None          (0)
+        % From
+        From          (1)
+        % To
+        To            (2)
+        % Bidirectional
+        Bidirectional (3)
         
     end % enumeration
     
@@ -41,10 +38,10 @@ classdef AccessLevel < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(matdoc.enums.AccessLevel.from(this)) == double(matdoc.enums.AccessLevel.from(other));
+                isEqual = double(matdoc.uml.relation.Direction.from(this)) == double(matdoc.uml.relation.Direction.from(other));
             catch ex
                 switch ex.identifier
-                    case 'matdoc:enums:AccessLevel:from:TypeError'
+                    case 'matdoc:uml:relation:Direction:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -60,10 +57,10 @@ classdef AccessLevel < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(matdoc.enums.AccessLevel.from(this)) ~= double(matdoc.enums.AccessLevel.from(other));
+                isEqual = double(matdoc.uml.relation.Direction.from(this)) ~= double(matdoc.uml.relation.Direction.from(other));
             catch ex
                 switch ex.identifier
-                    case 'matdoc:enums:AccessLevel:from:TypeError'
+                    case 'matdoc:uml:relation:Direction:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -81,36 +78,33 @@ classdef AccessLevel < uint32
         function enum = from(val)
             % function enum = from(val)
             %
-            % Call to obtain AccessLevel enumeration based on either of
+            % Call to obtain Direction enumeration based on either of
             % the following data types:
-            % - matdoc.enums.AccessLevel
+            % - matdoc.uml.relation.Direction
             % - string          see method: fromNum
             % - numerical       see method: fromStr
             %
             % Following input will yield:
             % 
-            %  Enum      | Numeric | String
-            % ===========|=========|========================
-            %  None      |    0    | 'None'
-            %  Public    |    1    | 'Public'
-            %  Protected |    2    | 'Protected'
-            %  Private   |    3    | 'Private'
-            %  Custom    |    4    | any other string
+            %  Enum          | Numeric | String
+            % ===============|=========|========================
+            %  None          |    0    | 'None'
+            %  From          |    1    | 'From', 'Left'
+            %  To            |    2    | 'To', 'Right'
+            %  Bidirectional |    3    | 'Bidirectional', 'FromTo', 'ToFrom', 'Both'
             %
             
             % determine the type of the input
-            if isa(val, 'matdoc.enums.AccessLevel')
+            if isa(val, 'matdoc.uml.relation.Direction')
                 enum = val;
             elseif isnumeric(val)
-                enum = matdoc.enums.AccessLevel.fromNum(val);
+                enum = matdoc.uml.relation.Direction.fromNum(val);
             elseif ischar(val)
-                enum = matdoc.enums.AccessLevel.fromStr(val);
-            elseif iscell(val)
-                enum = matdoc.enums.AccessLevel.Custom;
+                enum = matdoc.uml.relation.Direction.fromStr(val);
             else
-                error('matdoc:enums:AccessLevel:from:TypeError',...
+                error('matdoc:uml:relation:Direction:from:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.enums.AccessLevel'))
+                    class(val), help('matdoc.uml.relation.Direction'))
             end
             
         end % function enum = from(val)
@@ -119,39 +113,36 @@ classdef AccessLevel < uint32
         function enum = fromNum(val)
             % function enum = fromNum(val)
             %
-            % Call to obtain AccessLevel enumeration based on the given
+            % Call to obtain Direction enumeration based on the given
             % numeric value.
             %
-            %  Enum      | Numeric
-            % ===========|=========
-            %  None      |    0
-            %  Public    |    1
-            %  Protected |    2
-            %  Private   |    3
-            %  Custom    |    4
+            %  Enum          | Numeric
+            % ===============|=========
+            %  None          |    0
+            %  From          |    1
+            %  To            |    2
+            %  Bidirectional |    3
             
             % check data type
             if ~isnumeric(val)
-                error('matdoc:enums:AccessLevel:fromNum:TypeError',...
+                error('matdoc:uml:relation:Direction:fromNum:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.enums.AccessLevel.fromNum'))
+                    class(val), help('matdoc.uml.relation.Direction.fromNum'))
             end % if ~isnumeric(val)
             
             % get the enum
             switch val
                 case 0 % None
-                    enum  = matdoc.enums.AccessLevel.None;
-                case 1 % Public
-                    enum  = matdoc.enums.AccessLevel.Public;
-                case 2 % Protected
-                    enum  = matdoc.enums.AccessLevel.Protected;
-                case 3 % Private
-                    enum  = matdoc.enums.AccessLevel.Private;
-                case 4 % Custom
-                    enum  = matdoc.enums.AccessLevel.Custom;
+                    enum  = matdoc.uml.relation.Direction.None;
+                case 1 % From
+                    enum  = matdoc.uml.relation.Direction.From;
+                case 2 % To
+                    enum  = matdoc.uml.relation.Direction.To;
+                case 3 % Bidirectional
+                    enum  = matdoc.uml.relation.Direction.Bidirectional;
                 otherwise % find closest match
                     % fetch all names of the LogLevel
-                    avTypes = enumeration('matdoc.enums.AccessLevel');
+                    avTypes = enumeration('matdoc.uml.relation.Direction');
                     % find the closest matching
                     avTypeValues = double(avTypes);
                     [~, idx] = min(abs(avTypeValues - val));
@@ -164,42 +155,43 @@ classdef AccessLevel < uint32
         function enum = fromStr(val)
             % function enum = fromStr(val)
             %
-            % Call to obtain AccessLevel enumeration based on the given
+            % Call to obtain Direction enumeration based on the given
             % numeric value.
             %
             % Input is evaluated case insensitive
             % 
-            %  Enum      | String
-            % ===========|=========================
-            %  None      | 'None'
-            %  Public    | 'Public'
-            %  Protected | 'Protected'
-            %  Private   | 'Private'
-            %  Custom    | any other string
+            %  Enum          | String
+            % ===============|=========================
+            %  None          | 'None'
+            %  From          | 'From', 'Left'
+            %  To            | 'To', 'Right'
+            %  Bidirectional | 'Bidirectional', 'FromTo', 'ToFrom', 'Both'
             
             % check data type
             if ~ischar(val)
-                error('matdoc:enums:AccessLevel:fromStr:TypeError',...
+                error('matdoc:uml:relation:Direction:fromStr:TypeError',...
                     'Can not build enum from {}. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.enums.AccessLevel'));
+                    class(val), help('matdoc.uml.relation.Direction'));
             end % if ~isnumeric(val)
             
             % get the enum
             switch lower(val)
                 case 'none' % None
-                    enum  = matdoc.enums.AccessLevel.None;
-                case 'public' % Public
-                    enum  = matdoc.enums.AccessLevel.Public;
-                case 'protected' % Protected
-                    enum  = matdoc.enums.AccessLevel.Protected;
-                case 'private' % Private
-                    enum  = matdoc.enums.AccessLevel.Private;
-                otherwise % Custom
-                    enum  = matdoc.enums.AccessLevel.Custom;
+                    enum  = matdoc.uml.relation.Direction.None;
+                case {'from', 'left'} % From
+                    enum  = matdoc.uml.relation.Direction.From;
+                case {'to', 'right'} % To
+                    enum  = matdoc.uml.relation.Direction.To;
+                case {'bidirectional', 'fromto', 'tofrom', 'both'} % Bidirectional
+                    enum  = matdoc.uml.relation.Direction.Bidirectional;
+                otherwise % find closest match
+                    error('matdoc:uml:relation:Direction:fromStr:ValueError',...
+                    'Can not find exact enum value for %s. Please have a look at the doc:\n\n%s',...
+                    val, help('matdoc.uml.relation.Direction.fromStr'));
             end % switch val
             
         end % function enum = fromStr(val)
         
     end % methods (Static)
     
-end % classdef AccessLevel < uint32
+end % classdef Direction < uint32
