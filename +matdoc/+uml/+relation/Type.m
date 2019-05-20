@@ -49,6 +49,56 @@ classdef Type < handle
             
         end % function this = ColumnDataDisplay()
         
+        %% - umlStr = getPlantUML(ident_)
+        function umlStr = getPlantUML(this, ident_)
+            % function umlStr = getPlantUML(this, ident_)
+            %
+            % Returns the plantUML representation of this meta object.
+            % Note: This method will be called by the getter of the
+            % plantUML property of the matdoc.uml.super.Base.
+            
+            % process input %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if nargin < 2 || isempty(ident_)
+                ident_ = 0;
+            end % if nargin < 2 || isempty(ident_)
+            if ~isnumeric(ident_)
+                error('matdoc:uml:Package:getPlantUML:TypeError',...
+                    'Input ident_ has to be numeric.');
+            end % if ~isnumeric(ident_)
+            
+            % make sure its a scalar integer value
+            ident_ = abs(round(ident_(1)));
+            
+            % build the identStr
+            identStr = char(32 * ones(1, ident_));
+            
+            % build the UML string %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            switch this.Direction
+                case matdoc.uml.relation.Direction.To
+                    umlStr = sprintf('%s%s',...
+                        this.Body.getPlantUML(),...
+                        this.RightTip.getPlantUML(matdoc.uml.relation.Direction.To)...
+                        );
+                case matdoc.uml.relation.Direction.From
+                    umlStr = sprintf('%s%s',...
+                        this.LeftTip.getPlantUML(matdoc.uml.relation.Direction.From),...
+                        this.Body.getPlantUML()...
+                        );
+                case matdoc.uml.relation.Direction.Bidirectional
+                    umlStr = sprintf('%s%s%s',...
+                        this.LeftTip.getPlantUML(matdoc.uml.relation.Direction.From),...
+                        this.Body.getPlantUML(),...
+                        this.RightTip.getPlantUML(matdoc.uml.relation.Direction.To)...
+                        );
+                otherwise
+                    umlStr = this.Body.getPlantUML();
+            end % switch val
+            
+            % add the indentation
+            umlStr = sprintf('%s%s', identStr, umlStr);
+            
+        end % function umlStr = getPlantUML(this, direction)
+        
         %% - val = get.Direction()
         function val = get.Direction(this)
             % function val = get.Direction(this)
@@ -96,17 +146,55 @@ classdef Type < handle
                     'This function is desined to evaluate strings (as the name suggests). You where trying to call it with an argument of type ''%s''. RTMF! :-)', class(string));
             end % if ~ischar(string)
             
+            % Seperate the body from the arrows. The body will only contain
+            % '-' or '.' characters
+            Arrows = strsplit(string, {'.', '-'}, 'CollapseDelimiters', false);
+            
             % Left Arrow %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            try
+                theLeftTip = matdoc.uml.relation.arrow.Head.fromStr(Arrows{1});
+            catch ex
+                switch ex.identifier
+                    case 'matdoc:uml:relation:arrow:Head:fromStr:ValueError'
+                        error('matdoc:uml:relation:Type:fromStr:FormatError',...
+                            'Could not figure out what the right tip of the relation ''%s'' is. Syntax error?', string);
+                    otherwise
+                        rethrow(ex);
+                end % switch ex.identifier
+            end % try
             
             % Right Arrow %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            try
+                theRightTip = matdoc.uml.relation.arrow.Head.fromStr(Arrows{end});
+            catch ex
+                switch ex.identifier
+                    case 'matdoc:uml:relation:arrow:Head:fromStr:ValueError'
+                        error('matdoc:uml:relation:Type:fromStr:FormatError',...
+                            'Could not figure out what the left tip of the relation ''%s'' is. Syntax error?', string);
+                    otherwise
+                        rethrow(ex);
+                end % switch ex.identifier
+            end % try
             
             % Body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            BodyStr = strrep(strrep(string, Arrows{1}, ''), Arrows{end}, '');
+            try
+                theBody = matdoc.uml.relation.arrow.Body.fromStr(BodyStr);
+            catch ex
+                switch ex.identifier
+                    case 'matdoc:uml:relation:arrow:Body:fromStr:ValueError'
+                        error('matdoc:uml:relation:Type:fromStr:FormatError',...
+                            'Could not figure out what the body of the relation ''%s'' is. Syntax error?', string);
+                    otherwise
+                        rethrow(ex);
+                end % switch ex.identifier
+            end % try
             
             % Create Instance of class %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             theType = matdoc.uml.relation.Type(...
-                [],... LeftTip_
-                [],... RightTip_
-                []... Body_
+                theLeftTip,... LeftTip_
+                theRightTip,... RightTip_
+                theBody... Body_
                 );
             
         end % function theType = fromStr(string)

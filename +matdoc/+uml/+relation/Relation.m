@@ -168,9 +168,11 @@ classdef Relation < handle
             % Left Annotation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             LeftAnno = stringParts{2};
             hasLeftAnno = LeftAnno(1) == '"' && LeftAnno(end) == '"';
-            if ~hasLeftAnno
+            if hasLeftAnno
+                LeftAnno = LeftAnno(2:end-1);
+            else % if hasLeftAnno
                 LeftAnno = '';
-            end % if ~hasLeftAnnotation
+            end % if hasLeftAnno
             
             % Get the relation arrow %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if hasLeftAnno
@@ -198,9 +200,11 @@ classdef Relation < handle
                 RightAnno = stringParts{3};
             end % if hasLeftAnnotation
             hasRightAnno = RightAnno(1) == '"' && RightAnno(end) == '"';
-            if ~hasRightAnnotation
+            if hasRightAnno
+                RightAnno = RightAnno(2:end-1);
+            else % if hasRightAnno
                 RightAnno = '';
-            end % if ~hasLeftAnnotation
+            end % if hasRightAnno
             
             % Get Left ClassName %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             ClassRighthIdx = ClassRighthIdx + double(hasLeftAnno) + double(hasRightAnno);
@@ -222,14 +226,14 @@ classdef Relation < handle
                 
                 % get the relation annotation
                 if partCnt > ClassRighthIdx + 1
-                    RelationAnno = strtrim('%s ', stringParts{ClassRighthIdx + 2:end});
+                    RelationAnno = strtrim(sprintf('%s ', stringParts{ClassRighthIdx + 2:end}));
                 end % if partCnt > ClassRighthIdx + 1
                 
             end % if partCnt > ClassRighthIdx
             
             % Call constructor %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
-            theRelation = Relation(...
+            theRelation = matdoc.uml.relation.Relation(...
                 ClassLeft,... LeftClassName_
                 RelType,... RelationType_
                 ClassRight,... RightClassName_

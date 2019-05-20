@@ -46,6 +46,62 @@ classdef Head < uint32
     %% METHODS: PUBLIC
     methods
         
+        %% - umlStr = getPlantUML(direction)
+        function umlStr = getPlantUML(this, direction)
+            % function umlStr = getPlantUML(this, direction)
+            %
+            % Returns the plantUML representation of this meta object.
+            % Note: This method will be called by the getter of the
+            % plantUML property of the matdoc.uml.super.Base.
+            
+            % build the UML string %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            switch this
+                case matdoc.uml.relation.arrow.Head.Triangle
+                    switch direction
+                        case matdoc.uml.relation.Direction.From
+                            umlStr = '<|';
+                        case matdoc.uml.relation.Direction.To
+                            umlStr = '|>';
+                        otherwise
+                            error('matdoc:uml:relation:arrow:Head:getPlantUML:ValueError',...
+                                'Input direction has to be either matdoc.uml.relation.Direction.From or matdoc.uml.relation.Direction.To.');
+                    end % switch direction
+                case matdoc.uml.relation.arrow.Head.Diamond
+                    umlStr = 'o';
+                case matdoc.uml.relation.arrow.Head.DiamondFilled
+                    umlStr = '*';
+                case  matdoc.uml.relation.arrow.Head.Pointer
+                    switch direction
+                        case matdoc.uml.relation.Direction.From
+                            umlStr = '<';
+                        case matdoc.uml.relation.Direction.To
+                            umlStr = '>';
+                        otherwise
+                            error('matdoc:uml:relation:arrow:Head:getPlantUML:ValueError',...
+                                'Input direction has to be either matdoc.uml.relation.Direction.From or matdoc.uml.relation.Direction.To.');
+                    end % switch direction
+                case matdoc.uml.relation.arrow.Head.Square
+                    umlStr = '#';
+                case matdoc.uml.relation.arrow.Head.X
+                    umlStr = 'x';
+                case matdoc.uml.relation.arrow.Head.OpenTriangle
+                    switch direction
+                        case matdoc.uml.relation.Direction.From
+                            umlStr = '}';
+                        case matdoc.uml.relation.Direction.To
+                            umlStr = '{';
+                        otherwise
+                            error('matdoc:uml:relation:arrow:Head:getPlantUML:ValueError',...
+                                'Input direction has to be either matdoc.uml.relation.Direction.From or matdoc.uml.relation.Direction.To.');
+                    end % switch direction
+                case matdoc.uml.relation.arrow.Head.Plus
+                    umlStr = '+';
+                otherwise  % None
+                    umlStr = '';
+            end % switch val
+            
+        end % function umlStr = getPlantUML(this, direction)
+        
         %% - isEqual = eq(this, other)
         function isEqual = eq(this, other)
             % function isEqual = eq(this, other)
@@ -53,10 +109,10 @@ classdef Head < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(matdoc.uml.relation.Head.from(this)) == double(matdoc.uml.relation.Head.from(other));
+                isEqual = double(matdoc.uml.relation.arrow.Head.from(this)) == double(matdoc.uml.relation.arrow.Head.from(other));
             catch ex
                 switch ex.identifier
-                    case 'matdoc:uml:relation:Head:from:TypeError'
+                    case 'matdoc:uml:relation:arrow:Head:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -72,10 +128,10 @@ classdef Head < uint32
             % Compares the enum to the other object
             
             try
-                isEqual = double(matdoc.uml.relation.Head.from(this)) ~= double(matdoc.uml.relation.Head.from(other));
+                isEqual = double(matdoc.uml.relation.arrow.Head.from(this)) ~= double(matdoc.uml.relation.arrow.Head.from(other));
             catch ex
                 switch ex.identifier
-                    case 'matdoc:uml:relation:Head:from:TypeError'
+                    case 'matdoc:uml:relation:arrow:Head:from:TypeError'
                         isEqual = false;
                     otherwise
                         rethrow(ex);
@@ -104,7 +160,7 @@ classdef Head < uint32
             %  Enum          | Numeric | String
             % ===============|=========|========================
             %  None          |    0    | 'None'
-            %  Triangle      |    1    | 'Triangle', '<|', '|>'
+            %  Triangle      |    1    | 'Triangle', '<|', '|>', '^'
             %  Diamond       |    2    | 'Diamond', 'o'
             %  DiamondFilled |    3    | 'DiamondFilled', '*'
             %  Pointer       |    4    | 'Pointer', '<', '>'
@@ -115,14 +171,14 @@ classdef Head < uint32
             %
             
             % determine the type of the input
-            if isa(val, 'matdoc.uml.relation.Head')
+            if isa(val, 'matdoc.uml.relation.arrow.Head')
                 enum = val;
             elseif isnumeric(val)
-                enum = matdoc.uml.relation.Head.fromNum(val);
+                enum = matdoc.uml.relation.arrow.Head.fromNum(val);
             elseif ischar(val)
-                enum = matdoc.uml.relation.Head.fromStr(val);
+                enum = matdoc.uml.relation.arrow.Head.fromStr(val);
             else
-                error('matdoc:uml:relation:Head:from:TypeError',...
+                error('matdoc:uml:relation:arrow:Head:from:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
                     class(val), help('matdoc.uml.relation.Head'))
             end
@@ -150,31 +206,31 @@ classdef Head < uint32
             
             % check data type
             if ~isnumeric(val)
-                error('matdoc:uml:relation:Head:fromNum:TypeError',...
+                error('matdoc:uml:relation:arrow:Head:fromNum:TypeError',...
                     'Can not build enum from %s. Please have a look at the doc:\n\n%s',...
-                    class(val), help('matdoc.uml.relation.Head.fromNum'))
+                    class(val), help('matdoc.uml.relation.arrow.Head.fromNum'))
             end % if ~isnumeric(val)
             
             % get the enum
             switch val
                 case 0 % None
-                    enum  = matdoc.uml.relation.Head.None;
+                    enum  = matdoc.uml.relation.arrow.Head.None;
                 case 1 % Triangle
-                    enum  = matdoc.uml.relation.Head.Triangle;
+                    enum  = matdoc.uml.relation.arrow.Head.Triangle;
                 case 2 % Diamond
-                    enum  = matdoc.uml.relation.Head.Diamond;
+                    enum  = matdoc.uml.relation.arrow.Head.Diamond;
                 case 3 % DiamondFilled
-                    enum  = matdoc.uml.relation.Head.DiamondFilled;
+                    enum  = matdoc.uml.relation.arrow.Head.DiamondFilled;
                 case 4 % Pointer
-                    enum  = matdoc.uml.relation.Head.Pointer;
+                    enum  = matdoc.uml.relation.arrow.Head.Pointer;
                 case 5 % Square
-                    enum  = matdoc.uml.relation.Head.Square;
+                    enum  = matdoc.uml.relation.arrow.Head.Square;
                 case 6 % X
-                    enum  = matdoc.uml.relation.Head.X;
+                    enum  = matdoc.uml.relation.arrow.Head.X;
                 case 7 % OpenTriangle
-                    enum  = matdoc.uml.relation.Head.OpenTriangle;
+                    enum  = matdoc.uml.relation.arrow.Head.OpenTriangle;
                 case 8 % Plus
-                    enum  = matdoc.uml.relation.Head.Plus;
+                    enum  = matdoc.uml.relation.arrow.Head.Plus;
                 otherwise % find closest match
                     % fetch all names of the LogLevel
                     avTypes = enumeration('matdoc.uml.relation.Head');
@@ -209,35 +265,31 @@ classdef Head < uint32
             
             % check data type
             if ~ischar(val)
-                error('matdoc:uml:relation:Head:fromStr:TypeError',...
+                error('matdoc:uml:relation:arrow:Head:fromStr:TypeError',...
                     'Can not build enum from {}. Please have a look at the doc:\n\n%s',...
                     class(val), help('matdoc.uml.relation.Head'));
             end % if ~isnumeric(val)
             
             % get the enum
             switch lower(val)
-                case 'none' % None
-                    enum  = matdoc.uml.relation.Head.None;
-                case {'triangle', '<|', '|>'} % Triangle
-                    enum  = matdoc.uml.relation.Head.Triangle;
+                case {'triangle', '<|', '|>', '^'} % Triangle
+                    enum  = matdoc.uml.relation.arrow.Head.Triangle;
                 case {'diamond', 'o'}  % Diamond
-                    enum  = matdoc.uml.relation.Head.Diamond;
+                    enum  = matdoc.uml.relation.arrow.Head.Diamond;
                 case {'diamondfilled', '*'} % DiamondFilled
-                    enum  = matdoc.uml.relation.Head.DiamondFilled;
+                    enum  = matdoc.uml.relation.arrow.Head.DiamondFilled;
                 case {'pointer', '<', '>'} % Pointer
-                    enum  = matdoc.uml.relation.Head.Pointer;
+                    enum  = matdoc.uml.relation.arrow.Head.Pointer;
                 case {'square', '#'} % Square
-                    enum  = matdoc.uml.relation.Head.Square;
+                    enum  = matdoc.uml.relation.arrow.Head.Square;
                 case 'x',  % X
-                    enum  = matdoc.uml.relation.Head.X;
+                    enum  = matdoc.uml.relation.arrow.Head.X;
                 case {'opentriangle', '{', '}'} % OpenTriangle
-                    enum  = matdoc.uml.relation.Head.OpenTriangle;
+                    enum  = matdoc.uml.relation.arrow.Head.OpenTriangle;
                 case {'plus', '+'} % Plus
-                    enum  = matdoc.uml.relation.Head.Plus;
-                otherwise % find closest match
-                    error('matdoc:uml:relation:Head:fromStr:ValueError',...
-                    'Can not find exact enum value for %s. Please have a look at the doc:\n\n%s',...
-                    val, help('matdoc.uml.relation.Head.fromStr'));
+                    enum  = matdoc.uml.relation.arrow.Head.Plus;
+                otherwise  % None
+                    enum  = matdoc.uml.relation.arrow.Head.None;
             end % switch val
             
         end % function enum = fromStr(val)

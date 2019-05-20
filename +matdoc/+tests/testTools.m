@@ -122,7 +122,7 @@ classdef testTools < matlab.unittest.TestCase
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation }-- matdoc.Configuration'));
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation +-- matdoc.Configuration'));
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation ^-- matdoc.Configuration'));
-            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- "many" matdoc.Configuration : contains'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- "many" matdoc.Configuration : contains safas'));
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation o-- matdoc.Configuration : aggregation'));
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation --> "1" matdoc.Configuration'));
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation - matdoc.Configuration : drives >'));
