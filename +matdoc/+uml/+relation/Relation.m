@@ -1,4 +1,4 @@
-classdef Relation < handle
+classdef Relation < matdoc.uml.super.WithPlantUML
     % RELATION Represents a class relation
     % This class can be instanciated by the static methods from(string) or
     % with the constructor: Relation(LeftClass_, RelationType_, RightClass_, varargin)
@@ -120,10 +120,61 @@ classdef Relation < handle
             
         end % function this = ColumnDataDisplay()
         
+        %% - umlStr = getPlantUML(this, ident_)
+        function umlStr = getPlantUML(this, ident_)
+            % function umlStr = getPlantUML(this, ident_)
+            %
+            % Returns the UML Relation string of this relation
+            
+            
+            % process input %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            if nargin < 2 || isempty(ident_)
+                ident_ = 0;
+            end % if nargin < 2 || isempty(ident_)
+            if ~isnumeric(ident_)
+                error('matdoc:uml:Package:getPlantUML:TypeError',...
+                    'Input ident_ has to be numeric.');
+            end % if ~isnumeric(ident_)
+            
+            % build the identStr
+            identStr = char(32 * ones(1, ident_));
+            
+            % get Annotation Strings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            
+            if isempty(this.LeftAnnotation)
+                AnnoTationLeft = '';
+            else % if isempty(this.LeftAnnotation)
+                AnnoTationLeft = sprintf(' "%s"', this.LeftAnnotation);
+            end % if isempty(this.LeftAnnotation)
+            if isempty(this.RightAnnotation)
+                AnnotationRight = '';
+            else % if isempty(this.RightAnnotation)
+                AnnotationRight = sprintf('"%s" ', this.RightAnnotation);
+            end % if isempty(this.RightAnnotation)
+            if isempty(this.RelationAnnotation)
+                AnnotationRelation = '';
+            else % if isempty(this.RelationAnnotation)
+                AnnotationRelation = sprintf(' : %s', this.RelationAnnotation);
+            end % if isempty(this.RelationAnnotation)
+            
+            % Build the complete string %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            umlStr = sprintf('%s%s%s %s %s%s%s',...
+                identStr,...
+                this.LeftClassName,...
+                AnnoTationLeft,...
+                this.RelationType.getPlantUML(),...
+                AnnotationRight,...
+                this.RightClassName,...
+                AnnotationRelation...
+                );
+            
+        end % function umlStr = getPlantUML(this, ident_)
+        
     end % methods
     
     %% METHODS: PROTECTED
     methods (Access = protected)
+        
         
     end % methods (Access = protected)
     

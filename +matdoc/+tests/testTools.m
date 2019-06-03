@@ -62,6 +62,10 @@ classdef testTools < matlab.unittest.TestCase
             testCase.assertTrue(matdoc.tools.isBuiltIn('cell'));
             
             % Let's test some custom functions and classes
+            testCase.assertTrue(matdoc.tools.isClassOrPackage('matdoc'));
+            testCase.assertTrue(matdoc.tools.isClassOrPackage('matdoc.meta'));
+            testCase.assertTrue(matdoc.tools.isClassOrPackage('matdoc.Documentation'));
+            testCase.assertTrue(matdoc.tools.isClassOrPackage('matdoc.meta.Class'));
             testCase.assertFalse(matdoc.tools.isClassOrPackage('run_tests'));
             testCase.assertFalse(matdoc.tools.isClassOrPackage('matdoc.tools.isBuiltIn'));
             testCase.assertFalse(matdoc.tools.isClassOrPackage('matdoc.tools.faststrsplit'));
@@ -128,6 +132,15 @@ classdef testTools < matlab.unittest.TestCase
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation - matdoc.Configuration : drives >'));
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation *- matdoc.Configuration : have 4 >'));
             testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation -- matdoc.Configuration : < owns'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation " " *-- matdoc.Configuration'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation " 1" *-- matdoc.Configuration'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation "1 " *-- matdoc.Configuration'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation " 1 " *-- matdoc.Configuration'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- " " matdoc.Configuration'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- " many" matdoc.Configuration'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- "many " matdoc.Configuration'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- " many " matdoc.Configuration'));
+            testCase.assertTrue(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- "many" matdoc.Configuration : '));
             
             % now let's mess up the sintax a bit to check if it can be detected as
             % invalid
@@ -144,7 +157,10 @@ classdef testTools < matlab.unittest.TestCase
             testCase.assertFalse(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- "many" matdoc.Configuration contains'));
             testCase.assertFalse(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- "many" NonExistingClass : contains'));
             testCase.assertFalse(matdoc.tools.isUmlRelation('NonExistingClass "1" *-- "many" matdoc.Configuration contains'));
-            
+            testCase.assertFalse(matdoc.tools.isUmlRelation('matdoc.Documentation "1 *-- "many" matdoc.Configuration : contains safas'));
+            testCase.assertFalse(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- many" matdoc.Configuration : contains safas'));
+            testCase.assertFalse(matdoc.tools.isUmlRelation('matdoc.Documentation "1 *-- many" matdoc.Configuration : contains safas'));
+            testCase.assertFalse(matdoc.tools.isUmlRelation('matdoc.Documentation "1" *-- "many matdoc.Configuration : contains safas'));
             
         end % function test_isUmlRelation(testCase)
         

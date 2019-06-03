@@ -14,6 +14,12 @@ ObjDescStr = strtrim(ObjDescStr);
 % now let's try to figure out what you are
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% UML Relation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+if matdoc.tools.isUmlRelation(ObjDescStr)
+    objMeta = matdoc.uml.relation.Relation.fromStr(ObjDescStr);
+    return
+end % if matdoc.tools.isUmlRelation(ObjDescStr)
+
 % Class %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % obtain a meta.class based on the name
