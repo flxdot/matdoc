@@ -36,6 +36,10 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
         % This list also includes the sub packages of package
         PackageListFlattened = matdoc.meta.Package.empty(1, 0);
         
+        % List of all defined class/package relations in the UmlObjects
+        %
+        RelationList = matdoc.uml.relation.Relation.empty(1, 0);
+        
     end % properties (SetAccess = protected)
     
     %% PROPERTIES: ACCESS = PROTECTED
@@ -174,6 +178,10 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
                 );
             
             % add UML String for the relations %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            umlStr = sprintf('%s\n\n%s',...
+                umlStr,...
+                getRelationUml(this)...
+                );
             
             % add the UML end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             umlStr = sprintf('%s\n\n%s', umlStr, '@enduml');
@@ -270,6 +278,11 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
                     else % if isempty(this.PackageList)
                         this.PackageList(1, end + 1) = umlMetaObj;
                     end % if isempty(this.PackageList)
+                    
+                case 'matdoc.uml.relation.Relation'
+                    
+                    umlMetaObj = metaObj;
+                    this.RelationList(1, end + 1) = metaObj;
                     
             end % switch class(metaObj)
             
@@ -402,6 +415,23 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             umlStr = strtrim(umlStr);
             
         end % function umlStr = getClassUml(this)
+        
+        %% - umlStr = getRelationUml()
+        function umlStr = getRelationUml(this)
+            % function getRelationUml(this)
+            %
+            % Returns the UML representation of the relations defined in
+            % the RelationList property.
+            
+            umlStr = '';
+            for iRel = 1:length(this.RelationList)
+                umlStr = sprintf('%s\n%s',...
+                    umlStr,...
+                    this.RelationList(iRel).getPlantUML(0)...
+                    );
+            end % for iRel = 1:length(this.RelationList)
+            
+        end % function umlStr = getRelationUml(this)
         
         %% - getPackageListFlattened()
         function getPackageListFlattened(this)
