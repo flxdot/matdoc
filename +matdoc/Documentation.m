@@ -1,4 +1,5 @@
-classdef Documentation < matdoc.uml.super.WithPlantUML
+classdef Documentation < matdoc.uml.super.WithPlantUML & ...
+        matdoc.sphinx.super.WithSphinxDoc
     
     %% PROPERTIES: PUBLIC
     properties
@@ -63,7 +64,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
         
         %% - Constructor
         function this = Documentation(objects_, varargin)
-            % function this = Documentation()
+            % function this = Documentation(objects_, varargin)
             %
             % The default constructor can be used to directly create a
             % diagram based on the given objects_.
@@ -72,7 +73,7 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             % objects to add to the UML diagram. See help of method
             % addObj(object); for further details about the list of
             % supported types.
-            %
+            % :param varargin: optional key value pairs
             
             % process input
             if nargin > 0
@@ -175,6 +176,34 @@ classdef Documentation < matdoc.uml.super.WithPlantUML
             umlStr = sprintf('%s\n\n%s', umlStr, '@enduml');
             
         end % function umlStr = getPlantUML(this)
+        
+        %% - sphinxDocStr = getSphinxDoc(this)
+        function sphinxDocStr = getSphinxDoc(this)
+            % function sphinxDocStr = getSphinxDoc(this)
+            %
+            % Returns the sphinx documentation representation of the
+            % objects.
+            
+            sphinxDocStr = '';
+            
+            % get PlantUML string of each Class
+            for iClass = 1:length(this.ClassListFlattened)
+                % get the handle to the currently processed class
+                curClass = this.ClassListFlattened(iClass);
+                
+                % do the built-in classes need to be skipped?
+                if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                    continue;
+                end % if this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn
+                
+                sphinxDocStr = sprintf('%s\n\n%s',...
+                    sphinxDocStr,...
+                    curClass.getSphinxDoc()...
+                    );
+                
+            end % for iClass = 1:length(this.ClassListFlattened)
+            
+        end % function sphinxDocStr = getSphinxDoc(this)
         
         %% - clear()
         function clear(this)

@@ -1,5 +1,6 @@
 classdef Class < matdoc.meta.super.Container & ...
-        matdoc.uml.Class
+        matdoc.uml.Class & ...
+        matdoc.sphinx.Class
     
     %% PROPERTIES: PUBLIC
     properties

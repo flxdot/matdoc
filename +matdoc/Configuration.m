@@ -56,6 +56,12 @@ classdef Configuration < handle
         MethodInheritanceHint = true;
         
         % Flag: true or false
+        % Default: true
+        % If set the sphinx documentation will contain the method
+        % description
+        MethodDescription = true;
+        
+        % Flag: true or false
         % Default: false
         % If set the description of each property will be added to the UML
         % diagram

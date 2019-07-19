@@ -1,5 +1,6 @@
 classdef Package < matdoc.meta.super.Container & ...
-        matdoc.uml.Package
+        matdoc.uml.Package & ...
+        matdoc.sphinx.Package
    
     %% PROPERTIES: PUBLIC
     properties
