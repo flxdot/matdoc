@@ -11,6 +11,12 @@ classdef CustomPackage < matdoc.uml.super.Base
             % Note: This method will be called by the getter of the
             % plantUML property of the matdoc.uml.super.Base.
             
+            % 
+            if this.Configuration.IgnoreTests && strncmp(this.Name, 'matlab.unittest', 15)
+                umlStr = '';
+                return;
+            end % if this.Configuration.IgnoreTests && strncmp(this.Name, 'matlab.unittest', 15)
+            
             % process input %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             if nargin < 2 || isempty(ident_)
                 ident_ = 0;
@@ -22,7 +28,7 @@ classdef CustomPackage < matdoc.uml.super.Base
             
             % make sure its a scalar integer value
             if isempty(this.Name)
-                ident_ = -matdoc.uml.super.Base.UML_IDENT;
+                ident_ = -matdoc.uml.super.Base.IDENT;
             else % if isempty(this.Name)
                 ident_ = abs(round(ident_(1)));
             end % if isempty(this.Name)
@@ -38,22 +44,49 @@ classdef CustomPackage < matdoc.uml.super.Base
             end
             
             % get the stand alone classes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            exportedClassCnt = 0;
             for iClass = 1:length(this.ClassList)
+                % 
+                curClass = this.ClassList(iClass);
+                
+                % check if the current class need to be skipped 
+                if (this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn) || ...
+                        (this.Configuration.IgnoreTests && curClass.isUnitTest)
+                    continue;
+                end % if (this.Configuration.IgnoreBuiltInClass && curClass.isBuiltIn) || ...
+                
                 umlStr = sprintf('%s\n%s\n%s',...
                     umlStr,...
                     identStr,...
-                    this.ClassList(iClass).getPlantUML(ident_ + matdoc.uml.super.Base.UML_IDENT)...
+                    curClass.getPlantUML(ident_ + matdoc.uml.super.Base.IDENT)...
                     );
+                
+                exportedClassCnt = exportedClassCnt + 1;
             end % for iClass = 1:length(this.ClassList)
             
             % get the classes of the packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            exportedPackageCnt = 0;
             for iPack = 1:length(this.PackageList)
+                
+                curPackageUml = this.PackageList(iPack).getPlantUML(ident_ + matdoc.uml.super.Base.IDENT);
+                if isempty(strtrim(curPackageUml))
+                    continue;
+                end % if isempty(curPackageUml)
+                
                 umlStr = sprintf('%s\n%s\n%s',...
                     umlStr,...
                     identStr,...
-                    this.PackageList(iPack).getPlantUML(ident_ + matdoc.uml.super.Base.UML_IDENT)...
+                    curPackageUml...
                     );
+                exportedPackageCnt = exportedPackageCnt + 1;
             end % for iClass = 1:length(this.ClassList)
+            
+            % make sure to hide this custom package if neither a class nor
+            % a sub package was exported
+            if exportedPackageCnt + exportedClassCnt == 0
+                umlStr = '';
+                return;
+            end % if exportedPackageCnt + exportedClassCnt == 0
             
             % close the package string
             if ~isempty(this.Name)

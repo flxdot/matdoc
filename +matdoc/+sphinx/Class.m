@@ -158,7 +158,7 @@ classdef Class < matdoc.sphinx.super.Base
                     curMetaObj = theProperties(iProperty);
                     
                     % may be the class needs to be skipped?
-                    if this.Configuration.IngoreBuiltInPropertyInheritance && ...
+                    if this.Configuration.IgnoreBuiltInPropertyInheritance && ...
                             matdoc.tools.isBuiltIn(curMetaObj.metaObj.DefiningClass)
                         continue;
                     end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn
@@ -227,7 +227,7 @@ classdef Class < matdoc.sphinx.super.Base
                     
                     % may be the class needs to be skipped?
                     if curMetaObj.isConstructor || ...
-                            (this.Configuration.IngoreBuiltInMethodInheritance &&...
+                            (this.Configuration.IgnoreBuiltInMethodInheritance &&...
                             matdoc.tools.isBuiltIn(curMetaObj.metaObj.DefiningClass))
                         continue;
                     end % if this.Configuration.IgnoreBuiltInClass && curMetaClass.isBuiltIn

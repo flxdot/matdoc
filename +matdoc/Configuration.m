@@ -41,13 +41,20 @@ classdef Configuration < handle
         % Default: true
         % If set the uml export will not contain methods inheritated from
         % built-in classes
-        IngoreBuiltInMethodInheritance = true;
+        IgnoreBuiltInMethodInheritance = true;
         
         % Flag: true or false
         % Default: true
         % If set the uml export will not contain properties inheritated
         % from built-in classes
-        IngoreBuiltInPropertyInheritance = true;
+        IgnoreBuiltInPropertyInheritance = true;
+        
+        % Flag: true or false
+        % Default: true
+        % If set the export will not contain any classes which are from the
+        % matlab unittesting framework or inheritated from the unit testing
+        % frame work
+        IgnoreTests = true;
         
         % Flag: true or false
         % Default: true
@@ -81,6 +88,24 @@ classdef Configuration < handle
         % missing form diagram. This is mainly caused by naming conflicts
         % when classes and packages have the same name.
         SafeUmlExport = false;
+        
+    end % properties
+    
+    %% PROPERTIES: DEPENDENT
+    properties (Dependent)
+        
+        % IgnoreBuiltInMethodInheritance and
+        % IgnoreBuiltInPropertyInheritance combined.
+        IgnoreBuiltInInheritance = true;
+        
+        % MethodInheritanceHint and PropertyInheritanceHint combined.
+        InheritanceHint = true;
+        
+        % Hiddes all methods, properties, events and enumeration members
+        % to let the user focus on the relation between the classes. This
+        % can be helfull when the Diagram is very large or fairly
+        % complicated.
+        OnlyRelationship = false;
         
     end % properties
     
@@ -156,20 +181,9 @@ classdef Configuration < handle
             % check some special cases
             if value
                 switch lower(key)
-                    case 'ingorebuiltininheritance'
-                        this.IngoreBuiltInMethodInheritance = value;
-                        this.IngoreBuiltInPropertyInheritance = value;
-                    case 'inheritancehint'
-                        this.PropertyInheritanceHint = value;
-                        this.MethodInheritanceHint = value;
-                    case 'onlyrelationship'
-                        this.HideProperties = true;
-                        this.HideMethods = true;
-                        this.HideEvents = true;
-                        this.HideEnumerationMember = true;
                     otherwise
                         error('matdoc:Configuration:setSetting:SettingNotFound',...
-                            'Can not set settings ''%s'' because it don'' know that. You better check the documentation again!', key);
+                            'Can not set settings ''%s'' because i don''t know that. You better check the documentation again!', key);
                 end % switch lower(key)
             end % if value
             
@@ -209,6 +223,91 @@ classdef Configuration < handle
             
         end % function reset(this)
         
+        %% - set.HideEnumerationMember(val)
+        function set.HideEnumerationMember(this, val)
+            % function set.HideEnumerationMember(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setHideEnumerationMember:TypeError',...
+                    'The HideEnumerationMember has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.HideEnumerationMember = logical(val(1));
+            
+        end % function set.HideEnumerationMember(this, val)
+        
+        %% - set.HideEvents(val)
+        function set.HideEvents(this, val)
+            % function set.HideEvents(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setHideEvents:TypeError',...
+                    'The HideEvents has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.HideEvents = logical(val(1));
+            
+        end % function set.HideEvents(this, val)
+        
+        %% - set.HideMethods(val)
+        function set.HideMethods(this, val)
+            % function set.HideMethods(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setHideMethods:TypeError',...
+                    'The HideMethods has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.HideMethods = logical(val(1));
+            
+        end % function set.HideMethods(this, val)
+        
+        %% - set.HideInheritance(val)
+        function set.HideInheritance(this, val)
+            % function set.HideInheritance(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setHideInheritance:TypeError',...
+                    'The HideInheritance has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.HideInheritance = logical(val(1));
+            
+        end % function set.HideInheritance(this, val)
+        
+        %% - set.HideProperties(val)
+        function set.HideProperties(this, val)
+            % function set.HideProperties(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setHideProperties:TypeError',...
+                    'The HideProperties has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.HideProperties = logical(val(1));
+            
+        end % function set.HideProperties(this, val)
+        
         %% - set.IgnoreBuiltInClass(val)
         function set.IgnoreBuiltInClass(this, val)
             % function set.IgnoreBuiltInClass(this, val)
@@ -219,46 +318,80 @@ classdef Configuration < handle
             % check data type
             if isempty(val) || (~islogical(val) && ~isnumeric(val))
                 error('matdoc:Configuration:setIgnoreBuiltInClass:TypeError',...
-                    'The IgnoreBuiltInClass has to be a bool value.');
-            end % if (~islogical(val) && ~isnumeric(val))
+                    'The IgnoreBuiltInClass has to be a numeric value.');
+            end % if ~isnumeric(val)
             
             this.IgnoreBuiltInClass = logical(val(1));
             
         end % function set.IgnoreBuiltInClass(this, val)
         
-        %% - set.IngoreBuiltInMethodInheritance(val)
-        function set.IngoreBuiltInMethodInheritance(this, val)
-            % function set.IngoreBuiltInMethodInheritance(this, val)
+        %% - set.IgnoreBuiltInMethodInheritance(val)
+        function set.IgnoreBuiltInMethodInheritance(this, val)
+            % function set.IgnoreBuiltInMethodInheritance(this, val)
             %
             % The setter method will make sure that only proper values are
             % set.
             
             % check data type
             if isempty(val) || (~islogical(val) && ~isnumeric(val))
-                error('matdoc:Configuration:setIngoreBuiltInMethodInheritance:TypeError',...
-                    'The IngoreBuiltInMethodInheritance has to be a bool value.');
-            end % if (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setIgnoreBuiltInMethodInheritance:TypeError',...
+                    'The IgnoreBuiltInMethodInheritance has to be a numeric value.');
+            end % if ~isnumeric(val)
             
-            this.IngoreBuiltInMethodInheritance = logical(val(1));
+            this.IgnoreBuiltInMethodInheritance = logical(val(1));
             
-        end % function set.IngoreBuiltInMethodInheritance(this, val)
+        end % function set.IgnoreBuiltInMethodInheritance(this, val)
         
-        %% - set.IngoreBuiltInPropertyInheritance(val)
-        function set.IngoreBuiltInPropertyInheritance(this, val)
-            % function set.IngoreBuiltInPropertyInheritance(this, val)
+        %% - set.IgnoreBuiltInPropertyInheritance(val)
+        function set.IgnoreBuiltInPropertyInheritance(this, val)
+            % function set.IgnoreBuiltInPropertyInheritance(this, val)
             %
             % The setter method will make sure that only proper values are
             % set.
             
             % check data type
             if isempty(val) || (~islogical(val) && ~isnumeric(val))
-                error('matdoc:Configuration:setIngoreBuiltInPropertyInheritance:TypeError',...
-                    'The IngoreBuiltInPropertyInheritance has to be a bool value.');
-            end % if (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setIgnoreBuiltInPropertyInheritance:TypeError',...
+                    'The IgnoreBuiltInPropertyInheritance has to be a numeric value.');
+            end % if ~isnumeric(val)
             
-            this.IngoreBuiltInPropertyInheritance = logical(val(1));
+            this.IgnoreBuiltInPropertyInheritance = logical(val(1));
             
-        end % function set.IngoreBuiltInPropertyInheritance(this, val)
+        end % function set.IgnoreBuiltInPropertyInheritance(this, val)
+        
+        %% - set.IgnoreTests(val)
+        function set.IgnoreTests(this, val)
+            % function set.IgnoreTests(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setIgnoreTests:TypeError',...
+                    'The IgnoreTests has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.IgnoreTests = logical(val(1));
+            
+        end % function set.IgnoreTests(this, val)
+        
+        %% - set.MethodInheritanceHint(val)
+        function set.MethodInheritanceHint(this, val)
+            % function set.MethodInheritanceHint(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setMethodInheritanceHint:TypeError',...
+                    'The MethodInheritanceHint has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.MethodInheritanceHint = logical(val(1));
+            
+        end % function set.MethodInheritanceHint(this, val)
         
         %% - set.PropertyDescription(val)
         function set.PropertyDescription(this, val)
@@ -270,8 +403,8 @@ classdef Configuration < handle
             % check data type
             if isempty(val) || (~islogical(val) && ~isnumeric(val))
                 error('matdoc:Configuration:setPropertyDescription:TypeError',...
-                    'The PropertyDescription has to be a bool value.');
-            end % if (~islogical(val) && ~isnumeric(val))
+                    'The PropertyDescription has to be a numeric value.');
+            end % if ~isnumeric(val)
             
             this.PropertyDescription = logical(val(1));
             
@@ -287,29 +420,121 @@ classdef Configuration < handle
             % check data type
             if isempty(val) || (~islogical(val) && ~isnumeric(val))
                 error('matdoc:Configuration:setPropertyInheritanceHint:TypeError',...
-                    'The PropertyInheritanceHint has to be a bool value.');
-            end % if (~islogical(val) && ~isnumeric(val))
+                    'The PropertyInheritanceHint has to be a numeric value.');
+            end % if ~isnumeric(val)
             
             this.PropertyInheritanceHint = logical(val(1));
             
         end % function set.PropertyInheritanceHint(this, val)
         
-        %% - set.MethodInheritanceHint(val)
-        function set.MethodInheritanceHint(this, val)
-            % function set.MethodInheritanceHint(this, val)
+        %% - set.SafeUmlExport(val)
+        function set.SafeUmlExport(this, val)
+            % function set.SafeUmlExport(this, val)
             %
             % The setter method will make sure that only proper values are
             % set.
             
             % check data type
             if isempty(val) || (~islogical(val) && ~isnumeric(val))
-                error('matdoc:Configuration:setMethodInheritanceHint:TypeError',...
-                    'The MethodInheritanceHint has to be a bool value.');
-            end % if (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setSafeUmlExport:TypeError',...
+                    'The SafeUmlExport has to be a numeric value.');
+            end % if ~isnumeric(val)
             
+            this.SafeUmlExport = logical(val(1));
+            
+        end % function set.SafeUmlExport(this, val)
+        
+        %% - set.IgnoreBuiltInInheritance(val)
+        function set.IgnoreBuiltInInheritance(this, val)
+            % function set.IgnoreBuiltInInheritance(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setIgnoreBuiltInInheritance:TypeError',...
+                    'The IgnoreBuiltInInheritance has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.IgnoreBuiltInMethodInheritance = logical(val(1));
+            this.IgnoreBuiltInPropertyInheritance = logical(val(1));
+            
+        end % function set.IgnoreBuiltInInheritance(this, val)
+        
+        %% - set.InheritanceHint(val)
+        function set.InheritanceHint(this, val)
+            % function set.InheritanceHint(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setInheritanceHint:TypeError',...
+                    'The InheritanceHint has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.PropertyInheritanceHint = logical(val(1));
             this.MethodInheritanceHint = logical(val(1));
             
-        end % function set.MethodInheritanceHint(this, val)
+        end % function set.InheritanceHint(this, val)
+        
+        %% - set.OnlyRelationship(val)
+        function set.OnlyRelationship(this, val)
+            % function set.OnlyRelationship(this, val)
+            %
+            % The setter method will make sure that only proper values are
+            % set.
+            
+            % check data type
+            if isempty(val) || (~islogical(val) && ~isnumeric(val))
+                error('matdoc:Configuration:setOnlyRelationship:TypeError',...
+                    'The OnlyRelationship has to be a numeric value.');
+            end % if ~isnumeric(val)
+            
+            this.HideProperties = logical(val(1));
+            this.HideMethods = logical(val(1));
+            this.HideEvents = logical(val(1));
+            this.HideEnumerationMember = logical(val(1));
+            
+        end % function set.OnlyRelationship(this, val)
+        
+        %% - val = get.IgnoreBuiltInInheritance()
+        function val = get.IgnoreBuiltInInheritance(this)
+            % function val = get.IgnoreBuiltInInheritance(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = this.IgnoreBuiltInMethodInheritance &&...
+                this.IgnoreBuiltInPropertyInheritance;
+            
+        end % function val = get.IgnoreBuiltInInheritance(this)
+        
+        %% - val = get.InheritanceHint()
+        function val = get.InheritanceHint(this)
+            % function val = get.InheritanceHint(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = this.PropertyInheritanceHint && ...
+                this.MethodInheritanceHint;
+            
+        end % function val = get.InheritanceHint(this)
+        
+        %% - val = get.OnlyRelationship()
+        function val = get.OnlyRelationship(this)
+            % function val = get.OnlyRelationship(this)
+            %
+            % The getter method will return the private member of the property
+            % set.
+            
+            val = this.HideProperties &&  this.HideMethods && ...
+                this.HideEvents && this.HideEnumerationMember;
+            
+        end % function val = get.OnlyRelationship(this)
         
     end % methods
     

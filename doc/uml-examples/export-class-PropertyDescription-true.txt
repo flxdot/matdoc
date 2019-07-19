@@ -18,9 +18,11 @@ package matdoc {
    
       enum matdoc.enums.AccessLevel {
          -- Enumeration Values --
+         None
          Public
          Protected
          Private
+         Custom
          -- Methods --
          {method} + e = AccessLevel(varargin)
          .. Hidden ..
@@ -115,6 +117,10 @@ Help for matdoc.meta.Class/Alias is inherited from superclass MATDOC.SUPER.WITHA
          
          {field} + isBuiltIn
          If true the wrapped class is a built in matlab class
+         
+         {field} + isUnitTest
+         Flag if the class is within matlabs unit testing framework or is
+  inheritated from it
          
          {field} + metaObj < matdoc.meta.super.Base
          the actual wrapped meta object (meta.package, meta.class,
@@ -300,6 +306,32 @@ Help for matdoc.meta.super.Container/NameRaw is inherited from superclass MATDOC
 
    package matdoc.super {
    
+      class matdoc.super.Base {
+         -- Properties --
+         .. Protected ..
+         {field} # Configuration < matdoc.super.WithMetaObjProps
+         The handle to the export configuration
+
+Help for matdoc.super.Base/Configuration is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+         
+         {field} # Parent < matdoc.super.WithMetaObjProps
+         the parent object
+
+Help for matdoc.super.Base/Parent is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+         
+         {field} # UmlRoot < matdoc.super.WithMetaObjProps
+         Handle to the parent matdoc.Documentation class
+
+Help for matdoc.super.Base/UmlRoot is inherited from superclass MATDOC.SUPER.WITHMETAOBJPROPS
+         
+         -- Methods --
+         {method} + this = Base(parent)
+         .. Static Hidden ..
+         {method} {static} + E = empty(varargin)
+         -- Events --
+         ObjectBeingDestroyed < handle
+      }
+   
       abstract class matdoc.super.WithAlias {
          -- Properties --
          .. Abstract  SetAccess = Protected ..
@@ -466,10 +498,11 @@ Help for matdoc.uml.super.Base/UmlRoot is inherited from superclass MATDOC.SUPER
 matdoc.enums.AccessLevel --|> uint32
 matdoc.meta.Class ..|> matdoc.meta.super.Container
 matdoc.meta.Class --|> matdoc.uml.Class
-matdoc.meta.super.Base --|> matdoc.super.WithMetaObjProps
+matdoc.meta.super.Base --|> matdoc.super.Base
 matdoc.meta.super.Container ..|> matdoc.meta.super.Base
 matdoc.meta.super.Container ..|> matdoc.super.WithNameRaw
 matdoc.meta.super.Container ..|> matdoc.super.WithAlias
+matdoc.super.Base --|> matdoc.super.WithMetaObjProps
 matdoc.super.WithAlias ..|> handle
 matdoc.super.WithMetaObjProps ..|> handle
 matdoc.super.WithNameRaw ..|> handle

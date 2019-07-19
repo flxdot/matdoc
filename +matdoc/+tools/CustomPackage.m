@@ -1,4 +1,5 @@
-classdef CustomPackage <  matdoc.super.WithNameRaw & ...
+classdef CustomPackage < matdoc.super.Base &...
+        matdoc.super.WithNameRaw & ...
         matdoc.super.WithAlias & ...
         matdoc.uml.CustomPackage
    
@@ -38,10 +39,12 @@ classdef CustomPackage <  matdoc.super.WithNameRaw & ...
     methods
         
         %% - Constructor
-        function this = CustomPackage(Name_)
-            % function this = CustomPackage(Name_)
+        function this = CustomPackage(parent, Name_)
+            % function this = CustomPackage(parent, Name_)
             %
             %
+            
+            this = this@matdoc.super.Base(parent);
             
             if nargin < 1
                 Name_ = '';
@@ -94,7 +97,7 @@ classdef CustomPackage <  matdoc.super.WithNameRaw & ...
             packIdx = strcmp({this.PackageList(:).Name}, PackageName_);
             if ~any(packIdx)
                 % create new custom packge
-                hCustomPackge = matdoc.tools.CustomPackage(PackageName_);
+                hCustomPackge = matdoc.tools.CustomPackage(this, PackageName_);
                 % add the class list
                 this.PackageList(1, end + 1) = hCustomPackge;
                 % sort the list by name

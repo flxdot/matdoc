@@ -255,8 +255,34 @@ classdef Method < matdoc.meta.super.Base & ...
             % Access Level %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
             % Access
-            umlCat = char(this.Access);
-            isPublic = this.Access == matdoc.enums.AccessLevel.Public;
+            if this.Access == matdoc.enums.AccessLevel.Custom
+                
+                % check which type of access has been provided
+                actualAcces = this.metaObj.Access;
+                
+                if iscell(actualAcces)
+                    % Cell contains meta.class objects
+                    if length(actualAcces) == 1
+                        umlCat = actualAcces{1}.Name;
+                    else % if length(actualAcces) == 1
+                        try
+                            umlCat = strtrim(sprintf('%s, ', actualAcces{:}.Name));
+                        catch % newer versions of matla
+                            tmp = horzcat(actualAcces{:});
+                            umlCat = strtrim(sprintf('%s, ', tmp(:).Name));
+                        end
+                    end % if length(actualAcces) == 1
+                elseif isa(actualAcces, 'meta.class')
+                    umlCat = actualAcces.Name;
+                else % if iscell(actualAcces)
+                    error('matdoc:meta:Method:getAccessCategory:NotImplemented',...
+                        'Getting the catetory for access of type ''%s'' is not implemented. Please contact the developer of the package.', class(val));
+                end % if iscell(actualAcces)
+                isPublic = false;
+            else % if this.Access == matdoc.enums.AccessLevel.Custom
+                umlCat = char(this.Access);
+                isPublic = this.Access == matdoc.enums.AccessLevel.Public;
+            end % if this.Access == matdoc.enums.AccessLevel.Custom
             
             % Other Attributes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
@@ -318,7 +344,7 @@ classdef Method < matdoc.meta.super.Base & ...
             umlCat = strtrim(umlCat);
             if ~isempty(umlCat) && strcmp(umlCat(end), ',')
                 umlCat = strtrim(umlCat(1:end-1));
-            end
+            end % if ~isempty(umlCat) && strcmp(umlCat(end), ',')
             
         end % function umlCat = getAccessCategory(this)
         

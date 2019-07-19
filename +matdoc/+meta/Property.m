@@ -299,7 +299,18 @@ classdef Property < matdoc.meta.super.Base & ...
             % Is the access the same for get and set?
             if this.GetAccess == this.SetAccess
                 
-                umlCat = char(this.GetAccess);
+                % is the access a custom access?
+                if this.GetAccess == matdoc.enums.AccessLevel.Custom
+                    % 
+                    if length(this.metaObj.GetAccess) == 1
+                        umlCat = sprintf('%s, ', this.metaObj.GetAccess{:}.Name);
+                        umlCat = umlCat(1:end-2);
+                    else % if length(this.metaObj.GetAccess) == 1
+                        umlCat = this.metaObj.GetAccess{1}.Name;
+                    end % if length(this.metaObj.GetAccess) == 1
+                else % if this.GetAccess == matdoc.enums.AccessLevel.Custom
+                    umlCat = char(this.GetAccess);
+                end % if this.GetAccess == matdoc.enums.AccessLevel.Custom
                 
                 sameAccessLevel = true;
                 
@@ -311,14 +322,40 @@ classdef Property < matdoc.meta.super.Base & ...
                 
                 % GetAccess
                 if this.GetAccess > matdoc.enums.AccessLevel.Public
+                    
+                    % Special case for custom access
+                    if this.GetAccess == matdoc.enums.AccessLevel.Custom
+                        if length(this.metaObj.GetAccess) > 1
+                            AccessStr = sprintf('%s, ', this.metaObj.GetAccess{:}.Name);
+                            umlCat = umlCat(1:end-2);
+                        else % if length(this.metaObj.GetAccess) == 1
+                            AccessStr = this.metaObj.GetAccess{1}.Name;
+                        end % if length(this.metaObj.GetAccess) == 1
+                    else % if this.GetAccess == matdoc.enums.AccessLevel.Custom
+                        AccessStr = char(this.GetAccess);
+                    end % if this.GetAccess == matdoc.enums.AccessLevel.Custom
+                    
                     umlCat = sprintf('%s GetAccess = %s,',...
-                        umlCat, char(this.GetAccess));
+                        umlCat, AccessStr);
                 end % if this.GetAccess > matdoc.enums.AccessLevel.Public
                 
                 % SetAccess
                 if this.SetAccess > matdoc.enums.AccessLevel.Public
+                    
+                    % Special case for custom access
+                    if this.SetAccess == matdoc.enums.AccessLevel.Custom
+                        if length(this.metaObj.SetAccess) > 1
+                            AccessStr = sprintf('%s, ', this.metaObj.SetAccess{:}.Name);
+                            umlCat = umlCat(1:end-2);
+                        else % if length(this.metaObj.SetAccess) == 1
+                            AccessStr = this.metaObj.SetAccess{1}.Name;
+                        end % if length(this.metaObj.SetAccess) == 1
+                    else % if this.GetAccess == matdoc.enums.AccessLevel.Custom
+                        AccessStr = char(this.SetAccess);
+                    end % if this.GetAccess == matdoc.enums.AccessLevel.Custom
+                    
                     umlCat = sprintf('%s SetAccess = %s,',...
-                        umlCat, char(this.SetAccess));
+                        umlCat, AccessStr);
                 end % if this.SetAccess > matdoc.enums.AccessLevel.Public
                 
             end % if this.GetAccess == this.SetAccess
